@@ -31,9 +31,24 @@ the first image**, which is the one that pays the one-time model load; the video
 figure is the mean of all four clips. The images and clips are in
 [`evidence/`](evidence/) so the claim can be checked by looking, not by trusting.
 
-**Pick by what you are doing:** [`docs/reference/COMPARISON.md`](docs/reference/COMPARISON.md)
-puts both layers on one page, with each figure traced to the run file it came from
-and the method that produced it.
+**Pick by what you are doing.** The chart and the flowchart below settle most
+choices; the full comparison with every figure traced to its run file is in
+[`docs/reference/COMPARISON.md`](docs/reference/COMPARISON.md).
+
+```mermaid
+flowchart TD
+    A[What do you need?] --> B{Image or video?}
+    B -->|Image| C{Commercial use?}
+    B -->|Video| D{Commercial use?}
+    C -->|Yes| E[klein-q8 · 22.5 s · Apache-2.0]
+    C -->|No, quality first| F[flux3-klein-q8 · 180.6 s · FLUX Kommunity]
+    D -->|Yes| G[Wan2.2 TI2V 5B · Apache-2.0 · ~330 s/clip]
+    D -->|No / research| H[cogvideox q4 · 256.3 s/clip · CogVideoX License]
+    E --> I[Fast, text renders clean]
+    F --> J[Hands and text look better, 8x slower]
+    G --> K[Best licence, 25 frames, 16 fps]
+    H --> L[4% faster than q8, same output]
+```
 
 ## Table of Contents
 
@@ -110,6 +125,19 @@ One GPU job at a time: the harnesses refuse to start while another `mflux`,
 `mlxgen`, or `quick_infer` process is alive — two of these do not fit in 64 GB of
 unified memory at once.
 
+```mermaid
+flowchart TB
+    A[Your prompt] --> B{Layer?}
+    B -->|Image| C[mflux-generate-flux2 / flux3]
+    B -->|Video| D[quick_infer.py / mlxgen]
+    C --> E[MLX 0.32.4]
+    D --> E
+    E --> F[Metal GPU · M1 Max 32-core]
+    F --> G[Unified memory 64 GB]
+    G --> H[PNG / GIF on disk]
+    H --> I[ffprobe / PNG IHDR verify]
+```
+
 **No API, no account, no per-call bill.** Every model runs from weights on disk.
 
 ## What was measured
@@ -143,6 +171,14 @@ written PNG verified.
 | `flux2-klein-4b-mflux-q8` (`klein-q8`) | Apache-2.0 | **22.5** | 5.6 | 4 | 1024×1024 |
 | `flux-3-image-klein-base-mflux-q8` (`flux3-klein-q8`) | FLUX Kommunity | 180.6 | 11.3 | 16 | 1024×1024 |
 
+```mermaid
+xychart-beta
+    title "Seconds per image (lower is better, model load included)"
+    x-axis ["klein-q8", "flux3-klein-q8"]
+    y-axis "seconds" 0 --> 200
+    bar [22.5, 180.6]
+```
+
 A 4-step distilled 4B model runs ~22.5 s per 1024×1024 image (the first is slower,
 ~28 s, because the model loads); FLUX 3 at 16 steps and a 5.6B transformer takes
 ~180 s. Both figures are the mean of the seven steady-state images, with the
@@ -166,6 +202,15 @@ end, and every clip verified with `ffprobe` — the file, not the runner's log l
 | :--- | :--- | ---: | :--- | ---: | :---: |
 | `dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8` (`cogvideox-fun-1.5-5b-inp-q8`) | **The CogVideoX License** | **266.1** | 672×384, 1.6 s, GIF | 5 | ✅ 4/4 |
 | `dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4` (`cogvideox-fun-1.5-5b-inp-q4`) | **The CogVideoX License** | **256.3** | 672×384, 1.6 s, GIF | 5 | ✅ 4/4 |
+| `AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit` (`wan22-ti2v-5b-q8`) | Apache-2.0 | **330.5** (1 clip) | 480×832, 1.6 s, MP4 | 25 | ✅ 1/1 (in progress) |
+
+```mermaid
+xychart-beta
+    title "Seconds per clip (lower is better, model load included)"
+    x-axis ["cogvideox q4", "cogvideox q8", "wan2.2 (1 clip)"]
+    y-axis "seconds" 0 --> 350
+    bar [256.3, 266.1, 330.5]
+```
 
 **266.1 s** for a 5-frame 672×384 clip — the mean of four prompts spanning
 265.2–267.2 s — so a clip that plays for 1.6 s costs about 4.4 minutes of GPU. Five frames is the model's ceiling,
