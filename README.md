@@ -38,6 +38,7 @@ and the method that produced it.
 ## Table of Contents
 
 - [Hardware & Software](#hardware--software)
+- [The environment](#the-environment)
 - [What was measured](#what-was-measured)
 - [Image generation](#image-generation)
 - [Video generation](#video-generation)
@@ -66,6 +67,48 @@ and 400 GB/s of memory bandwidth are what the timings below are against:
 - Apple's own specification: [support.apple.com/en-us/111901](https://support.apple.com/en-us/111901)
 - EveryMac's breakdown of this exact configuration:
   [MacBook Pro M1 Max 10-core CPU, 32-core GPU (16-inch, 2021)](https://everymac.com/systems/apple/macbook_pro/specs/macbook-pro-m1-max-10-core-cpu-32-core-gpu-16-2021-specs.html)
+
+### The environment
+
+Hardware is half the story; the other half is what the weights are executed by.
+Nothing in this repository calls `llama.cpp`, `ollama`, or a GGUF runtime — text
+LLMs are the companion repository's job. Both layers here are model-specific
+Python inference engines on Apple's [MLX](https://github.com/ml-explore/mlx)
+framework, which is the tensor runtime (the PyTorch-shaped layer), not the engine:
+
+| Layer | What runs the model | What that sits on |
+| :--- | :--- | :--- |
+| Image | **mflux** — FLUX graph, sampler, VAE, tokenizer | MLX → Metal |
+| Video (Wan) | **mlx-gen** — Wan2.2 graph and sampler | MLX → Metal |
+| Video (CogVideoX) | **VideoX-Fun-mlx** — CogVideoX-Fun graph and sampler | MLX → Metal |
+| Measurement | `scripts/measure/*.py` — spawns the engine, times it, verifies the file | Python 3 stdlib |
+
+Exact versions this was measured on:
+
+| Item | Value |
+|---|---|
+| Python | **3.15.2** (CPython, arm64, from Homebrew) |
+| Virtualenv | `~/Sites/.mlxgen-venv` (1.4 GB, isolated — not Homebrew's site-packages) |
+| `mlx` | **0.32.4** |
+| `mlx-metal` | **0.32.4** |
+| `mlx-gen` | **0.38.0** (ships the `mflux-generate*` commands *and* `mlxgen`) |
+| `mlx-arsenal` | **0.19.0** (required by VideoX-Fun-mlx, not pulled in by mlx-gen) |
+| `ffmpeg` / `ffprobe` | **9.0.2** |
+
+`pip install mflux` does **not** appear anywhere on purpose: mflux arrives inside
+the `mlx-gen` package, and installing both into one environment makes the two
+disagree about who owns the `mflux-generate*` scripts. That clash is why this is
+a dedicated virtualenv rather than a `uv tool install`.
+
+```bash
+python3.15 -m venv ~/Sites/.mlxgen-venv
+~/Sites/.mlxgen-venv/bin/pip install mlx-gen mlx-arsenal
+export PATH="$HOME/Sites/.mlxgen-venv/bin:$PATH"   # the harnesses call tools by name
+```
+
+One GPU job at a time: the harnesses refuse to start while another `mflux`,
+`mlxgen`, or `quick_infer` process is alive — two of these do not fit in 64 GB of
+unified memory at once.
 
 **No API, no account, no per-call bill.** Every model runs from weights on disk.
 
@@ -150,9 +193,18 @@ run are in [`docs/reference/PROFILES.md`](docs/reference/PROFILES.md).
 
 ## Reproducing
 
-1. Install the tool for the layer you want:
-   `pip install mflux` for images, or clone
-   [VideoX-Fun-mlx](https://github.com/dgrauet/VideoX-Fun-mlx) for video.
+1. Build the environment once — Python 3.15, one virtualenv, two installs:
+
+   ```bash
+   brew install python@3.15 ffmpeg
+   python3.15 -m venv ~/Sites/.mlxgen-venv
+   ~/Sites/.mlxgen-venv/bin/pip install mlx-gen mlx-arsenal
+   export PATH="$HOME/Sites/.mlxgen-venv/bin:$PATH"
+   git clone https://github.com/dgrauet/VideoX-Fun-mlx ~/Sites/VideoX-Fun-mlx
+   ```
+
+   Why each piece, and what is deliberately *not* installed, is in
+   [`docs/reference/ENVIRONMENT.md`](docs/reference/ENVIRONMENT.md).
 2. Download the model weights (see [`docs/reference/PROFILES.md`](docs/reference/PROFILES.md)
    for the exact model ids).
 3. Run the harness or the one-shot CLI — both are in

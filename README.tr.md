@@ -67,6 +67,47 @@ süreler 32 çekirdekli GPU'ya ve 400 GB/s bellek bant genişliğine karşıdır
 - EveryMac'in bu tam konfigürasyonu:
   [MacBook Pro M1 Max 10-core CPU, 32-core GPU (16-inch, 2021)](https://everymac.com/systems/apple/macbook_pro/specs/macbook-pro-m1-max-10-core-cpu-32-core-gpu-16-2021-specs.html)
 
+### Ortam
+
+Donanım işin yarısı; diğer yarısı ağırlıkları neyin çalıştırdığı. Bu depoda
+`llama.cpp`, `ollama` ya da GGUF çalıştıran tek bir satır yok — metin modelleri
+[yardımcı deponun](https://github.com/mahirfatih/omlx-m1-max-benchmark) işi. Buradaki
+iki katman da Apple'ın [MLX](https://github.com/ml-explore/mlx) çatısı üzerinde
+koşan, modele özel Python inference motorlarıdır. MLX çalışma zamanıdır (PyTorch'un
+karşılığı), motor değildir:
+
+| Katman | Modeli ne çalıştırıyor | Neyin üstünde |
+| :--- | :--- | :--- |
+| Görsel | **mflux** — FLUX grafiği, sampler, VAE, tokenizer | MLX → Metal |
+| Video (Wan) | **mlx-gen** — Wan2.2 grafiği ve sampler | MLX → Metal |
+| Video (CogVideoX) | **VideoX-Fun-mlx** — CogVideoX-Fun grafiği ve sampler | MLX → Metal |
+| Ölçüm | `scripts/measure/*.py` — motoru ayağa kaldırır, süreyi ölçer, dosyayı doğrular | Python 3 standart kütüphanesi |
+
+Ölçümün yapıldığı sürümler:
+
+| Öğe | Değer |
+|---|---|
+| Python | **3.15.2** (CPython, arm64, Homebrew) |
+| Sanal ortam | `~/Sites/.mlxgen-venv` (1.4 GB, izole — Homebrew'un site-packages'i değil) |
+| `mlx` | **0.32.4** |
+| `mlx-metal` | **0.32.4** |
+| `mlx-gen` | **0.38.0** (`mflux-generate*` komutlarını *ve* `mlxgen`'i getirir) |
+| `mlx-arsenal` | **0.19.0** (VideoX-Fun-mlx ister, mlx-gen getirmez) |
+| `ffmpeg` / `ffprobe` | **9.0.2** |
+
+`pip install mflux` bilerek yok: mflux, `mlx-gen` paketinin içinden geliyor.
+İkisini aynı ortama kurmak `mflux-generate*` betiklerinin sahibi konusunda
+çakışır — bu yüzden `uv tool install` değil, ayrı bir sanal ortam.
+
+```bash
+python3.15 -m venv ~/Sites/.mlxgen-venv
+~/Sites/.mlxgen-venv/bin/pip install mlx-gen mlx-arsenal
+export PATH="$HOME/Sites/.mlxgen-venv/bin:$PATH"
+```
+
+Aynı anda tek GPU işi: başka bir `mflux`, `mlxgen` veya `quick_infer` süreci
+yaşıyorsa harness başlamayı reddeder — ikisi 64 GB birleşik belleğe sığmaz.
+
 **API yok, hesap yok, çağrı başına fatura yok.** Her model diskten yüklenir.
 
 ## Ne ölçüldü
@@ -144,8 +185,18 @@ tam komutlar [`docs/reference/PROFILES.md`](docs/reference/PROFILES.md) içinde.
 
 ## Çoğaltma
 
-1. İstediğin katmanın aracını kur: görseller için `pip install mflux`, video için
-   [VideoX-Fun-mlx](https://github.com/dgrauet/VideoX-Fun-mlx) klonla.
+1. Ortamı bir kez kur — Python 3.15, tek sanal ortam, iki kurulum:
+
+   ```bash
+   brew install python@3.15 ffmpeg
+   python3.15 -m venv ~/Sites/.mlxgen-venv
+   ~/Sites/.mlxgen-venv/bin/pip install mlx-gen mlx-arsenal
+   export PATH="$HOME/Sites/.mlxgen-venv/bin:$PATH"
+   git clone https://github.com/dgrauet/VideoX-Fun-mlx ~/Sites/VideoX-Fun-mlx
+   ```
+
+   Her parçanın neden gerektiği ve bilerek *kurulmayanlar*
+   [`docs/reference/ENVIRONMENT.md`](docs/reference/ENVIRONMENT.md) içinde.
 2. Model ağırlıklarını indir (tam model id'leri için
    [`docs/reference/PROFILES.md`](docs/reference/PROFILES.md)).
 3. Harness'ı ya da tek-atış CLI'sini çalıştır — ikisi de

@@ -9,6 +9,7 @@ reasoning behind a figure, a setting or a licence reading.
 | [`reference/COMPARISON.md`](reference/COMPARISON.md) | Which layer, which model, for what — both layers on one page, every figure traced. |
 | [`reference/PROFILES.md`](reference/PROFILES.md) | What settings each layer runs with, why each value, and the exact commands to reproduce a run. |
 | [`reference/LICENSES.md`](reference/LICENSES.md) | What may be done with each model's output — "downloadable" is not "commercially usable". |
+| [`reference/ENVIRONMENT.md`](reference/ENVIRONMENT.md) | What it all ran on: the stack from Metal to the harness, a clean-macOS install, which binary each profile calls, and the four failures that look like something else. |
 
 ## How the two documents differ
 
