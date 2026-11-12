@@ -46,6 +46,7 @@ PROMPTS_FILE = ROOT / "data" / "image-prompts.json"
 GPU_HEAVY = (
     "hallucination-test", "code-benchmark", "code-matrix-test", "grammar-test",
     "context-memory-test", "repo-analysis-test", "benchmark.py",
+    "video-benchmark.py", "mlxgen", "quick_infer.py", "mflux-generate",
 )
 
 
@@ -65,7 +66,12 @@ def load_prompts(path=PROMPTS_FILE):
 
 
 def gpu_busy():
-    """Return the names of known oMLX benchmark processes currently running."""
+    """Return the names of known GPU-heavy processes currently running.
+
+    The list is the same for both harnesses here plus the text benchmark's
+    scripts: the machine has one GPU, and an oMLX run in the companion
+    repository competes with a diffusion run just as another mflux run does.
+    """
     running = []
     for name in GPU_HEAVY:
         if shutil.which("pgrep"):
@@ -132,6 +138,13 @@ def reported_seconds(stderr):
 
 def run_one(profile, item, out_dir, model=None, seed=None, steps=None, timeout=1800):
     out_path = Path(out_dir) / f"{profile['name']}--{item['id']}.png"
+    # Relative to the repository when the file lands inside it, absolute
+    # otherwise. A committed JSON that points at /Users/<someone>/... is both
+    # unportable and broken the moment the tree moves.
+    try:
+        image_ref = str(out_path.resolve().relative_to(ROOT))
+    except ValueError:
+        image_ref = str(out_path)
     argv = build_argv(profile, item["prompt"], out_path, model=model, seed=seed, steps=steps)
     t0 = time.time()
     try:
@@ -140,7 +153,7 @@ def run_one(profile, item, out_dir, model=None, seed=None, steps=None, timeout=1
     except FileNotFoundError:
         return {"id": item["id"], "category": item.get("category", ""),
                 "seconds": None, "reported_seconds": None, "s_per_step": None,
-                "returncode": None, "ok": False, "image": str(out_path),
+                "returncode": None, "ok": False, "image": image_ref,
                 "dimensions": None, "bytes": None, "sha256_16": None,
                 "stderr_tail": f"{argv[0]} not found on PATH", "argv": argv}
     seconds = time.time() - t0
@@ -158,7 +171,7 @@ def run_one(profile, item, out_dir, model=None, seed=None, steps=None, timeout=1
         "s_per_step": round(seconds / max(1, steps or profile["settings"]["steps"]), 2),
         "returncode": rc,
         "ok": rc == 0 and dims is not None,
-        "image": str(out_path),
+        "image": image_ref,
         "dimensions": list(dims) if dims else None,
         "bytes": size,
         "sha256_16": digest,

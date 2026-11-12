@@ -114,4 +114,54 @@ python3 scripts/measure/image-benchmark.py --selftest
 step "8. Video harness — the runner command and the ffprobe reader agree"
 python3 scripts/measure/video-benchmark.py --selftest
 
+step "9. Reference data — relative paths, and the headline figures match it"
+python3 - <<'PY'
+import json, pathlib, statistics, sys
+
+rows = {}
+for f in sorted(pathlib.Path("reference").glob("*.json")):
+    d = json.loads(f.read_text())
+    rows[f.name] = d
+
+bad = []
+
+# 1. A committed result must not carry a machine-specific absolute path. The
+#    files move (this repository was split out of another one) and a frozen
+#    /Users/<someone>/... path is broken the moment they do.
+for name, d in rows.items():
+    for row in d["rows"]:
+        for key in ("images", "videos"):
+            for item in row.get(key, []):
+                for field in ("image", "video"):
+                    v = item.get(field, "")
+                    if v.startswith("/"):
+                        bad.append(f"{name}: {item.get('id')} {field} is absolute: {v}")
+
+# 2. The s/img and s/clip figures the documents quote must be derivable from the
+#    raw data, and under the same definition the documents state: s/img is the
+#    mean with the first (model-load) image dropped, s/clip the mean of all.
+def image_mean(name):
+    ts = [i["seconds"] for i in rows[name]["rows"][0]["images"]]
+    return statistics.mean(ts[1:])
+
+def clip_mean(name):
+    ts = [v["seconds"] for v in rows[name]["rows"][0]["videos"]]
+    return statistics.mean(ts)
+
+checks = [
+    ("image-benchmark.json", image_mean, 22.5),
+    ("image-benchmark-flux3.json", image_mean, 180.4),
+    ("video-benchmark.json", clip_mean, 266.1),
+]
+for name, fn, claimed in checks:
+    got = fn(name)
+    if abs(got - claimed) > 0.5:
+        bad.append(f"{name}: documents say {claimed} s, data gives {got:.2f} s")
+
+if bad:
+    print("\n".join(bad))
+    sys.exit(1)
+print("paths are repo-relative; s/img and s/clip match the committed data")
+PY
+
 printf '\n\033[1;32mAll checks passed.\033[0m\n'

@@ -11,8 +11,9 @@ server that cannot run it.
 | Image | [`mflux`](https://github.com/filipstrand/mflux) | [`profiles/mflux-profiles.json`](../../profiles/mflux-profiles.json) |
 | Video | [`VideoX-Fun-mlx`](https://github.com/dgrauet/VideoX-Fun-mlx), [`mlx-gen`](https://github.com/lpalbou/mlx-gen) | [`profiles/video-profiles.json`](../../profiles/video-profiles.json) |
 
-The text layer and its oMLX profiles live in the companion repository; see
-[`COMPARISON.md`](COMPARISON.md).
+The text layer and its oMLX profiles live in the companion repository,
+[mahirfatih/omlx-m1-max-benchmark](https://github.com/mahirfatih/omlx-m1-max-benchmark);
+see [`COMPARISON.md`](COMPARISON.md).
 
 ## Image generation — a separate layer (mflux)
 
@@ -130,8 +131,9 @@ is on you.
 ### Image — mflux
 
 The CLI is one-shot: it loads the model, generates, writes the PNG, exits. The
-first image therefore includes model load (see the `s/img` note in the image
-evidence). Output size is whatever `--height`/`--width` say.
+first image therefore includes model load and runs slower (~28 s for klein-q8),
+which is why every `s/img` figure is the mean of the steady-state images with the
+first left out. Output size is whatever `--height`/`--width` say.
 
 ```bash
 # klein-q8 — the 22.5 s/image profile. Steps and guidance come from the model card.

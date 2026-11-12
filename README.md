@@ -4,18 +4,21 @@
 committed so you can look at it.**
 
 This is the generation half of a local-MLX benchmark. Text runs on
-[oMLX](https://omlx.ai) and lives in the companion repository; here are the two
-layers oMLX cannot serve:
+[oMLX](https://omlx.ai) and lives in the companion repository
+[mahirfatih/omlx-m1-max-benchmark](https://github.com/mahirfatih/omlx-m1-max-benchmark);
+here are the two layers oMLX cannot serve:
 
 | Layer | Tool | Model | Time | Output |
 | :--- | :--- | :--- | ---: | :--- |
 | **Image** | [mflux](https://github.com/filipstrand/mflux) | FLUX.2 klein 4B (q8) | **22.5 s** | 1024×1024 PNG |
 | Image | mflux | FLUX 3 Image Klein | 180.4 s | 1024×1024 PNG |
-| **Video** | [VideoX-Fun-mlx](https://github.com/dgrauet/VideoX-Fun-mlx) | CogVideoX-Fun V1.5 5B (int8) | **265.9 s** | 672×384, 5-frame GIF |
+| **Video** | [VideoX-Fun-mlx](https://github.com/dgrauet/VideoX-Fun-mlx) | CogVideoX-Fun V1.5 5B (int8) | **266.1 s** | 672×384, 5-frame GIF |
 
 Every number is wall clock on this one machine, **model load included**, and every
 output is verified against the file it wrote — the PNG header for images, `ffprobe`
-for clips — not against a tool's log line. The images and clips are in
+for clips — not against a tool's log line. The image figures are the mean **after
+the first image**, which is the one that pays the one-time model load; the video
+figure is the mean of all four clips. The images and clips are in
 [`evidence/`](evidence/) so the claim can be checked by looking, not by trusting.
 
 **Pick by what you are doing:** [`docs/reference/COMPARISON.md`](docs/reference/COMPARISON.md)
@@ -88,7 +91,9 @@ written PNG verified.
 
 A 4-step distilled 4B model runs ~22.5 s per 1024×1024 image (the first is slower,
 ~28 s, because the model loads); FLUX 3 at 16 steps and a 5.6B transformer takes
-~180 s. **klein-q8 wins by 8×** and is the one to use unless you need FLUX 3
+~180 s. Both figures are the mean of the seven steady-state images, with the
+first — the one that includes model load — left out; that is the `s/img` column.
+**klein-q8 wins by 8×** and is the one to use unless you need FLUX 3
 specifically. Legible text and correct hands — the classic failure surfaces — come
 out clean on both.
 
@@ -105,10 +110,10 @@ end, and every clip verified with `ffprobe` — the file, not the runner's log l
 
 | Model (profile) | Licence | s/clip | Output | Frames | OK |
 | :--- | :--- | ---: | :--- | ---: | :---: |
-| `dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8` (`cogvideox-fun-1.5-5b-inp-q8`) | **The CogVideoX License** | **265.9** | 672×384, 1.6 s, GIF | 5 | ✅ 4/4 |
+| `dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8` (`cogvideox-fun-1.5-5b-inp-q8`) | **The CogVideoX License** | **266.1** | 672×384, 1.6 s, GIF | 5 | ✅ 4/4 |
 
-~266 s for a 5-frame 672×384 clip — four prompts, 265.2–267.2 s — so a clip that
-plays for 1.6 s costs about 4.4 minutes of GPU. Five frames is the model's ceiling,
+**266.1 s** for a 5-frame 672×384 clip — the mean of four prompts spanning
+265.2–267.2 s — so a clip that plays for 1.6 s costs about 4.4 minutes of GPU. Five frames is the model's ceiling,
 not a setting: `--frames` is not linear (4 → 1 frame, 8 → the same 5 as 5, an odd
 count raises a reshape error), so asking for more does not get you more.
 

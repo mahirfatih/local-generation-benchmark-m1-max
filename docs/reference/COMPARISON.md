@@ -14,6 +14,7 @@ measured on the same M1 Max.
 
 | | This repository | The text benchmark |
 | :--- | :--- | :--- |
+| Repository | [`local-generation-benchmark-m1-max`](https://github.com/mahirfatih/local-generation-benchmark-m1-max) | [`omlx-m1-max-benchmark`](https://github.com/mahirfatih/omlx-m1-max-benchmark) |
 | Layers | Image (mflux), video (VideoX-Fun-mlx / mlx-gen) | Text (oMLX) |
 | Numbers | Seconds per image, per clip, `ffprobe`/PNG verified | tok/s, coding, format, context, hallucination, red-team |
 
@@ -23,11 +24,14 @@ measured on the same M1 Max.
 | :--- | :--- | :--- | :--- | ---: | :--- |
 | **Image** | `flux2-klein-4b` | mflux | Apache-2.0 | **22.5 s** | 1024×1024, 4 steps |
 | Image | `flux-3-image-klein-base` | mflux | FLUX Kommunity | 180.4 s | 1024×1024, 16 steps |
-| **Video** | `CogVideoX-Fun-V1.5-5b-InP` | VideoX-Fun-mlx | **CogVideoX License** | **265.9 s** | 672×384, 5 frames, GIF |
+| **Video** | `CogVideoX-Fun-V1.5-5b-InP` | VideoX-Fun-mlx | **CogVideoX License** | **266.1 s** | 672×384, 5 frames, GIF |
 
 Read down each column, not across the rows: seconds per image and seconds per
-clip are not comparable units. **22.5 s buys a still; 265.9 s buys 1.6 s of
-motion.** That gap is the whole story of local generation on this machine.
+clip are not comparable units, and nor are the two ways they are averaged —
+`s/img` is the mean **after the first image**, whose number carries the one-time
+model load, while `s/clip` is the mean of all four clips. **22.5 s buys a still;
+266.1 s buys 1.6 s of motion.** That gap is the whole story of local generation
+on this machine.
 
 ## Image generation — a separate layer
 
@@ -65,11 +69,13 @@ with `ffprobe`. Seconds per clip, model load included.
 
 | Model | Licence | Runner | s/clip | Output | Status |
 | :--- | :--- | :--- | ---: | :--- | :--- |
-| `CogVideoX-Fun-V1.5-5b-InP` (int8) | **The CogVideoX License** | VideoX-Fun-mlx | **265.9** | 672×384, 5 frames, GIF | ✅ 4/4 |
+| `CogVideoX-Fun-V1.5-5b-InP` (int8) | **The CogVideoX License** | VideoX-Fun-mlx | **266.1** | 672×384, 5 frames, GIF | ✅ 4/4 |
 | `Wan2.2-TI2V-5B` | Apache-2.0 | mlx-gen | pending | — | — |
 
-CogVideoX-Fun renders a 5-frame 672×384 clip in ~266 s (four prompts, 265.2–267.2 s),
-which is ~4.4 minutes of waiting for a clip that plays for 1.6 s. The frame count
+CogVideoX-Fun renders a 5-frame 672×384 clip in **266.1 s on average** (four
+prompts, 265.2–267.2 s), which is ~4.4 minutes of waiting for a clip that plays
+for 1.6 s. The spread is under 2 s, so any single figure in that range is honest;
+266.1 is the mean of the four. The frame count
 is this model's ceiling, not a choice: `--frames` is not linear and 5 is as far as
 it decodes, so more steps or a larger request buys nothing. All four clips — with
 the prompt under each — are in

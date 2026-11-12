@@ -15,14 +15,14 @@
           "s_per_step": 11.94,
           "returncode": 0,
           "ok": true,
-          "image": "/Users/MahirFatih/Sites/omlx-m1-max-benchmark/evidence/images/flux3-klein-q8--photoreal-market.png",
+          "image": "evidence/images/flux3-klein-q8--photoreal-market.png",
           "dimensions": [
             1024,
             1024
           ],
           "bytes": 2290947,
           "sha256_16": "e662392336258d02",
-          "stderr_tail": "100%|██████████| 16/16 [02:56<00:00, 10.94s/it]\n100%|██████████| 16/16 [02:56<00:00, 11.04s/it]\nINFO: Image saved successfully at: /Users/MahirFatih/Sites/omlx-m1-max-benchmark/evidence/images/flux3-klein-q8--photoreal-market.png\nINFO: Metadata embedded successfully at: /Users/MahirFatih/Sites/omlx-m1-max-benchmark/evidence/images/flux3-klein-q8--photoreal-market.png",
+          "stderr_tail": "100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 16/16 [02:56<00:00, 10.94s/it]\n100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 16/16 [02:56<00:00, 11.04s/it]\nINFO: Image saved successfully at: evidence/images/flux3-klein-q8--photoreal-market.png\nINFO: Metadata embedded successfully at: evidence/images/flux3-klein-q8--photoreal-market.png",
           "argv": [
             "mflux-generate-flux3",
             "--model",
@@ -40,7 +40,7 @@
             "--seed",
             "42",
             "--output",
-            "/Users/MahirFatih/Sites/omlx-m1-max-benchmark/evidence/images/flux3-klein-q8--photoreal-market.png",
+            "evidence/images/flux3-klein-q8--photoreal-market.png",
             "--compute-precision",
             "float16"
           ]
@@ -53,14 +53,14 @@
           "s_per_step": 11.27,
           "returncode": 0,
           "ok": true,
-          "image": "/Users/MahirFatih/Sites/omlx-m1-max-benchmark/evidence/images/flux3-klein-q8--portrait-hands.png",
+          "image": "evidence/images/flux3-klein-q8--portrait-hands.png",
           "dimensions": [
             1024,
             1024
           ],
           "bytes": 1670283,
           "sha256_16": "14301fc52cbbec84",
-          "stderr_tail": "100%|██████████| 16/16 [02:55<00:00, 10.97s/it]\n100%|██████████| 16/16 [02:55<00:00, 10.99s/it]\nINFO: Image saved successfully at: /Users/MahirFatih/Sites/omlx-m1-max-benchmark/evidence/images/flux3-klein-q8--portrait-hands.png\nINFO: Metadata embedded successfully at: /Users/MahirFatih/Sites/omlx-m1-max-benchmark/evidence/images/flux3-klein-q8--portrait-hands.png",
+          "stderr_tail": "100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 16/16 [02:55<00:00, 10.97s/it]\n100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 16/16 [02:55<00:00, 10.99s/it]\nINFO: Image saved successfully at: evidence/images/flux3-klein-q8--portrait-hands.png\nINFO: Metadata embedded successfully at: evidence/images/flux3-klein-q8--portrait-hands.png",
           "argv": [
             "mflux-generate-flux3",
             "--model",
@@ -78,7 +78,7 @@
             "--seed",
             "42",
             "--output",
-            "/Users/MahirFatih/Sites/omlx-m1-max-benchmark/evidence/images/flux3-klein-q8--portrait-hands.png",
+            "evidence/images/flux3-klein-q8--portrait-hands.png",
             "--compute-precision",
             "float16"
           ]
@@ -91,14 +91,14 @@
           "s_per_step": 11.28,
           "returncode": 0,
           "ok": true,
-          "image": "/Users/MahirFatih/Sites/omlx-m1-max-benchmark/evidence/images/flux3-klein-q8--text-poster.png",
+          "image": "evidence/images/flux3-klein-q8--text-poster.png",
           "dimensions": [
             1024,
             1024
           ],
           "bytes": 531433,
           "sha256_16": "9ef3d5ad4f4bde05",
-          "stderr_tail": "100%|██████████| 16/16 [02:55<00:00, 10.96s/it]\n100%|██████████| 16/16 [02:55<00:00, 10.99s/it]\nINFO: Image saved successfully at: /Users/MahirFatih/Sites/omlx-m1-max-benchmark/evidence/images/flux3-klein-q8--text-poster.png\nINFO: Metadata embedded successfully at: /Users/MahirFatih/Sites/omlx-m1-max-benchmark/evidence/images/flux3-klein-q8--text-poster.png",
+          "stderr_tail": "100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 16/16 [02:55<00:00, 10.96s/it]\n100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 16/16 [02:55<00:00, 10.99s/it]\nINFO: Image saved successfully at: evidence/images/flux3-klein-q8--text-poster.png\nINFO: Metadata embedded successfully at: evidence/images/flux3-klein-q8--text-poster.png",
           "argv": [
             "mflux-generate-flux3",
             "--model",
@@ -116,7 +116,7 @@
             "--seed",
             "42",
             "--output",
-            "/Users/MahirFatih/Sites/omlx-m1-max-benchmark/evidence/images/flux3-klein-q8--text-poster.png",
+            "evidence/images/flux3-klein-q8--text-poster.png",
             "--compute-precision",
             "float16"
           ]
@@ -129,14 +129,14 @@
           "s_per_step": 11.28,
           "returncode": 0,
           "ok": true,
-          "image": "/Users/MahirFatih/Sites/omlx-m1-max-benchmark/evidence/images/flux3-klein-q8--composition-stilllife.png",
+          "image": "evidence/images/flux3-klein-q8--composition-stilllife.png",
           "dimensions": [
             1024,
             1024
           ],
           "bytes": 1596332,
           "sha256_16": "73a4abd575377040",
-          "stderr_tail": "100%|██████████| 16/16 [02:55<00:00, 10.96s/it]\n100%|██████████| 16/16 [02:55<00:00, 10.98s/it]\nINFO: Image saved successfully at: /Users/MahirFatih/Sites/omlx-m1-max-benchmark/evidence/images/flux3-klein-q8--composition-stilllife.png\nINFO: Metadata embedded successfully at: /Users/MahirFatih/Sites/omlx-m1-max-benchmark/evidence/images/flux3-klein-q8--composition-stilllife.png",
+          "stderr_tail": "100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 16/16 [02:55<00:00, 10.96s/it]\n100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 16/16 [02:55<00:00, 10.98s/it]\nINFO: Image saved successfully at: evidence/images/flux3-klein-q8--composition-stilllife.png\nINFO: Metadata embedded successfully at: evidence/images/flux3-klein-q8--composition-stilllife.png",
           "argv": [
             "mflux-generate-flux3",
             "--model",
@@ -144,7 +144,7 @@
             "--base-model",
             "flux3-klein-base",
             "--prompt",
-            "Overhead still life on a dark oak table: exactly three objects — a white ceramic mug, a brass pocket watch, and a ripe pomegranate cut in half. Warm side light, soft shadows, each object distinct and fully in frame.",
+            "Overhead still life on a dark oak table: exactly three objects \u2014 a white ceramic mug, a brass pocket watch, and a ripe pomegranate cut in half. Warm side light, soft shadows, each object distinct and fully in frame.",
             "--width",
             "1024",
             "--height",
@@ -154,7 +154,7 @@
             "--seed",
             "42",
             "--output",
-            "/Users/MahirFatih/Sites/omlx-m1-max-benchmark/evidence/images/flux3-klein-q8--composition-stilllife.png",
+            "evidence/images/flux3-klein-q8--composition-stilllife.png",
             "--compute-precision",
             "float16"
           ]
@@ -167,14 +167,14 @@
           "s_per_step": 11.29,
           "returncode": 0,
           "ok": true,
-          "image": "/Users/MahirFatih/Sites/omlx-m1-max-benchmark/evidence/images/flux3-klein-q8--stylised-risograph.png",
+          "image": "evidence/images/flux3-klein-q8--stylised-risograph.png",
           "dimensions": [
             1024,
             1024
           ],
           "bytes": 2277829,
           "sha256_16": "2f2e3b562e712313",
-          "stderr_tail": "100%|██████████| 16/16 [02:55<00:00, 10.96s/it]\n100%|██████████| 16/16 [02:55<00:00, 11.00s/it]\nINFO: Image saved successfully at: /Users/MahirFatih/Sites/omlx-m1-max-benchmark/evidence/images/flux3-klein-q8--stylised-risograph.png\nINFO: Metadata embedded successfully at: /Users/MahirFatih/Sites/omlx-m1-max-benchmark/evidence/images/flux3-klein-q8--stylised-risograph.png",
+          "stderr_tail": "100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 16/16 [02:55<00:00, 10.96s/it]\n100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 16/16 [02:55<00:00, 11.00s/it]\nINFO: Image saved successfully at: evidence/images/flux3-klein-q8--stylised-risograph.png\nINFO: Metadata embedded successfully at: evidence/images/flux3-klein-q8--stylised-risograph.png",
           "argv": [
             "mflux-generate-flux3",
             "--model",
@@ -192,7 +192,7 @@
             "--seed",
             "42",
             "--output",
-            "/Users/MahirFatih/Sites/omlx-m1-max-benchmark/evidence/images/flux3-klein-q8--stylised-risograph.png",
+            "evidence/images/flux3-klein-q8--stylised-risograph.png",
             "--compute-precision",
             "float16"
           ]
@@ -205,14 +205,14 @@
           "s_per_step": 11.26,
           "returncode": 0,
           "ok": true,
-          "image": "/Users/MahirFatih/Sites/omlx-m1-max-benchmark/evidence/images/flux3-klein-q8--product-headphones.png",
+          "image": "evidence/images/flux3-klein-q8--product-headphones.png",
           "dimensions": [
             1024,
             1024
           ],
           "bytes": 1069678,
           "sha256_16": "676ef00daaa14c07",
-          "stderr_tail": "100%|██████████| 16/16 [02:55<00:00, 10.94s/it]\n100%|██████████| 16/16 [02:55<00:00, 10.97s/it]\nINFO: Image saved successfully at: /Users/MahirFatih/Sites/omlx-m1-max-benchmark/evidence/images/flux3-klein-q8--product-headphones.png\nINFO: Metadata embedded successfully at: /Users/MahirFatih/Sites/omlx-m1-max-benchmark/evidence/images/flux3-klein-q8--product-headphones.png",
+          "stderr_tail": "100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 16/16 [02:55<00:00, 10.94s/it]\n100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 16/16 [02:55<00:00, 10.97s/it]\nINFO: Image saved successfully at: evidence/images/flux3-klein-q8--product-headphones.png\nINFO: Metadata embedded successfully at: evidence/images/flux3-klein-q8--product-headphones.png",
           "argv": [
             "mflux-generate-flux3",
             "--model",
@@ -230,7 +230,7 @@
             "--seed",
             "42",
             "--output",
-            "/Users/MahirFatih/Sites/omlx-m1-max-benchmark/evidence/images/flux3-klein-q8--product-headphones.png",
+            "evidence/images/flux3-klein-q8--product-headphones.png",
             "--compute-precision",
             "float16"
           ]
@@ -243,14 +243,14 @@
           "s_per_step": 11.28,
           "returncode": 0,
           "ok": true,
-          "image": "/Users/MahirFatih/Sites/omlx-m1-max-benchmark/evidence/images/flux3-klein-q8--photoreal-architecture.png",
+          "image": "evidence/images/flux3-klein-q8--photoreal-architecture.png",
           "dimensions": [
             1024,
             1024
           ],
           "bytes": 1686735,
           "sha256_16": "add897b3e800e767",
-          "stderr_tail": "100%|██████████| 16/16 [02:55<00:00, 10.97s/it]\n100%|██████████| 16/16 [02:55<00:00, 10.99s/it]\nINFO: Image saved successfully at: /Users/MahirFatih/Sites/omlx-m1-max-benchmark/evidence/images/flux3-klein-q8--photoreal-architecture.png\nINFO: Metadata embedded successfully at: /Users/MahirFatih/Sites/omlx-m1-max-benchmark/evidence/images/flux3-klein-q8--photoreal-architecture.png",
+          "stderr_tail": "100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 16/16 [02:55<00:00, 10.97s/it]\n100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 16/16 [02:55<00:00, 10.99s/it]\nINFO: Image saved successfully at: evidence/images/flux3-klein-q8--photoreal-architecture.png\nINFO: Metadata embedded successfully at: evidence/images/flux3-klein-q8--photoreal-architecture.png",
           "argv": [
             "mflux-generate-flux3",
             "--model",
@@ -268,7 +268,7 @@
             "--seed",
             "42",
             "--output",
-            "/Users/MahirFatih/Sites/omlx-m1-max-benchmark/evidence/images/flux3-klein-q8--photoreal-architecture.png",
+            "evidence/images/flux3-klein-q8--photoreal-architecture.png",
             "--compute-precision",
             "float16"
           ]
@@ -281,14 +281,14 @@
           "s_per_step": 11.35,
           "returncode": 0,
           "ok": true,
-          "image": "/Users/MahirFatih/Sites/omlx-m1-max-benchmark/evidence/images/flux3-klein-q8--text-signage.png",
+          "image": "evidence/images/flux3-klein-q8--text-signage.png",
           "dimensions": [
             1024,
             1024
           ],
           "bytes": 1753041,
           "sha256_16": "711a641e9af437eb",
-          "stderr_tail": "100%|██████████| 16/16 [02:56<00:00, 11.17s/it]\n100%|██████████| 16/16 [02:56<00:00, 11.06s/it]\nINFO: Image saved successfully at: /Users/MahirFatih/Sites/omlx-m1-max-benchmark/evidence/images/flux3-klein-q8--text-signage.png\nINFO: Metadata embedded successfully at: /Users/MahirFatih/Sites/omlx-m1-max-benchmark/evidence/images/flux3-klein-q8--text-signage.png",
+          "stderr_tail": "100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 16/16 [02:56<00:00, 11.17s/it]\n100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 16/16 [02:56<00:00, 11.06s/it]\nINFO: Image saved successfully at: evidence/images/flux3-klein-q8--text-signage.png\nINFO: Metadata embedded successfully at: evidence/images/flux3-klein-q8--text-signage.png",
           "argv": [
             "mflux-generate-flux3",
             "--model",
@@ -306,7 +306,7 @@
             "--seed",
             "42",
             "--output",
-            "/Users/MahirFatih/Sites/omlx-m1-max-benchmark/evidence/images/flux3-klein-q8--text-signage.png",
+            "evidence/images/flux3-klein-q8--text-signage.png",
             "--compute-precision",
             "float16"
           ]

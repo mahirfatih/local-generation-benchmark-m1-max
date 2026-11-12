@@ -45,7 +45,7 @@ PROMPTS_FILE = ROOT / "data" / "video-prompts.json"
 GPU_HEAVY = (
     "hallucination-test", "code-benchmark", "code-matrix-test", "grammar-test",
     "context-memory-test", "repo-analysis-test", "benchmark.py",
-    "image-benchmark.py", "mlxgen", "quick_infer.py",
+    "image-benchmark.py", "mlxgen", "quick_infer.py", "mflux-generate",
 )
 
 
@@ -185,6 +185,10 @@ def ffprobe(path):
 def run_one(profile, item, out_dir, model=None, seed=None, steps=None, repo=None, timeout=3600):
     ext = profile.get("output_format", "mp4")
     out_path = Path(out_dir) / f"{profile['name']}--{item['id']}.{ext}"
+    try:
+        video_ref = str(out_path.resolve().relative_to(ROOT))
+    except ValueError:
+        video_ref = str(out_path)
     argv = build_argv(profile, item["prompt"], out_path,
                       model=model, seed=seed, steps=steps, repo=repo)
     t0 = time.time()
@@ -193,7 +197,7 @@ def run_one(profile, item, out_dir, model=None, seed=None, steps=None, repo=None
         stderr, rc = proc.stderr, proc.returncode
     except FileNotFoundError:
         return {"id": item["id"], "category": item.get("category", ""),
-                "seconds": None, "returncode": None, "ok": False, "video": str(out_path),
+                "seconds": None, "returncode": None, "ok": False, "video": video_ref,
                 "probe": None, "bytes": None, "sha256_16": None,
                 "stderr_tail": f"{argv[0]} not found on PATH", "argv": argv}
     seconds = time.time() - t0
@@ -208,7 +212,7 @@ def run_one(profile, item, out_dir, model=None, seed=None, steps=None, repo=None
         "seconds": round(seconds, 2),
         "returncode": rc,
         "ok": rc == 0 and probe is not None,
-        "video": str(out_path),
+        "video": video_ref,
         "probe": probe,
         "bytes": size,
         "sha256_16": digest,
