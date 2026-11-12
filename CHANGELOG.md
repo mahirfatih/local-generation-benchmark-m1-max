@@ -6,6 +6,20 @@ date-based snapshots rather than semver releases.
 
 ## [Unreleased]
 
+### Fixed — the FLUX 3 average, and a tolerance that let it drift
+
+- **The published `s/img` for FLUX 3 was 180.4 s; the data gives 180.55.** The
+  eight runs are 191.0 (the first, which pays model load), then 180.36, 180.42,
+  180.41, 180.57, 180.12, 180.47, 181.52 — mean **180.55 s**, which rounds to
+  **180.6**, not 180.4. The number had been carried since before the last run
+  landed and was never recomputed. Corrected in `README.md`, `README.tr.md`,
+  `docs/reference/COMPARISON.md` and `docs/reference/PROFILES.md`.
+- **`test/test.sh` step 9 compared with a 0.5 s tolerance, which is why the
+  error survived.** The documents round to one decimal, so the widest a correct
+  figure can be off is 0.05 s; the test now uses that bound, and names the data
+  value to three decimals when it fails. The old tolerance would also have
+  accepted 180.5 and 180.0 for the same run.
+
 ### Fixed — the video average, frozen paths, and a guard that watched the wrong repository
 
 - **The published `s/clip` was one sample, not the mean.** The four CogVideoX

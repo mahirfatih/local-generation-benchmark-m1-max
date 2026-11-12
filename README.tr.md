@@ -23,7 +23,7 @@ durur; burada oMLX'in çalıştıramadığı iki katman var:
 | Katman | Araç | Model | Süre | Çıktı |
 | :--- | :--- | :--- | ---: | :--- |
 | **Görsel** | [mflux](https://github.com/filipstrand/mflux) | FLUX.2 klein 4B (q8) | **22.5 s** | 1024×1024 PNG |
-| Görsel | mflux | FLUX 3 Image Klein | 180.4 s | 1024×1024 PNG |
+| Görsel | mflux | FLUX 3 Image Klein | 180.6 s | 1024×1024 PNG |
 | **Video** | [VideoX-Fun-mlx](https://github.com/dgrauet/VideoX-Fun-mlx) | CogVideoX-Fun V1.5 5B (int8) | **266.1 s** | 672×384, 5 kare GIF |
 
 Her sayı bu tek makinede **duvar saatiyle**, **model yüklemesi dahil** ölçüldü ve
@@ -90,7 +90,7 @@ Görsel, native-MLX bir difüzyon aracı olan
 | Model (profil) | Lisans | s/görsel | s/adım | Adım | Boyut |
 | :--- | :--- | ---: | ---: | ---: | :--- |
 | `flux2-klein-4b-mflux-q8` (`klein-q8`) | Apache-2.0 | **22.5** | 5.6 | 4 | 1024×1024 |
-| `flux-3-image-klein-base-mflux-q8` (`flux3-klein-q8`) | FLUX Kommunity | 180.4 | 11.3 | 16 | 1024×1024 |
+| `flux-3-image-klein-base-mflux-q8` (`flux3-klein-q8`) | FLUX Kommunity | 180.6 | 11.3 | 16 | 1024×1024 |
 
 4 adımlı distile 4B model 1024×1024 görsel başına ~22.5 s koşar (ilki daha
 yavaş, ~28 s, çünkü model yüklenir); FLUX 3 ise 16 adımda ve 5.6B transformer ile

@@ -147,7 +147,7 @@ mflux-generate-flux2 \
 ```
 
 ```bash
-# flux3-klein-q8 — the 180.4 s/image profile. Distilled: 16 steps, no guidance.
+# flux3-klein-q8 — the 180.6 s/image profile. Distilled: 16 steps, no guidance.
 mflux-generate-flux3 \
   --model mflux-community/flux-3-image-klein-base-mflux-q8 \
   --base-model flux3-klein-base \

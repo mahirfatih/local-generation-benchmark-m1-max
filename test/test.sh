@@ -140,6 +140,15 @@ for name, d in rows.items():
 # 2. The s/img and s/clip figures the documents quote must be derivable from the
 #    raw data, and under the same definition the documents state: s/img is the
 #    mean with the first (model-load) image dropped, s/clip the mean of all.
+#
+#    The tolerance is 0.05 s, not 0.5: the documents round to one decimal, so
+#    0.05 is the widest a correct rounding can be off. A looser bound hid a real
+#    error — flux3 was published as 180.4 while the data gives 180.55 — because
+#    the drift fit inside it. A figure that does not round to the stated one is
+#    a wrong figure, not a rounding difference.
+TOLERANCE = 0.05
+
+
 def image_mean(name):
     ts = [i["seconds"] for i in rows[name]["rows"][0]["images"]]
     return statistics.mean(ts[1:])
@@ -150,13 +159,13 @@ def clip_mean(name):
 
 checks = [
     ("image-benchmark.json", image_mean, 22.5),
-    ("image-benchmark-flux3.json", image_mean, 180.4),
+    ("image-benchmark-flux3.json", image_mean, 180.6),
     ("video-benchmark.json", clip_mean, 266.1),
 ]
 for name, fn, claimed in checks:
     got = fn(name)
-    if abs(got - claimed) > 0.5:
-        bad.append(f"{name}: documents say {claimed} s, data gives {got:.2f} s")
+    if abs(got - claimed) > TOLERANCE:
+        bad.append(f"{name}: documents say {claimed} s, data gives {got:.3f} s")
 
 if bad:
     print("\n".join(bad))

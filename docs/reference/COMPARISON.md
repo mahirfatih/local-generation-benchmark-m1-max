@@ -23,7 +23,7 @@ measured on the same M1 Max.
 | Task | Model | Tool | Licence | Time | Output |
 | :--- | :--- | :--- | :--- | ---: | :--- |
 | **Image** | `flux2-klein-4b` | mflux | Apache-2.0 | **22.5 s** | 1024×1024, 4 steps |
-| Image | `flux-3-image-klein-base` | mflux | FLUX Kommunity | 180.4 s | 1024×1024, 16 steps |
+| Image | `flux-3-image-klein-base` | mflux | FLUX Kommunity | 180.6 s | 1024×1024, 16 steps |
 | **Video** | `CogVideoX-Fun-V1.5-5b-InP` | VideoX-Fun-mlx | **CogVideoX License** | **266.1 s** | 672×384, 5 frames, GIF |
 
 Read down each column, not across the rows: seconds per image and seconds per
@@ -42,7 +42,7 @@ written PNG checked.
 | Model | Licence | s/img | s/step | Steps | Size |
 | :--- | :--- | ---: | ---: | ---: | :--- |
 | `flux2-klein-4b-mflux-q8` | Apache-2.0 | **22.5** | 5.6 | 4 | 1024×1024 |
-| `flux-3-image-klein-base-mflux-q8` | FLUX Kommunity | 180.4 | 11.3 | 16 | 1024×1024 |
+| `flux-3-image-klein-base-mflux-q8` | FLUX Kommunity | 180.6 | 11.3 | 16 | 1024×1024 |
 
 Both were run on eight prompts covering the surfaces that separate image
 models: photorealism, hands, legible text, composition, style. **klein-q8 wins
@@ -53,7 +53,7 @@ correct hands came out clean on both.
 The same prompt — a poster whose whole point is whether the two words render as
 words — on both models. The cheap one did not need the expensive one's help here:
 
-| `flux2-klein-4b` (22.5 s) | `flux-3-klein-base` (180.4 s) |
+| `flux2-klein-4b` (22.5 s) | `flux-3-klein-base` (180.6 s) |
 | :---: | :---: |
 | ![LOCAL FIRST poster, klein-q8](../../evidence/images/klein-q8--text-poster.png) | ![LOCAL FIRST poster, flux-3-klein q8](../../evidence/images/flux3-klein-q8--text-poster.png) |
 

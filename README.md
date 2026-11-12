@@ -21,7 +21,7 @@ here are the two layers oMLX cannot serve:
 | Layer | Tool | Model | Time | Output |
 | :--- | :--- | :--- | ---: | :--- |
 | **Image** | [mflux](https://github.com/filipstrand/mflux) | FLUX.2 klein 4B (q8) | **22.5 s** | 1024×1024 PNG |
-| Image | mflux | FLUX 3 Image Klein | 180.4 s | 1024×1024 PNG |
+| Image | mflux | FLUX 3 Image Klein | 180.6 s | 1024×1024 PNG |
 | **Video** | [VideoX-Fun-mlx](https://github.com/dgrauet/VideoX-Fun-mlx) | CogVideoX-Fun V1.5 5B (int8) | **266.1 s** | 672×384, 5-frame GIF |
 
 Every number is wall clock on this one machine, **model load included**, and every
@@ -98,7 +98,7 @@ written PNG verified.
 | Model (profile) | Licence | s/img | s/step | Steps | Size |
 | :--- | :--- | ---: | ---: | ---: | :--- |
 | `flux2-klein-4b-mflux-q8` (`klein-q8`) | Apache-2.0 | **22.5** | 5.6 | 4 | 1024×1024 |
-| `flux-3-image-klein-base-mflux-q8` (`flux3-klein-q8`) | FLUX Kommunity | 180.4 | 11.3 | 16 | 1024×1024 |
+| `flux-3-image-klein-base-mflux-q8` (`flux3-klein-q8`) | FLUX Kommunity | 180.6 | 11.3 | 16 | 1024×1024 |
 
 A 4-step distilled 4B model runs ~22.5 s per 1024×1024 image (the first is slower,
 ~28 s, because the model loads); FLUX 3 at 16 steps and a 5.6B transformer takes
