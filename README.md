@@ -3,6 +3,16 @@
 **Local image and video generation on an Apple M1 Max — measured, and the output
 committed so you can look at it.**
 
+[![Platform](https://img.shields.io/badge/platform-Apple%20Silicon%20(arm64)-000?logo=apple&logoColor=white)](#hardware--software)
+[![mflux](https://img.shields.io/badge/image-mflux-blue)](https://github.com/filipstrand/mflux)
+[![VideoX-Fun-mlx](https://img.shields.io/badge/video-VideoX--Fun--mlx-blue)](https://github.com/dgrauet/VideoX-Fun-mlx)
+[![Outputs](https://img.shields.io/badge/outputs-16%20PNG%20%2B%204%20GIF-purple)](evidence/)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
+[English](README.md) · [Türkçe](README.tr.md)
+
+---
+
 This is the generation half of a local-MLX benchmark. Text runs on
 [oMLX](https://omlx.ai) and lives in the companion repository
 [mahirfatih/omlx-m1-max-benchmark](https://github.com/mahirfatih/omlx-m1-max-benchmark);
@@ -34,6 +44,7 @@ and the method that produced it.
 - [Profiles](#profiles)
 - [Reproducing](#reproducing)
 - [Repository structure](#repository-structure)
+- [Contributing](#contributing)
 - [Notes & disclaimer](#notes--disclaimer)
 - [License](#license)
 
@@ -169,7 +180,8 @@ The offline gate needs no model and no network:
 
 ```text
 local-generation-benchmark-m1-max/
-├── README.md
+├── README.md · README.tr.md
+├── CHANGELOG.md · CONTRIBUTING.md · CODE_OF_CONDUCT.md · SECURITY.md
 ├── data/                       # the prompt sets, one JSON per layer
 │   ├── image-prompts.json
 │   └── video-prompts.json
@@ -182,12 +194,23 @@ local-generation-benchmark-m1-max/
 │   ├── images/                 # 16 PNGs
 │   └── videos/                 # 4 GIFs
 ├── reference/                  # machine-readable copies of every number
-├── docs/reference/             # comparison · profiles · licences
+├── docs/
+│   ├── README.md
+│   └── reference/              # comparison · profiles · licences
 ├── scripts/
 │   ├── measure/                # image-benchmark.py, video-benchmark.py
-│   └── release/                # export-video-evidence.py
-└── test/test.sh                # offline gate
+│   ├── release/                # export-video-evidence.py
+│   └── lint.sh                 # every linter, at pinned versions
+├── test/test.sh                # offline gate
+└── .github/workflows/ci.yml    # the gate and the lint run, on demand
 ```
+
+## Contributing
+
+Corrections and additional data points are welcome — see
+[`CONTRIBUTING.md`](CONTRIBUTING.md). A timing must arrive with the output it
+timed. Run `./test/test.sh` before you push; [`scripts/lint.sh`](scripts/lint.sh)
+runs every linter at once.
 
 ## Notes & disclaimer
 
