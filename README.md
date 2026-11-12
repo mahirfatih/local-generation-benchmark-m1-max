@@ -202,14 +202,14 @@ end, and every clip verified with `ffprobe` — the file, not the runner's log l
 | :--- | :--- | ---: | :--- | ---: | :---: |
 | `dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8` (`cogvideox-fun-1.5-5b-inp-q8`) | **The CogVideoX License** | **266.1** | 672×384, 1.6 s, GIF | 5 | ✅ 4/4 |
 | `dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4` (`cogvideox-fun-1.5-5b-inp-q4`) | **The CogVideoX License** | **256.3** | 672×384, 1.6 s, GIF | 5 | ✅ 4/4 |
-| `AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit` (`wan22-ti2v-5b-q8`) | Apache-2.0 | **330.5** (1 clip) | 480×832, 1.6 s, MP4 | 25 | ✅ 1/1 (in progress) |
+| `AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit` (`wan22-ti2v-5b-q8`) | Apache-2.0 | **285.9** | 480×832, 1.6 s, MP4 | 25 | ✅ 4/4 |
 
 ```mermaid
 xychart-beta
     title "Seconds per clip (lower is better, model load included)"
-    x-axis ["cogvideox q4", "cogvideox q8", "wan2.2 (1 clip)"]
+    x-axis ["cogvideox q4", "cogvideox q8", "wan2.2"]
     y-axis "seconds" 0 --> 350
-    bar [256.3, 266.1, 330.5]
+    bar [256.3, 266.1, 285.9]
 ```
 
 **266.1 s** for a 5-frame 672×384 clip — the mean of four prompts spanning

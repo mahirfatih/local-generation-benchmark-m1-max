@@ -157,6 +157,7 @@ doğrulanır — runner'ın log satırıyla değil, dosyayla.
 | :--- | :--- | ---: | :--- | ---: | :---: |
 | `dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8` (`cogvideox-fun-1.5-5b-inp-q8`) | **The CogVideoX License** | **266.1** | 672×384, 1.6 s, GIF | 5 | ✅ 4/4 |
 | `dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4` (`cogvideox-fun-1.5-5b-inp-q4`) | **The CogVideoX License** | **256.3** | 672×384, 1.6 s, GIF | 5 | ✅ 4/4 |
+| `AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit` (`wan22-ti2v-5b-q8`) | Apache-2.0 | **285.9** | 480×832, 1.6 s, MP4 | 25 | ✅ 4/4 |
 
 5 karelik 672×384 bir klip için **266.1 s** — dört promptun ortalaması,
 265.2–267.2 s aralığında — yani 1.6 s oynayan bir klip yaklaşık 4.4 dakika GPU

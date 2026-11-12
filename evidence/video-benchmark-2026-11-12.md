@@ -83,3 +83,44 @@ Same prompts as above, one quantisation step down.
 > A wide fixed shot of a stormy coastline, large waves breaking against black rocks, sea spray thrown into the air, low grey clouds moving quickly inland, grass on the clifftop bending in the wind, no people.
 
 ![scene-storm-coast, cogvideox-fun-1.5-5b-inp-q4](videos/cogvideox-fun-1.5-5b-inp-q4--scene-storm-coast.gif)
+
+---
+
+## Wan2.2 TI2V 5B (int8) — Apache-2.0, local MLX
+
+Run through `mlxgen generate --family wan` against the local folder `~/models/AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit` (17 GB, oMLX-style quantisation). Settings: 480×832, 25 frames at 16 fps, 20 steps, guidance 5, seed 42, `--low-ram`. Licence Apache-2.0, inherited from the base model.
+
+| Model (profile) | Licence | Prompt | s/clip | Output | Frames | fps | Codec | OK |
+|---|---|---|---:|---|---:|---:|---|:---:|
+| `AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit` (wan22-ti2v-5b-q8) | Apache-2.0 | `motion-horse-gallop` | 237.00 | 480×832, 1.6s, 0.3 MB | 25 | 16.0 | mp4 | ✅ |
+| `AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit` (wan22-ti2v-5b-q8) | Apache-2.0 | `camera-orbit-tower` | 299.44 | 480×832, 1.6s, 0.2 MB | 25 | 16.0 | mp4 | ✅ |
+| `AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit` (wan22-ti2v-5b-q8) | Apache-2.0 | `physics-tea-pour` | 305.30 | 480×832, 1.6s, 0.2 MB | 25 | 16.0 | mp4 | ✅ |
+| `AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit` (wan22-ti2v-5b-q8) | Apache-2.0 | `scene-storm-coast` | 301.93 | 480×832, 1.6s, 0.4 MB | 25 | 16.0 | mp4 | ✅ |
+
+_Wan mean: 285.9 s/clip (237.0–305.3 s range), 25 frames at 16 fps._
+
+## The clips themselves (Wan2.2)
+
+### `motion-horse-gallop` — motion
+
+> A single brown horse galloping left to right across a flat green field, legs moving in a correct gait, dust kicked up behind the hooves, camera tracking alongside at a constant distance, overcast afternoon light.
+
+![motion-horse-gallop, wan22-ti2v-5b-q8](videos/wan22-ti2v-5b-q8--motion-horse-gallop.mp4)
+
+### `camera-orbit-tower` — camera
+
+> A slow smooth camera orbit around a small stone lighthouse on a rocky headland, the sea behind it, the light in the tower rotating once, late golden hour, the horizon staying level throughout.
+
+![camera-orbit-tower, wan22-ti2v-5b-q8](videos/wan22-ti2v-5b-q8--camera-orbit-tower.mp4)
+
+### `physics-tea-pour` — physics
+
+> Close-up of dark tea being poured from a ceramic pot into a small glass cup, a steady stream that narrows as the cup fills, gentle steam rising, the surface rippling, a warm kitchen background slightly out of focus.
+
+![physics-tea-pour, wan22-ti2v-5b-q8](videos/wan22-ti2v-5b-q8--physics-tea-pour.mp4)
+
+### `scene-storm-coast` — scene
+
+> A wide fixed shot of a stormy coastline, large waves breaking against black rocks, sea spray thrown into the air, low grey clouds moving quickly inland, grass on the clifftop bending in the wind, no people.
+
+![scene-storm-coast, wan22-ti2v-5b-q8](videos/wan22-ti2v-5b-q8--scene-storm-coast.mp4)

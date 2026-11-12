@@ -71,7 +71,7 @@ with `ffprobe`. Seconds per clip, model load included.
 | :--- | :--- | :--- | ---: | :--- | :--- |
 | `CogVideoX-Fun-V1.5-5b-InP` (int8) | **The CogVideoX License** | VideoX-Fun-mlx | **266.1** | 672×384, 5 frames, GIF | ✅ 4/4 |
 | `CogVideoX-Fun-V1.5-5b-InP` (int4) | **The CogVideoX License** | VideoX-Fun-mlx | **256.3** | 672×384, 5 frames, GIF | ✅ 4/4 |
-| `Wan2.2-TI2V-5B` | Apache-2.0 | mlx-gen | pending | — | — |
+| `Wan2.2-TI2V-5B` (int8) | Apache-2.0 | mlx-gen | **285.9** | 480×832, 25 frames, MP4 | ✅ 4/4 |
 
 CogVideoX-Fun renders a 5-frame 672×384 clip in **266.1 s on average** (four
 prompts, 265.2–267.2 s), which is ~4.4 minutes of waiting for a clip that plays

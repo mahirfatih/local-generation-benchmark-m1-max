@@ -40,6 +40,9 @@ sys.exit(1 if bad else 0)
 PY
 echo "scripts parse"
 
+step "1b. Naming — source and data files are kebab-case"
+python3 scripts/checks/check-naming.py
+
 step "2. Image prompts — every one is complete and the ids are unique"
 python3 - <<'PY'
 import json, pathlib
@@ -221,6 +224,7 @@ if command -v mmdc >/dev/null 2>&1 && [ -n "$CHROME" ]; then
     trap 'rm -rf "$tmpdir"' EXIT
     i=0
     fail=0
+    # shellcheck disable=SC2013
     for f in $(grep -rl '```mermaid' --include='*.md' . | grep -v .git); do
         python3 - "$f" "$tmpdir" <<'PY'
 import re, pathlib, sys

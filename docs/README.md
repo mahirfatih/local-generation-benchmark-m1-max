@@ -27,3 +27,9 @@ There is no `docs/reference/MODELS.md` and no results page here: the model
 inventory and the text results belong to the
 [companion repository](https://github.com/mahirfatih/omlx-m1-max-benchmark). This
 repository documents two generation layers and nothing else.
+
+## Guides
+
+| Document | The question it answers |
+| :--- | :--- |
+| [`guides/NAMING.md`](guides/NAMING.md) | File-name and identifier conventions. |
