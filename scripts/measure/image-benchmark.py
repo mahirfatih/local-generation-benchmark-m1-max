@@ -198,12 +198,15 @@ def selftest():
         if p.get("category") not in prompts["categories"]:
             ok = False
             print("FAIL: unknown category:", p.get("category"))
-    # arg builder: the M1-family float16 flag and the fixed seed must be present
+    # arg builder: the fixed seed and steps must be present for every profile;
+    # the M1-family float16 flag is only added when the profile opts into it,
+    # because not every mflux tool accepts --compute-precision.
     for name, prof in gens.items():
         argv = build_argv(prof, "a test", Path("/tmp/x.png"))
-        if "--compute-precision" not in argv or "float16" not in argv:
-            ok = False
-            print(f"FAIL: {name} missing float16 flag:", argv)
+        if prof.get("settings", {}).get("compute_precision"):
+            if "--compute-precision" not in argv or "float16" not in argv:
+                ok = False
+                print(f"FAIL: {name} missing float16 flag:", argv)
         if "--seed" not in argv or "--steps" not in argv:
             ok = False
             print(f"FAIL: {name} missing seed/steps:", argv)

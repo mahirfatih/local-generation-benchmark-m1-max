@@ -19,7 +19,11 @@
       "quantization": {
         "scheme": "mlx-affine",
         "bits": 8,
-        "applies_to": ["text_encoder", "transformer", "vae"],
+        "applies_to": [
+          "text_encoder",
+          "transformer",
+          "vae"
+        ],
         "note": "The level is stored in the weights, so no --quantize flag is needed."
       },
       "settings": {
@@ -52,7 +56,11 @@
       "quantization": {
         "scheme": "mlx-affine",
         "bits": 8,
-        "applies_to": ["text_encoder", "transformer", "vae"],
+        "applies_to": [
+          "text_encoder",
+          "transformer",
+          "vae"
+        ],
         "note": "Community Q8 conversion by MFlux-Community (not an official BFL release); the level is in the weights, so no --quantize flag is needed."
       },
       "settings": {

@@ -165,11 +165,16 @@ end, and every clip verified with `ffprobe` — the file, not the runner's log l
 | Model (profile) | Licence | s/clip | Output | Frames | OK |
 | :--- | :--- | ---: | :--- | ---: | :---: |
 | `dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8` (`cogvideox-fun-1.5-5b-inp-q8`) | **The CogVideoX License** | **266.1** | 672×384, 1.6 s, GIF | 5 | ✅ 4/4 |
+| `dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4` (`cogvideox-fun-1.5-5b-inp-q4`) | **The CogVideoX License** | **256.3** | 672×384, 1.6 s, GIF | 5 | ✅ 4/4 |
 
 **266.1 s** for a 5-frame 672×384 clip — the mean of four prompts spanning
 265.2–267.2 s — so a clip that plays for 1.6 s costs about 4.4 minutes of GPU. Five frames is the model's ceiling,
 not a setting: `--frames` is not linear (4 → 1 frame, 8 → the same 5 as 5, an odd
 count raises a reshape error), so asking for more does not get you more.
+
+A q4 quantisation of the same model runs at 256.3 s/clip (about 4% faster) at
+identical output; both rows are in
+[`evidence/video-benchmark-2026-11-12.md`](evidence/video-benchmark-2026-11-12.md).
 
 The four clips, each with the prompt that produced it, are in
 [`evidence/video-benchmark-2026-11-12.md`](evidence/video-benchmark-2026-11-12.md).

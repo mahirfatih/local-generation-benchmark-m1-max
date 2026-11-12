@@ -87,11 +87,13 @@ profile (1280×704, 17 frames, 20 steps on 128 GB, which peaked near 104 GiB). T
 licence is Apache-2.0, inherited from the base model.
 
 The model id is `Wan-AI/Wan2.2-TI2V-5B-Diffusers` and this is not cosmetic:
-mlx-gen resolves a model **against its own Hugging Face cache** and does not read
-an oMLX-style quantised folder (for example
-`~/models/AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit`). Pointing it there
-fails; the download that makes the profile runnable is
-`mlxgen download --model Wan-AI/Wan2.2-TI2V-5B-Diffusers`.
+mlx-gen resolves a model from an alias, a Hugging Face repo id, **or a local
+directory**. The local-directory form needs the family hint:
+`mlxgen capabilities --model ~/models/AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit --family wan`
+reports `wan.text-video`, so routing works. What that does not prove is that the
+8-bit quantisation in that folder loads — oMLX's scheme and mlx-gen's expectations
+may differ, and only a real run settles it. The Hugging Face cache copy
+(`models--Wan-AI--Wan2.2-TI2V-5B-Diffusers`) is incomplete and should be ignored.
 
 **`cogvideox-fun-1.5-5b-inp-q8`** — CogVideoX-Fun V1.5 5B is a diffusers-style DiT
 ported to MLX; `quick_infer.py` writes an animated GIF and has its own defaults (used
@@ -99,6 +101,12 @@ here: 672×384, 5 frames, 50 steps, guidance 6.0). Its licence is **not** the
 `apache-2.0` tag on the quant: the base model is under **The CogVideoX License**
 (academic free, commercial registration-gated) — see [`LICENSES.md`](LICENSES.md).
 The runner *code* (VideoX-Fun-mlx) is Apache-2.0; the *weights* are not.
+
+A q4 quantisation of the same port (`cogvideox-fun-1.5-5b-inp-q4`, 13 GB) runs
+at 256.3 s/clip against q8's 266.1 s (about 4% faster) at identical output
+(672×384, 5 frames, 3.125 fps) — the only difference is the weight file. The
+q4 download is missing `spiece.model`; it is byte-identical to q8's tokenizer, so
+copying that file (773 KB) completes it.
 
 A real run of either profile needs its runner installed and its model downloaded;
 `scripts/measure/video-benchmark.py` refuses to start while any other GPU job is

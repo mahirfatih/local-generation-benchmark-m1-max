@@ -224,7 +224,7 @@ def run_one(profile, item, out_dir, model=None, seed=None, steps=None, repo=None
 def selftest():
     ok = True
     _, gens = load_profiles()
-    if set(gens) != {"wan22-ti2v-5b-q8", "cogvideox-fun-1.5-5b-inp-q8"}:
+    if set(gens) != {"wan22-ti2v-5b-q8", "cogvideox-fun-1.5-5b-inp-q8", "cogvideox-fun-1.5-5b-inp-q4"}:
         ok = False
         print("FAIL: unexpected profiles:", sorted(gens))
     prompts = load_prompts()
