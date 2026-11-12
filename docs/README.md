@@ -28,6 +28,12 @@ inventory and the text results belong to the
 [companion repository](https://github.com/mahirfatih/omlx-m1-max-benchmark). This
 repository documents two generation layers and nothing else.
 
+## Diagrams
+
+| Document | What it is |
+| :--- | :--- |
+| [`diagrams/model-map/model-map.html`](diagrams/model-map/model-map.html) | The model map: which generation model for which job, with dark and light PNGs. |
+
 ## Guides
 
 | Document | The question it answers |

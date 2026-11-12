@@ -122,6 +122,14 @@ yaşıyorsa harness başlamayı reddeder — ikisi 64 GB birleşik belleğe sı�
 
 **Diskte toplam:** ~62 GB · **Çalışma belleği:** 64 GB birleşik bellekte model başına ~30 GB'a kadar. Her model diskteki ağırlıklardan çalışır — API yok, hesap yok.
 
+## Model haritası
+
+![Model haritası (koyu)](docs/diagrams/model-map/model-map-dark.png)
+
+[`docs/diagrams/model-map/model-map.html`](docs/diagrams/model-map/model-map.html) — interaktif sürüm (tema değiştirilebilir). [`model-map-light.png`](docs/diagrams/model-map/model-map-light.png) açık tema için.
+
+Hangi üretim modelinin hangi iş için, ve gerçekten ne kadara mal olduğunu, tek sayfada.
+
 ## Ne ölçüldü
 
 | Paket | Kaynak | Neyi ölçer |

@@ -152,6 +152,14 @@ flowchart TB
 
 **Total on disk:** ~62 GB · **Runtime memory:** up to ~30 GB per loaded model on 64 GB unified memory. Every model runs from weights on disk — no API, no account.
 
+## Model map
+
+![Model map (dark)](docs/diagrams/model-map/model-map-dark.png)
+
+[`docs/diagrams/model-map/model-map.html`](docs/diagrams/model-map/model-map.html) — the interactive version (theme toggle). [`model-map-light.png`](docs/diagrams/model-map/model-map-light.png) for the light theme.
+
+Which generation model for which job, at the seconds it actually cost, in one picture.
+
 ## What was measured
 
 | Suite | Origin | What it measures |

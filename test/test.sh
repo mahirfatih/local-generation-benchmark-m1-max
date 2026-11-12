@@ -252,3 +252,29 @@ PY
 else
     echo "mmdc or a browser not found; structure check only"
 fi
+
+step "11. Model map — files, PNGs, and HF links agree"
+python3 - <<'PY'
+import json, pathlib, re, struct
+root = pathlib.Path(".")
+base = root / "docs" / "diagrams" / "model-map"
+for name in ["model-map.html", "model-map-dark.png", "model-map-light.png", "README.md"]:
+    assert (base / name).exists(), f"missing {name}"
+html = (base / "model-map.html").read_text()
+for png_name in ["model-map-dark.png", "model-map-light.png"]:
+    data = (base / png_name).read_bytes()
+    w, h = struct.unpack(">II", data[16:24])
+    assert w == 2000, f"{png_name}: width {w} != 2000"
+    assert 1000 < h < 8000, f"{png_name}: height {h} out of range"
+# every HF URL published in the profiles must appear in the poster
+urls = set()
+readme = (root / "README.md").read_text()
+for line in readme.splitlines():
+    if "[HF](" in line:
+        urls.update(re.findall(r"https://huggingface\.co/[A-Za-z0-9._/-]+", line))
+assert urls, "no HF URLs found in profiles"
+missing = [u for u in urls if u not in html]
+assert not missing, f"HF URLs missing from poster: {missing}"
+assert "<script src" not in html and "<link rel=\"stylesheet\"" not in html, "external resource found"
+print(f"model map OK · {len(urls)} HF links agree · PNG 2000 px")
+PY

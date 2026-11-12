@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yerel Üretim Haritam · 5 model, mflux + VideoX-Fun-mlx, M1 Max — mockup</title>
+<style>
+  :root{
+    --bg:#08080a; --panel:#0d0d0f; --ink:#f3f1ea; --muted:#8b8b8f;
+    --rule:#26262b; --track:#232327; --accent:#e8a33d; --accent-dim:#b9822c;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+  }
+  html[data-theme="light"]{
+    --bg:#f2f0eb; --panel:#faf9f6; --ink:#141414; --muted:#6b6b6b;
+    --rule:#dcdad3; --track:#e4e2db; --accent:#c9770f; --accent-dim:#a8630c;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--ink); font-family:var(--sans);
+    -webkit-font-smoothing:antialiased; padding:40px 20px 64px;
+  }
+  .poster{max-width:880px;margin:0 auto;background:var(--panel);border:1px solid var(--rule);
+    padding:clamp(28px,4vw,56px);border-radius:2px}
+
+  /* header */
+  .top{display:flex;justify-content:space-between;align-items:center;gap:16px;
+    font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--muted);
+    text-transform:uppercase;flex-wrap:wrap}
+  .top .right{color:var(--muted)}
+
+  h1{font-size:clamp(38px,8vw,74px);line-height:.98;letter-spacing:-.02em;font-weight:800;
+    margin:34px 0 6px}
+  .sub{font-size:clamp(20px,4vw,30px);font-weight:800;color:var(--accent);letter-spacing:-.01em;
+    margin:0 0 8px}
+  .lede{margin:14px 0 0;color:var(--muted);font-size:14px;line-height:1.5;max-width:52ch}
+
+  .source{display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+    margin-top:36px;padding-bottom:10px;border-bottom:1px solid var(--rule);
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+  .source .hint{letter-spacing:.12em;color:var(--accent-dim)}
+
+  /* rows */
+  .rows{margin:0}
+  .row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:24px;
+    padding:18px 0;border-bottom:1px solid var(--rule);align-items:center;transition:background .15s}
+  .row:hover{background:color-mix(in srgb,var(--accent) 6%,transparent)}
+  .task .k{font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--accent);font-weight:700}
+  .task .d{color:var(--muted);font-size:13.5px;margin-top:5px;line-height:1.35}
+  .pick{display:flex;flex-direction:column;gap:9px}
+  .pick .m{font-weight:700;font-size:15.5px;letter-spacing:-.01em}
+  .pick .m .tiny{font-family:var(--mono);font-weight:400;color:var(--muted);font-size:11.5px;
+    letter-spacing:.04em}
+  .bar{display:flex;align-items:center;gap:12px}
+  .flag{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--accent);border:1px solid var(--accent-dim);border-radius:20px;
+    padding:2px 8px;margin-left:8px;vertical-align:2px;white-space:nowrap}
+  .flag.off{color:var(--muted);border-color:var(--rule)}
+  .track{position:relative;flex:1;height:9px;background:var(--track);border-radius:20px;overflow:hidden}
+  .fill{position:absolute;inset:0 auto 0 0;height:100%;border-radius:20px;
+    background:linear-gradient(90deg,var(--accent-dim),var(--accent))}
+  .val{font-family:var(--mono);font-size:12px;color:var(--ink);min-width:66px;text-align:right;letter-spacing:.02em}
+
+  /* bottom cards */
+  .cards{margin-top:40px}
+  .cards .cap{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--muted);margin-bottom:16px}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .card{background:color-mix(in srgb,var(--ink) 5%,transparent);border:1px solid var(--rule);
+    border-radius:3px;padding:20px 18px;min-height:112px;display:flex;flex-direction:column;justify-content:space-between}
+  .card .big{font-size:clamp(30px,5vw,44px);font-weight:800;color:var(--accent);letter-spacing:-.02em;line-height:1}
+  .card .lbl{color:var(--muted);font-size:12.5px;line-height:1.35;margin-top:12px}
+
+  footer{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:46px;
+    font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.06em;flex-wrap:wrap}
+  footer .name{color:var(--ink);font-weight:700;letter-spacing:.02em}
+
+  .badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;
+    letter-spacing:.16em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent-dim);
+    border-radius:20px;padding:4px 10px;margin-top:22px}
+
+  /* runtime strip — the stack every number below was measured on */
+  .runtime{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:18px;
+    padding:14px 16px;border:1px solid var(--rule);border-radius:3px;
+    background:color-mix(in srgb,var(--accent) 4%,transparent)}
+  .runtime .rlabel{font-family:var(--mono);font-size:10px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--muted);margin-right:4px}
+  .chip{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;
+    letter-spacing:.05em;color:var(--ink);background:var(--track);border:1px solid var(--rule);
+    border-radius:20px;padding:5px 11px}
+  .chip b{color:var(--accent);font-weight:700}
+  .chip .dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+  .toggle{background:none;border:1px solid var(--rule);color:var(--muted);font-family:var(--mono);
+    font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:6px 10px;border-radius:20px;cursor:pointer}
+  .toggle:hover{color:var(--accent);border-color:var(--accent-dim)}
+
+  /* the other two layers — image and video. Not oMLX, so deliberately separate
+     from the token/s table above: different server, different unit. */
+  .layers{margin-top:40px;border:1px solid var(--rule);border-radius:3px;padding:22px 22px 20px;
+    background:color-mix(in srgb,var(--muted) 7%,transparent)}
+  .layers .cap{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+  .layers .where{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;
+    color:var(--muted);margin-bottom:18px}
+  .layers .where b{color:var(--ink);font-weight:700}
+  .layers .lr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:24px;
+    padding:14px 0;border-bottom:1px solid var(--rule);align-items:center}
+  .layers .lr:last-child{border-bottom:none;padding-bottom:0}
+  .layers .lk{font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--accent);font-weight:700}
+  .layers .ld{color:var(--muted);font-size:13px;margin-top:5px;line-height:1.35}
+  .layers .ld b{color:var(--ink)}
+  .layers .lm{font-weight:700;font-size:15px;letter-spacing:-.01em}
+  .layers .lm .tiny{font-family:var(--mono);font-weight:400;color:var(--muted);font-size:11.5px;
+    letter-spacing:.04em}
+  .layers .lbar{display:flex;align-items:center;gap:12px;margin-top:8px}
+  .layers .track{position:relative;flex:1;height:9px;background:var(--track);border-radius:20px;overflow:hidden}
+  .layers .fill{position:absolute;inset:0 auto 0 0;height:100%;border-radius:20px;
+    background:linear-gradient(90deg,var(--muted),var(--ink));opacity:.55}
+  .layers .val{font-family:var(--mono);font-size:12px;color:var(--ink);min-width:74px;text-align:right}
+  .warn{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--accent);border:1px solid var(--accent-dim);border-radius:20px;
+    padding:2px 8px;margin-left:8px;vertical-align:2px;white-space:nowrap}
+  .layers .note{margin:16px 0 0;color:var(--muted);font-size:12px;line-height:1.45;
+    padding-top:14px;border-top:1px solid var(--rule)}
+  .layers .note b{color:var(--accent)}
+  @media (max-width:600px){
+    .layers .lr{grid-template-columns:1fr;gap:10px}
+  }
+
+  /* in practice — what actually gets loaded, day to day */
+  .practice{margin-top:40px;border:1px solid var(--rule);border-radius:3px;
+    background:color-mix(in srgb,var(--accent) 4%,transparent);padding:22px 22px 20px}
+  .practice .cap{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+  .practice .where{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;
+    color:var(--muted);margin-bottom:18px}
+  .practice .g{display:grid;grid-template-columns:1.35fr 1fr;gap:26px}
+  .practice h3{font-size:13px;font-weight:700;letter-spacing:.02em;margin:0 0 10px;color:var(--ink)}
+  .practice h3 span{font-family:var(--mono);font-size:10px;font-weight:400;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--muted);display:block;margin-top:3px}
+  .practice ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+  .practice li{font-size:13px;line-height:1.4;padding-left:20px;position:relative;color:var(--ink)}
+  .practice li::before{content:"";position:absolute;left:0;top:6px;width:8px;height:8px;
+    border-radius:50%;background:var(--accent)}
+  .practice li .nm{font-weight:700}
+  .practice li .why{color:var(--muted)}
+  .practice .off li::before{background:transparent;border:1px solid var(--accent-dim)}
+
+  @media (max-width:600px){
+    .row{grid-template-columns:1fr;gap:12px}
+    .practice .g{grid-template-columns:1fr;gap:20px}
+    .grid{grid-template-columns:1fr}
+    .val{min-width:54px}
+  }
+
+  .bands{margin-top:26px}
+  .band{display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+    margin-top:30px;padding-bottom:10px;border-bottom:1px solid var(--rule);
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+  .band .hint{letter-spacing:.12em;color:var(--accent-dim)}
+  .callout{margin-top:34px;border:1px solid var(--accent-dim);border-radius:3px;
+    background:color-mix(in srgb,var(--accent) 6%,transparent);padding:20px 22px}
+  .callout .cap{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+  .callout p{margin:0;font-size:14px;line-height:1.5;color:var(--ink)}
+  .callout p b{color:var(--accent)}
+  .callout p span.mut{color:var(--muted)}
+  .hf{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;
+    color:var(--accent);border:1px solid var(--accent-dim);border-radius:20px;
+    padding:2px 8px;margin-left:8px;text-decoration:none;vertical-align:2px;
+    white-space:nowrap}
+  .hf:hover{background:color-mix(in srgb,var(--accent) 12%,transparent)}
+</style>
+</head>
+<body>
+<main class="poster">
+  <div class="top">
+    <span>Yerel Üretim Haritam</span>
+    <span class="right">M1 Max · 64 GB · mflux · VideoX-Fun-mlx · Bulut yok</span>
+  </div>
+
+  <h1>Yerelde hangi üretim modeli?</h1>
+  <p class="sub">5 model — 2 görsel, 3 video — ölçüldü.</p>
+  <p class="lede">Görsel <strong>mflux</strong>, video <strong>VideoX-Fun-mlx</strong> ve <strong>mlx-gen</strong>
+    üzerinde, <strong>Apple MLX</strong> ile, bu makinede. Barlar saniyeyi gösterir, <em>düşük daha iyi</em>.
+    Bu sayfada yalnızca üretim var; metin modelleri başka bir araçla çalıştığı için burada değil.</p>
+  <span class="badge">v1 · mockup · rakamların hepsi bu makinede ölçüldü</span>
+
+  <div class="runtime">
+    <span class="rlabel">Çalışma ortamı</span>
+    <span class="chip"><span class="dot"></span><b>mflux</b> · görsel</span>
+    <span class="chip"><span class="dot"></span><b>VideoX-Fun-mlx</b> · video</span>
+    <span class="chip"><span class="dot"></span><b>mlx-gen</b> · video</span>
+    <span class="chip"><span class="dot"></span>Apple <b>MLX</b> · Metal</span>
+    <span class="chip"><span class="dot"></span><b>MacBookPro18,2</b> · M1 Max</span>
+    <span class="chip"><span class="dot"></span><b>62 GB</b> diskte</span>
+    <span class="chip"><span class="dot"></span>API yok, hesap yok</span>
+  </div>
+
+  <div class="bands">
+    <div class="band">
+      <span>Görsel · mflux</span>
+      <span class="hint">s/görsel — 1024×1024, ilk görsel hariç ortalama</span>
+    </div>
+
+    <div class="rows">
+      <div class="row">
+        <div class="task">
+          <div class="k">Görsel · varsayılan</div>
+          <div class="d">4 adımlı distile 4B model. 1024×1024, okunabilir metin ve doğru eller.
+            <b>8× hızlı</b>; özel olarak FLUX 3 gerekmiyorsa bu.</div>
+        </div>
+        <div class="pick">
+          <div class="m">FLUX.2 klein 4B <span class="tiny">· q8 · 4 adım</span> <a class="hf" href="https://huggingface.co/mflux-community/flux2-klein-4b-mflux-q8">HF</a><span class="flag">kullanılıyor</span></div>
+          <div class="bar"><div class="track"><div class="fill" style="width:12%"></div></div><span class="val">22,5 s/img</span></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="task">
+          <div class="k">Görsel · yüksek kalite</div>
+          <div class="d">16 adım, 5,6B transformer. Aynı prompt seti, aynı 1024×1024 — ama görsel
+            başına <b>~3 dakika</b> GPU.
+            <span class="warn">ticari çıktı US$5M ile sınırlı</span></div>
+        </div>
+        <div class="pick">
+          <div class="m">FLUX 3 Image Klein <span class="tiny">· q8 · 16 adım · FLUX Kommunity</span> <a class="hf" href="https://huggingface.co/mflux-community/flux-3-image-klein-base-mflux-q8">HF</a></div>
+          <div class="bar"><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">180,6 s/img</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="band">
+      <span>Video · VideoX-Fun-mlx / mlx-gen</span>
+      <span class="hint">s/klip — 4 prompt ortalaması, <code>ffprobe</code> ile doğrulandı</span>
+    </div>
+
+    <div class="rows">
+      <div class="row">
+        <div class="task">
+          <div class="k">Video · en hızlı klip</div>
+          <div class="d">Aynı modelin int4 hâli: klip başına <b>~4% hızlı</b>, çıktı ayırt edilemez,
+            diskte 2 GB daha az. 5 kare tavanı burada da geçerli.</div>
+        </div>
+        <div class="pick">
+          <div class="m">CogVideoX-Fun 5B <span class="tiny">· q4 · 5 kare · 672×384</span> <a class="hf" href="https://huggingface.co/dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4">HF</a></div>
+          <div class="bar"><div class="track"><div class="fill" style="width:90%"></div></div><span class="val">256,3 s/clip</span></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="task">
+          <div class="k">Video · referans</div>
+          <div class="d">672×384, <b>5 kare</b> — bu modelin tavanı, bir ayar değil (4 kare → 1 kare,
+            8 kare → aynı 5). 1,6 s'lik klip ≈ 4,4 dakika GPU.
+            <span class="warn">lisans: quant apache-2.0 diyor, taban model değil</span></div>
+        </div>
+        <div class="pick">
+          <div class="m">CogVideoX-Fun 5B <span class="tiny">· q8 · 5 kare · The CogVideoX License</span> <a class="hf" href="https://huggingface.co/dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8">HF</a></div>
+          <div class="bar"><div class="track"><div class="fill" style="width:93%"></div></div><span class="val">266,1 s/clip</span></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="task">
+          <div class="k">Video · ticari kullanım</div>
+          <div class="d">480×832, <b>25 kare</b> — 5× daha fazla. Klip başına yalnızca <b>7% yavaş</b>,
+            kare başına <b>4,5× ucuz</b>. Tek Apache-2.0 video profili.</div>
+        </div>
+        <div class="pick">
+          <div class="m">Wan2.2 TI2V 5B <span class="tiny">· int8 · 25 kare · Apache-2.0</span> <a class="hf" href="https://huggingface.co/AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit">HF</a><span class="flag">ticari</span></div>
+          <div class="bar"><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">285,9 s/clip</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="cap">Asıl bulgu — klipte değil, karede</div>
+    <p>Üç video profili klip başına neredeyse aynı (256,3 · 266,1 · 285,9 s). Ama biri <b>5 kare</b>,
+      diğeri <b>25 kare</b> üretiyor: kare başına <span class="mut">51–53 s</span> ile
+      <b>11,4 s</b> arasındaki fark, klipte görünmeyen <b>4,5×</b>. Aynı GPU dakikasıyla 5× daha
+      uzun video — ve lisansı da ticari kullanıma açık.</p>
+  </div>
+
+  <div class="cards">
+    <div class="cap">Ölçüm ne diyor?</div>
+    <div class="grid">
+      <div class="card">
+        <div class="big">8×</div>
+        <div class="lbl">görselde hız farkı: 22,5 s vs 180,6 s</div>
+      </div>
+      <div class="card">
+        <div class="big">4,5×</div>
+        <div class="lbl">video kare başına maliyet farkı (11,4 s vs 51–53 s)</div>
+      </div>
+      <div class="card">
+        <div class="big">25 vs 5</div>
+        <div class="lbl">kare — Wan2.2 ile CogVideoX'in tavanı</div>
+      </div>
+      <div class="card">
+        <div class="big">28</div>
+        <div class="lbl">çıktı dosyadan doğrulandı — 16 PNG + 12 klip</div>
+      </div>
+      <div class="card">
+        <div class="big">62 GB</div>
+        <div class="lbl">beş modelin diskte kapladığı alan</div>
+      </div>
+      <div class="card">
+        <div class="big">0</div>
+        <div class="lbl">API çağrısı, hesap, anahtar — tamamı yerel</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="layers">
+    <div class="cap">Ölçüm yöntemi · dosyadan doğrulama</div>
+    <div class="where">Süreler model yüklemesi dahil, uçtan uca. Doğrulama <b>yazılan dosyaya</b> karşı —
+      görsellerde PNG başlığı, klipte <code>ffprobe</code>; aracın log satırına karşı değil.</div>
+    <p class="note"><b>s/görsel</b> ilk görsel hariç ortalamadır (ilk görsel model yüklemesini taşır),
+      <b>s/klip</b> dört klibin ortalaması, tolerans 0,05 s. Çıktıların hepsi
+      <b>github.com/mahirfatih/local-generation-benchmark-m1-max</b> içinde, bakarak doğrulanabilir.</p>
+  </div>
+
+  <footer>
+    <div>
+      <span class="name">Mahir F. ÜNAL</span><br>
+      <span style="opacity:.7">5 model ölçüldü · 2 görsel + 3 video, hepsi bu sayfada</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:14px">
+      <button class="toggle" id="themeBtn" type="button">◐ tema</button>
+      <span>github.com/mahirfatih/local-generation-benchmark-m1-max</span>
+    </div>
+  </footer>
+</main>
+
+<script>
+  const btn = document.getElementById('themeBtn');
+  const root = document.documentElement;
+  btn.addEventListener('click', () => {
+    root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+  });
+</script>
+</body>
+</html>
