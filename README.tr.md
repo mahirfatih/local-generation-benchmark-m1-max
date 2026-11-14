@@ -268,10 +268,15 @@ local-generation-benchmark-m1-max/
 │   ├── images/                 # 24 PNG
 │   └── videos/                 # 4 GIF
 ├── reference/                  # her sayının makine-okunur kopyası
-├── docs/reference/             # karşılaştırma · profiller · lisanslar
+├── docs/
+│   ├── README.md
+│   ├── diagrams/               # model-map poster'u: HTML özgün + PNG çıktıları
+│   ├── guides/                 # adlandırma kuralları
+│   └── reference/              # karşılaştırma · profiller · lisanslar · ortam
 ├── scripts/
 │   ├── measure/                # image-benchmark.py, video-benchmark.py
 │   ├── release/                # export-video-evidence.py
+│   ├── render/                 # render-model-map.py — poster HTML → PNG
 │   └── lint.sh
 └── test/test.sh                # çevrimdışı kapı
 ```

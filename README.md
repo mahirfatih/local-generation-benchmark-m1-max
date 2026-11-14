@@ -172,7 +172,10 @@ Which generation model for which job, at the seconds it actually cost, in one pi
 
 Both harnesses run offline against themselves before they touch a model:
 `python3 scripts/measure/<suite>.py --selftest`. `test/test.sh` runs the gate and
-proves the harnesses agree with their own fixtures.
+proves the harnesses agree with their own fixtures. The gate is eleven steps —
+syntax and naming, prompt sets, profiles, evidence links, licences, both
+selftests, the reference figures recomputed from the JSON, the Mermaid diagrams,
+and the model map's files, PNGs and Hugging Face links.
 
 The tools we measured **through**, without which there would be no column at all:
 [mflux](https://github.com/filipstrand/mflux),
@@ -325,10 +328,13 @@ local-generation-benchmark-m1-max/
 ├── reference/                  # machine-readable copies of every number
 ├── docs/
 │   ├── README.md
-│   └── reference/              # comparison · profiles · licences
+│   ├── diagrams/               # the model-map poster: HTML original + rendered PNGs
+│   ├── guides/                 # naming conventions
+│   └── reference/              # comparison · profiles · licences · environment
 ├── scripts/
 │   ├── measure/                # image-benchmark.py, video-benchmark.py
 │   ├── release/                # export-video-evidence.py
+│   ├── render/                 # render-model-map.py — poster HTML → PNG
 │   └── lint.sh                 # every linter, at pinned versions
 ├── test/test.sh                # offline gate
 └── .github/workflows/ci.yml    # the gate and the lint run, on demand

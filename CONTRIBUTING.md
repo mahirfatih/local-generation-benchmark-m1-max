@@ -25,7 +25,10 @@ arrive with the file it timed.
 1. Fork the repository and create a topic branch.
 2. Keep changes focused and reproducible.
 3. Update `README.md` if you add or change results.
-4. Run `./test/test.sh` before you push; it must pass.
+4. Run `./test/test.sh` before you push; it must pass. It needs no model and no
+   network: syntax and naming, prompt sets, profiles, evidence links, licences,
+   both harness selftests, the reference figures recomputed from the JSON, the
+   Mermaid diagrams, and the model map's files, PNGs and Hugging Face links.
 5. Do **not** commit API keys, tokens or other secrets.
 
 ## Which layer does my change belong to?

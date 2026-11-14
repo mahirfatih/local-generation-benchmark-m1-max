@@ -13,9 +13,10 @@ the software half: the stack, the install, and the four things people get wrong.
 5. this repository   scripts/measure/{image,video}-benchmark.py
                      spawns one engine process per prompt, times it end to end,
                      verifies the output (PNG IHDR / ffprobe)
-4. CLI surface       mflux-generate-flux2 · mflux-generate-flux3 · mflux-generate
+4. CLI surface       mflux-generate-flux2 · mflux-generate-flux3 ·
+                     mflux-generate-z-image-turbo · mflux-generate
                      mlxgen generate · scripts/quick_infer.py
-3. inference engine  mflux (FLUX) · mlx-gen (Wan2.2) · VideoX-Fun-mlx (CogVideoX-Fun)
+3. inference engine  mflux (FLUX · Z-Image) · mlx-gen (Wan2.2) · VideoX-Fun-mlx (CogVideoX-Fun)
                      model graph, sampler, VAE, tokenizer — Python
 2. MLX 0.32.4        tensors, ops, Metal kernels, unified memory
 1. Metal             Apple GPU driver
@@ -57,8 +58,10 @@ ffprobe -version | head -1
 | Profile | Command | Engine |
 | :--- | :--- | :--- |
 | `klein-q8` | `mflux-generate-flux2` | mflux |
+| `z-image-turbo-q4` | `mflux-generate-z-image-turbo` | mflux |
 | `flux3-klein-q8` | `mflux-generate-flux3` | mflux |
 | `cogvideox-fun-1.5-5b-inp-q8` | `python3 scripts/quick_infer.py` | VideoX-Fun-mlx |
+| `cogvideox-fun-1.5-5b-inp-q4` | `python3 scripts/quick_infer.py` | VideoX-Fun-mlx |
 | `wan22-ti2v-5b-q8` | `mlxgen generate --family wan` | mlx-gen |
 
 `mlxgen` resolves `--model` from an alias, a Hugging Face repo id, **or a local
@@ -83,12 +86,13 @@ and `mlxgen capabilities` confirms the routing before a run costs you 20 minutes
 
 ## Models
 
-Weights are read from disk, never from an API. Roughly 100 GB for everything
-measured here.
+Weights are read from disk, never from an API. Roughly 68 GB for everything
+measured here — the same total the [README](../../README.md) states.
 
 | Model | Local size |
 | :--- | ---: |
 | `mflux-community/flux2-klein-4b-mflux-q8` | 8.0 GB |
+| `mflux-community/z-image-turbo-mflux-q4` | 5.5 GB |
 | `mflux-community/flux-3-image-klein-base-mflux-q8` | 9.2 GB |
 | `dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8` | 15 GB |
 | `dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4` | 13 GB |

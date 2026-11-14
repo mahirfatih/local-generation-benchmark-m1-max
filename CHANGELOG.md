@@ -79,7 +79,8 @@ date-based snapshots rather than semver releases.
 - This repository is the generation half of the local-MLX benchmark: **images**
   (mflux) and **video** (VideoX-Fun-mlx), with their harnesses, prompt sets,
   profiles, machine-readable results and the committed outputs — **16 images and
-  4 clips**.
+  4 clips** (the image count has since grown to 24 as models were added; the video
+  count is unchanged).
 - oMLX serves text and only text; it cannot run either layer, which is why the
   two repositories are apart. The text benchmark is
   [`mahirfatih/omlx-m1-max-benchmark`](https://github.com/mahirfatih/omlx-m1-max-benchmark).

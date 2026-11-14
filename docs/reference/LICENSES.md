@@ -15,6 +15,7 @@ It is a summary, not legal advice; the licence text on each page is the authorit
 | Model | Upstream base | Declared licence | Commercial use of outputs | Note |
 | :--- | :--- | :--- | :--- | :--- |
 | `mflux-community/flux2-klein-4b-mflux-q8` | `black-forest-labs/FLUX.2-klein-4B` | **Apache-2.0** | yes | Clean; no output restrictions beyond Apache-2.0's own. |
+| `mflux-community/z-image-turbo-mflux-q4` | `Tongyi-MAI/Z-Image-Turbo` | **Apache-2.0** | yes | Clean; no output restrictions beyond Apache-2.0's own. Inherited from the base model. |
 | `mflux-community/flux-3-image-klein-base-mflux-q8` | `black-forest-labs/flux-3-image-klein-base` | **FLUX Kommunity License v1.0** | **only under US$5M revenue** | Not open source. See below. |
 
 ## Video models (run by VideoX-Fun-mlx, and the Wan2.2 layer by mlx-gen)
@@ -84,6 +85,8 @@ here redistributes model weights.
 ## Sources
 
 - FLUX.2 klein q8: <https://huggingface.co/mflux-community/flux2-klein-4b-mflux-q8>
+- Z-Image Turbo q4: <https://huggingface.co/mflux-community/z-image-turbo-mflux-q4>
+  (base model: <https://huggingface.co/Tongyi-MAI/Z-Image-Turbo>)
 - FLUX 3 klein q8: <https://huggingface.co/mflux-community/flux-3-image-klein-base-mflux-q8>
 - CogVideoX-Fun quant: <https://huggingface.co/dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8>
 - CogVideoX-Fun base: <https://huggingface.co/alibaba-pai/CogVideoX-Fun-V1.5-5b-InP>

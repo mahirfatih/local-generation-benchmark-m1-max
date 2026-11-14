@@ -32,7 +32,9 @@ repository documents two generation layers and nothing else.
 
 | Document | What it is |
 | :--- | :--- |
-| [`diagrams/model-map/model-map.html`](diagrams/model-map/model-map.html) | The model map: which generation model for which job, with dark and light PNGs. |
+| [`diagrams/model-map/model-map.html`](diagrams/model-map/model-map.html) | The model map: which generation model for which job. The interactive original, with a theme toggle. |
+| `diagrams/model-map/model-map-dark.png` · `model-map-light.png` | The same poster rendered to PNG at 2000 px wide, once per theme. |
+| [`scripts/render/render-model-map.py`](../scripts/render/render-model-map.py) | What produces those two PNGs from the HTML. |
 
 ## Guides
 
