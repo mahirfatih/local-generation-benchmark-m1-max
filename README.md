@@ -156,9 +156,9 @@ flowchart TB
 
 ## Model map
 
-![Model map (dark)](docs/diagrams/model-map/model-map-dark.png)
+![Model map (light)](docs/diagrams/model-map/model-map-light.png)
 
-[`docs/diagrams/model-map/model-map.html`](docs/diagrams/model-map/model-map.html) — the interactive version (theme toggle). [`model-map-light.png`](docs/diagrams/model-map/model-map-light.png) for the light theme.
+[`docs/diagrams/model-map/model-map.html`](docs/diagrams/model-map/model-map.html) — the interactive version (theme toggle). [`model-map-dark.png`](docs/diagrams/model-map/model-map-dark.png) for the dark theme.
 
 Which generation model for which job, at the seconds it actually cost, in one picture.
 

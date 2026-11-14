@@ -3,8 +3,8 @@
 One page that answers a single question: **which local generation model for which job**, and
 what it cost in seconds on this machine.
 
-- [`model-map-dark.png`](model-map-dark.png) — the poster, dark theme, 2000 px wide
-- [`model-map-light.png`](model-map-light.png) — the same poster, light theme
+- [`model-map-light.png`](model-map-light.png) — the poster, light theme, 2000 px wide — the default
+- [`model-map-dark.png`](model-map-dark.png) — the same poster, dark theme
 - [`model-map.html`](model-map.html) — the interactive original; the theme button switches
   between the two without a reload
 

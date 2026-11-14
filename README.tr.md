@@ -126,9 +126,9 @@ yaşıyorsa harness başlamayı reddeder — ikisi 64 GB birleşik belleğe sı�
 
 ## Model haritası
 
-![Model haritası (koyu)](docs/diagrams/model-map/model-map-dark.png)
+![Model haritası (açık)](docs/diagrams/model-map/model-map-light.png)
 
-[`docs/diagrams/model-map/model-map.html`](docs/diagrams/model-map/model-map.html) — interaktif sürüm (tema değiştirilebilir). [`model-map-light.png`](docs/diagrams/model-map/model-map-light.png) açık tema için.
+[`docs/diagrams/model-map/model-map.html`](docs/diagrams/model-map/model-map.html) — interaktif sürüm (tema değiştirilebilir). [`model-map-dark.png`](docs/diagrams/model-map/model-map-dark.png) koyu tema için.
 
 Hangi üretim modelinin hangi iş için, ve gerçekten ne kadara mal olduğunu, tek sayfada.
 
