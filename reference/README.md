@@ -8,6 +8,7 @@ figures from these files to prove it does.
 | :--- | :--- | :--- |
 | [`image-benchmark.json`](image-benchmark.json) | `scripts/measure/image-benchmark.py --profile klein-q8` | 8 images: seconds, PNG dimensions, bytes, sha256 |
 | [`image-benchmark-flux3.json`](image-benchmark-flux3.json) | `scripts/measure/image-benchmark.py --profile flux3-klein-q8` | The same, for FLUX 3 |
+| [`image-benchmark-zimage.json`](image-benchmark-zimage.json) | `scripts/measure/image-benchmark.py --profile z-image-turbo-q4` | The same, for Z-Image Turbo |
 | [`video-benchmark.json`](video-benchmark.json) | `scripts/measure/video-benchmark.py --profile cogvideox-fun-1.5-5b-inp-q8` | 4 clips: seconds, `ffprobe` output, bytes, sha256 |
 
 ## What each record carries

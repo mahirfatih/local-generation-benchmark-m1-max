@@ -183,7 +183,7 @@ def run_one(profile, item, out_dir, model=None, seed=None, steps=None, timeout=1
 def selftest():
     ok = True
     profiles, gens = load_profiles()
-    if set(gens) != {"klein-q8", "flux3-klein-q8"}:
+    if set(gens) != {"klein-q8", "flux3-klein-q8", "z-image-turbo-q4"}:
         ok = False
         print("FAIL: unexpected profiles:", sorted(gens))
     prompts = load_prompts()

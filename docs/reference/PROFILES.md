@@ -22,18 +22,18 @@ The image model is **not** served by oMLX: it is run by
 settings live in a separate file,
 [`profiles/mflux-profiles.json`](../../profiles/mflux-profiles.json).
 
-| Setting | `klein-q8` | `flux3-klein-q8` |
-| :--- | ---: | ---: |
-| Model | `mflux-community/flux2-klein-4b-mflux-q8` | `mflux-community/flux-3-image-klein-base-mflux-q8` |
-| Base model | `black-forest-labs/FLUX.2-klein-4B` | `black-forest-labs/flux-3-image-klein-base` |
-| CLI | `mflux-generate-flux2` | `mflux-generate-flux3` |
-| Quantization | MLX affine, 8-bit | MLX affine, 8-bit (modified) |
-| Width × height | 1024 × 1024 | 1024 × 1024 |
-| Steps | 4 | 16 |
-| Guidance scale | 1.0 | — (none; distilled) |
-| Seed | 42 | 42 |
-| Compute precision | `float16` | `float16` |
-| Licence | Apache-2.0 | **FLUX Kommunity License** |
+| Setting | `klein-q8` | `z-image-turbo-q4` | `flux3-klein-q8` |
+| :--- | ---: | ---: | ---: |
+| Model | `mflux-community/flux2-klein-4b-mflux-q8` | `mflux-community/z-image-turbo-mflux-q4` | `mflux-community/flux-3-image-klein-base-mflux-q8` |
+| Base model | `black-forest-labs/FLUX.2-klein-4B` | `Tongyi-MAI/Z-Image-Turbo` | `black-forest-labs/flux-3-image-klein-base` |
+| CLI | `mflux-generate-flux2` | `mflux-generate-z-image-turbo` | `mflux-generate-flux3` |
+| Quantization | MLX affine, 8-bit | MLX affine, 4-bit | MLX affine, 8-bit (modified) |
+| Width × height | 1024 × 1024 | 1024 × 1024 | 1024 × 1024 |
+| Steps | 4 | 9 | 16 |
+| Guidance scale | 1.0 | — (tool default) | — (none; distilled) |
+| Seed | 42 | 42 | 42 |
+| Compute precision | `float16` | — (flag absent in mflux 0.38.0) | `float16` |
+| Licence | Apache-2.0 | Apache-2.0 | **FLUX Kommunity License** |
 
 **`klein-q8`** — the quantization is 8-bit MLX affine across the text encoder,
 transformer and VAE, stored in the weights (no `--quantize` flag). The 4 steps and
@@ -51,10 +51,20 @@ is 8-bit and the **text encoder is truncated to layers 0–31** and quantized to
 **not** Apache-2.0; the output rules (including the US$5M revenue line) are in
 [`LICENSES.md`](LICENSES.md).
 
-Both run **float16 compute** (`--compute-precision float16`): the Apple M1 family has
-no native bfloat16, and MLX's matmul and attention kernels are fastest in float16
-there. mflux measured FLUX.2 klein 4B (q4) at 6.8 → 5.0 s/step (−22%) with the flag.
-It changes the image slightly for a given seed, so the run records it.
+**`z-image-turbo-q4`** — Z-Image Turbo is a distilled 6B single-stream DiT (Tongyi
+Lab / Alibaba) that reaches quality in **9 steps**; the MLX build is 4-bit affine
+across the text encoder, transformer and VAE, stored in the weights. Apache-2.0
+inherited from the base model, so it is the profile to reach for when FLUX 3's
+[FLUX Kommunity License](https://huggingface.co/black-forest-labs/flux-3-image-klein-base/blob/main/LICENSE.md)
+rules it out. It measured **95.8 s/img** — between klein and FLUX 3.
+
+Both FLUX profiles run **float16 compute** (`--compute-precision float16`): the
+Apple M1 family has no native bfloat16, and MLX's matmul and attention kernels are
+fastest in float16 there. mflux measured FLUX.2 klein 4B (q4) at 6.8 → 5.0 s/step
+(−22%) with the flag. **Z-Image Turbo's profile carries no compute precision:** the
+mflux build in the documented venv (`mlx-gen` 0.38.0) no longer accepts
+`--compute-precision`, so the harness passes no precision flag for this profile. The
+two FLUX profiles keep the `float16` value from the run that produced their figures.
 
 ## Video profiles
 
@@ -168,10 +178,20 @@ mflux-generate-flux3 \
 `--guidance` is ignored on the FLUX 3 distilled checkpoint — passing it does
 nothing rather than erroring, which is worth knowing before you tune it.
 
+```bash
+# z-image-turbo-q4 — the 95.8 s/image profile. Distilled: 9 steps, tool-default guidance.
+mflux-generate-z-image-turbo \
+  --model mflux-community/z-image-turbo-mflux-q4 \
+  --base-model z-image-turbo \
+  --prompt "Studio product shot of matte-black over-ear headphones on a seamless light-grey backdrop" \
+  --width 1024 --height 1024 --steps 9 --seed 42 \
+  --output headphones.png
+```
+
 To run the whole eight-prompt suite instead of one prompt:
 
 ```bash
-python3 scripts/measure/image-benchmark.py --profile klein-q8 --out-dir ~/Desktop/out
+python3 scripts/measure/image-benchmark.py --profile z-image-turbo-q4 --out-dir ~/Desktop/out
 ```
 
 ### Video — mlx-gen and VideoX-Fun-mlx

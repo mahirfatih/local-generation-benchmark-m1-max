@@ -7,11 +7,12 @@ a number.
 | :--- | :--- | :--- |
 | [`image-benchmark-2026-11-12.md`](image-benchmark-2026-11-12.md) | mflux / klein-q8 | 8 images, each with its prompt and its seconds |
 | [`image-benchmark-flux3-2026-11-12.md`](image-benchmark-flux3-2026-11-12.md) | mflux / FLUX 3 | The same, for the second model |
+| [`image-benchmark-zimage-2026-11-14.md`](image-benchmark-zimage-2026-11-14.md) | mflux / Z-Image Turbo | The same, for the third model |
 | [`video-benchmark-2026-11-12.md`](video-benchmark-2026-11-12.md) | VideoX-Fun-mlx | 4 clips, each with its prompt, its seconds and its `ffprobe` reading |
 
 The outputs themselves sit beside the pages:
 
-- [`images/`](images/) — 16 PNGs, named `<profile>--<prompt-id>.png`
+- [`images/`](images/) — 24 PNGs, named `<profile>--<prompt-id>.png`
 - [`videos/`](videos/) — 4 GIFs, named `<profile>--<prompt-id>.gif`
 
 Every prompt is quoted **verbatim** under its output, so a page can be read

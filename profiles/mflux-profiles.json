@@ -76,10 +76,47 @@
         "https://huggingface.co/mflux-community/flux-3-image-klein-base-mflux-q8",
         "https://huggingface.co/black-forest-labs/flux-3-image-klein-base"
       ]
+    },
+    "z-image-turbo-q4": {
+      "name": "z-image-turbo-q4",
+      "display_name": "z-image-turbo-q4",
+      "description": "Z-Image Turbo, MLX 4-bit (mflux-community q4), 9-step distilled. Apache-2.0.",
+      "task": "text-to-image",
+      "cli": "mflux-generate-z-image-turbo",
+      "model": "mflux-community/z-image-turbo-mflux-q4",
+      "mflux_base_model": "z-image-turbo",
+      "base_model": "Tongyi-MAI/Z-Image-Turbo",
+      "license": "apache-2.0",
+      "license_note": "Apache-2.0. No output restrictions beyond the licence's own terms.",
+      "local_path": "~/models/mflux-community/z-image-turbo-mflux-q4",
+      "on_disk_gb": 5.5,
+      "quantization": {
+        "scheme": "mlx-affine",
+        "bits": 4,
+        "applies_to": [
+          "text_encoder",
+          "transformer",
+          "vae"
+        ],
+        "note": "The level is stored in the weights, so no --quantize flag is needed."
+      },
+      "settings": {
+        "width": 1024,
+        "height": 1024,
+        "steps": 9,
+        "guidance_scale": null,
+        "seed": 42
+      },
+      "compute_precision_note": "No compute_precision is set: mflux 0.38.0 (via mlx-gen 0.38.0) no longer accepts --compute-precision, so the harness passes no precision flag for this profile. Z-Image Turbo is a distilled 9-step model and does not need it.",
+      "sources": [
+        "https://huggingface.co/mflux-community/z-image-turbo-mflux-q4",
+        "https://huggingface.co/Tongyi-MAI/Z-Image-Turbo"
+      ]
     }
   },
   "model_to_profile": {
     "mflux-community/flux2-klein-4b-mflux-q8": "klein-q8",
-    "mflux-community/flux-3-image-klein-base-mflux-q8": "flux3-klein-q8"
+    "mflux-community/flux-3-image-klein-base-mflux-q8": "flux3-klein-q8",
+    "mflux-community/z-image-turbo-mflux-q4": "z-image-turbo-q4"
   }
 }

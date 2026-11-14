@@ -6,7 +6,7 @@
 [![Platform](https://img.shields.io/badge/platform-Apple%20Silicon%20(arm64)-000?logo=apple&logoColor=white)](#donanım--yazılım)
 [![mflux](https://img.shields.io/badge/image-mflux-blue)](https://github.com/filipstrand/mflux)
 [![VideoX-Fun-mlx](https://img.shields.io/badge/video-VideoX--Fun--mlx-blue)](https://github.com/dgrauet/VideoX-Fun-mlx)
-[![Outputs](https://img.shields.io/badge/outputs-16%20PNG%20%2B%204%20GIF-purple)](evidence/)
+[![Outputs](https://img.shields.io/badge/outputs-24%20PNG%20%2B%204%20GIF-purple)](evidence/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
 **Türkçe** · [English](README.md)
@@ -23,6 +23,7 @@ durur; burada oMLX'in çalıştıramadığı iki katman var:
 | Katman | Araç | Model | Süre | Çıktı |
 | :--- | :--- | :--- | ---: | :--- |
 | **Görsel** | [mflux](https://github.com/filipstrand/mflux) | FLUX.2 klein 4B (q8) | **22.5 s** | 1024×1024 PNG |
+| Görsel | mflux | Z-Image Turbo (q4) | 95.8 s | 1024×1024 PNG |
 | Görsel | mflux | FLUX 3 Image Klein | 180.6 s | 1024×1024 PNG |
 | **Video** | [VideoX-Fun-mlx](https://github.com/dgrauet/VideoX-Fun-mlx) | CogVideoX-Fun V1.5 5B (int8) | **266.1 s** | 672×384, 5 kare GIF |
 
@@ -116,11 +117,12 @@ yaşıyorsa harness başlamayı reddeder — ikisi 64 GB birleşik belleğe sı�
 |---|---:|---|---|---|
 | `flux2-klein-4b-mflux-q8` | 8.0 GB | int8 | Apache-2.0 | [HF](https://huggingface.co/mflux-community/flux2-klein-4b-mflux-q8) |
 | `flux-3-image-klein-base-mflux-q8` | 9.2 GB | int8 | FLUX Kommunity | [HF](https://huggingface.co/mflux-community/flux-3-image-klein-base-mflux-q8) |
+| `z-image-turbo-mflux-q4` | 5.5 GB | int4 | Apache-2.0 | [HF](https://huggingface.co/mflux-community/z-image-turbo-mflux-q4) |
 | `CogVideoX-Fun-V1.5-5b-InP-mlx-q8` | 15 GB | int8 | CogVideoX License | [HF](https://huggingface.co/dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8) |
 | `CogVideoX-Fun-V1.5-5b-InP-mlx-q4` | 13 GB | int4 | CogVideoX License | [HF](https://huggingface.co/dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4) |
 | `wan2.2-ti2v-5b-diffusers-8bit` | 17 GB | int8 | Apache-2.0 | [HF](https://huggingface.co/AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit) |
 
-**Diskte toplam:** ~62 GB · **Çalışma belleği:** 64 GB birleşik bellekte model başına ~30 GB'a kadar. Her model diskteki ağırlıklardan çalışır — API yok, hesap yok.
+**Diskte toplam:** ~68 GB · **Çalışma belleği:** 64 GB birleşik bellekte model başına ~30 GB'a kadar. Her model diskteki ağırlıklardan çalışır — API yok, hesap yok.
 
 ## Model haritası
 
@@ -151,20 +153,25 @@ Görsel, native-MLX bir difüzyon aracı olan
 | Model (profil) | Lisans | s/görsel | s/adım | Adım | Boyut |
 | :--- | :--- | ---: | ---: | ---: | :--- |
 | [`flux2-klein-4b-mflux-q8`](https://huggingface.co/mflux-community/flux2-klein-4b-mflux-q8) (`klein-q8`) | Apache-2.0 | **22.5** | 5.6 | 4 | 1024×1024 |
+| [`z-image-turbo-mflux-q4`](https://huggingface.co/mflux-community/z-image-turbo-mflux-q4) (`z-image-turbo-q4`) | Apache-2.0 | 95.8 | 10.6 | 9 | 1024×1024 |
 | [`flux-3-image-klein-base-mflux-q8`](https://huggingface.co/mflux-community/flux-3-image-klein-base-mflux-q8) (`flux3-klein-q8`) | FLUX Kommunity | 180.6 | 11.3 | 16 | 1024×1024 |
 
 4 adımlı distile 4B model 1024×1024 görsel başına ~22.5 s koşar (ilki daha
 yavaş, ~28 s, çünkü model yüklenir); FLUX 3 ise 16 adımda ve 5.6B transformer ile
-~180 s. İki sayı da ilk görsel hariç, durağan 7 görselin ortalamasıdır — model
-yüklemesini taşıyan ilk görsel dışarıda bırakılır; `s/görsel` kolonu budur.
+~180 s. Z-Image Turbo — 9 adımlı distile 6B model, Apache-2.0 — ikisinin arasında
+**95.8 s**'de durur: klein'den ~4.3×, FLUX 3'ten ~1.9× yavaş. Bütün sayılar ilk görsel
+hariç, durağan 7 görselin ortalamasıdır — model yüklemesini taşıyan ilk görsel
+dışarıda bırakılır; `s/görsel` kolonu budur.
 **klein-q8 8× kazanır** ve özel olarak FLUX 3 gerekmiyorsa kullanılacak olandır.
-Okunabilir metin ve doğru eller — klasik başarısızlık yüzeyleri — ikisinde de
-temiz çıktı.
+Okunabilir metin ve doğru eller — klasik başarısızlık yüzeyleri — üçünde de
+temiz çıktı. FLUX 3'ün ticari-çıktı sınırı devreye girdiğinde ama klein'in hızı
+öncelik değilse, Apache-2.0 alternatifi Z-Image Turbo'dur.
 
-On altı görsel, her biri kendisini üreten prompt ile:
+Yirmi dört görsel, her biri kendisini üreten prompt ile:
 
-[`evidence/image-benchmark-2026-11-12.md`](evidence/image-benchmark-2026-11-12.md)
-ve [`evidence/image-benchmark-flux3-2026-11-12.md`](evidence/image-benchmark-flux3-2026-11-12.md).
+[`evidence/image-benchmark-2026-11-12.md`](evidence/image-benchmark-2026-11-12.md),
+[`evidence/image-benchmark-flux3-2026-11-12.md`](evidence/image-benchmark-flux3-2026-11-12.md)
+ve [`evidence/image-benchmark-zimage-2026-11-14.md`](evidence/image-benchmark-zimage-2026-11-14.md).
 
 ## Video üretimi
 
@@ -258,7 +265,7 @@ local-generation-benchmark-m1-max/
 ├── evidence/                   # koşular: sayfalar ve görseller/klipler
 │   ├── image-benchmark-*.md
 │   ├── video-benchmark-*.md
-│   ├── images/                 # 16 PNG
+│   ├── images/                 # 24 PNG
 │   └── videos/                 # 4 GIF
 ├── reference/                  # her sayının makine-okunur kopyası
 ├── docs/reference/             # karşılaştırma · profiller · lisanslar

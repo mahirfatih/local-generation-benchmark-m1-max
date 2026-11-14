@@ -11,7 +11,8 @@ what it cost in seconds on this machine.
 ## What it shows
 
 Two bands, because the two units are not comparable. Images: seconds per 1024×1024 image
-over mflux — 22.5 s for FLUX.2 klein against 180.6 s for FLUX 3, an 8× spread. Video:
+over mflux — 22.5 s for FLUX.2 klein, 95.8 s for Z-Image Turbo and 180.6 s for FLUX 3, an
+8× spread. Video:
 seconds per clip over VideoX-Fun-mlx and mlx-gen — 256.3 / 266.1 / 285.9 s, which looks like
 a tie until you count frames: 5 frames against 25, so 51–53 s per frame against 11.4 s.
 

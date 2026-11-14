@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Yerel Üretim Haritam · 5 model, mflux + VideoX-Fun-mlx, M1 Max — mockup</title>
+<title>Yerel Üretim Haritam · 6 model, mflux + VideoX-Fun-mlx, M1 Max — mockup</title>
 <style>
   :root{
     --bg:#08080a; --panel:#0d0d0f; --ink:#f3f1ea; --muted:#8b8b8f;
@@ -182,7 +182,7 @@
   </div>
 
   <h1>Yerelde hangi üretim modeli?</h1>
-  <p class="sub">5 model — 2 görsel, 3 video — ölçüldü.</p>
+  <p class="sub">6 model — 3 görsel, 3 video — ölçüldü.</p>
   <p class="lede">Görsel <strong>mflux</strong>, video <strong>VideoX-Fun-mlx</strong> ve <strong>mlx-gen</strong>
     üzerinde, <strong>Apple MLX</strong> ile, bu makinede. Barlar saniyeyi gösterir, <em>düşük daha iyi</em>.
     Bu sayfada yalnızca üretim var; metin modelleri başka bir araçla çalıştığı için burada değil.</p>
@@ -195,7 +195,7 @@
     <span class="chip"><span class="dot"></span><b>mlx-gen</b> · video</span>
     <span class="chip"><span class="dot"></span>Apple <b>MLX</b> · Metal</span>
     <span class="chip"><span class="dot"></span><b>MacBookPro18,2</b> · M1 Max</span>
-    <span class="chip"><span class="dot"></span><b>62 GB</b> diskte</span>
+    <span class="chip"><span class="dot"></span><b>68 GB</b> diskte</span>
     <span class="chip"><span class="dot"></span>API yok, hesap yok</span>
   </div>
 
@@ -215,6 +215,18 @@
         <div class="pick">
           <div class="m">FLUX.2 klein 4B <span class="tiny">· q8 · 4 adım</span> <a class="hf" href="https://huggingface.co/mflux-community/flux2-klein-4b-mflux-q8">HF</a><span class="flag">kullanılıyor</span></div>
           <div class="bar"><div class="track"><div class="fill" style="width:12%"></div></div><span class="val">22,5 s/img</span></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="task">
+          <div class="k">Görsel · Apache-2.0, hızlı</div>
+          <div class="d">9 adımlı distile 6B DiT. Görsel başına <b>~1,5 dakika</b> — klein'in ~4×,
+            FLUX 3'ün ~2× altı, ve ticari kullanım serbest. 1024×1024, aynı 8 prompt.</div>
+        </div>
+        <div class="pick">
+          <div class="m">Z-Image Turbo <span class="tiny">· q4 · 9 adım · Apache-2.0</span> <a class="hf" href="https://huggingface.co/mflux-community/z-image-turbo-mflux-q4">HF</a></div>
+          <div class="bar"><div class="track"><div class="fill" style="width:53%"></div></div><span class="val">95,8 s/img</span></div>
         </div>
       </div>
 
@@ -302,10 +314,10 @@
       </div>
       <div class="card">
         <div class="big">28</div>
-        <div class="lbl">çıktı dosyadan doğrulandı — 16 PNG + 12 klip</div>
+        <div class="lbl">çıktı dosyadan doğrulandı — 24 PNG + 12 klip</div>
       </div>
       <div class="card">
-        <div class="big">62 GB</div>
+        <div class="big">68 GB</div>
         <div class="lbl">beş modelin diskte kapladığı alan</div>
       </div>
       <div class="card">
@@ -327,7 +339,7 @@
   <footer>
     <div>
       <span class="name">Mahir F. ÜNAL</span><br>
-      <span style="opacity:.7">5 model ölçüldü · 2 görsel + 3 video, hepsi bu sayfada</span>
+      <span style="opacity:.7">6 model ölçüldü · 3 görsel + 3 video, hepsi bu sayfada</span>
     </div>
     <div style="display:flex;align-items:center;gap:14px">
       <button class="toggle" id="themeBtn" type="button">◐ tema</button>

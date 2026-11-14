@@ -23,6 +23,7 @@ measured on the same M1 Max.
 | Task | Model | Tool | Licence | Time | Output |
 | :--- | :--- | :--- | :--- | ---: | :--- |
 | **Image** | `flux2-klein-4b` | mflux | Apache-2.0 | **22.5 s** | 1024×1024, 4 steps |
+| Image | `z-image-turbo` | mflux | Apache-2.0 | 95.8 s | 1024×1024, 9 steps |
 | Image | `flux-3-image-klein-base` | mflux | FLUX Kommunity | 180.6 s | 1024×1024, 16 steps |
 | **Video** | `CogVideoX-Fun-V1.5-5b-InP` | VideoX-Fun-mlx | **CogVideoX License** | **266.1 s** | 672×384, 5 frames, GIF |
 
@@ -42,25 +43,29 @@ written PNG checked.
 | Model | Licence | s/img | s/step | Steps | Size |
 | :--- | :--- | ---: | ---: | ---: | :--- |
 | `flux2-klein-4b-mflux-q8` | Apache-2.0 | **22.5** | 5.6 | 4 | 1024×1024 |
+| `z-image-turbo-mflux-q4` | Apache-2.0 | 95.8 | 10.6 | 9 | 1024×1024 |
 | `flux-3-image-klein-base-mflux-q8` | FLUX Kommunity | 180.6 | 11.3 | 16 | 1024×1024 |
 
-Both were run on eight prompts covering the surfaces that separate image
+All three were run on eight prompts covering the surfaces that separate image
 models: photorealism, hands, legible text, composition, style. **klein-q8 wins
-by 8×** and is the one to use unless you need FLUX 3 specifically. The PNGs are
-committed in [`evidence/images/`](../../evidence/images/); legible text and
-correct hands came out clean on both.
+by 8×** and is the one to use unless you need FLUX 3 specifically. **Z-Image
+Turbo** is the middle option and the Apache-2.0 one: ~4.3× slower than klein,
+~1.9× faster than FLUX 3. The PNGs are committed in
+[`evidence/images/`](../../evidence/images/); legible text and correct hands came
+out clean on all three.
 
 The same prompt — a poster whose whole point is whether the two words render as
-words — on both models. The cheap one did not need the expensive one's help here:
+words — on all three models. The cheap one did not need the others' help here:
 
-| `flux2-klein-4b` (22.5 s) | `flux-3-klein-base` (180.6 s) |
-| :---: | :---: |
-| ![LOCAL FIRST poster, klein-q8](../../evidence/images/klein-q8--text-poster.png) | ![LOCAL FIRST poster, flux-3-klein q8](../../evidence/images/flux3-klein-q8--text-poster.png) |
+| `flux2-klein-4b` (22.5 s) | `z-image-turbo` (95.8 s) | `flux-3-klein-base` (180.6 s) |
+| :---: | :---: | :---: |
+| ![LOCAL FIRST poster, klein-q8](../../evidence/images/klein-q8--text-poster.png) | ![LOCAL FIRST poster, z-image-turbo-q4](../../evidence/images/z-image-turbo-q4--text-poster.png) | ![LOCAL FIRST poster, flux-3-klein q8](../../evidence/images/flux3-klein-q8--text-poster.png) |
 
-Every one of the sixteen images, with the prompt that produced it, is in
-[`evidence/image-benchmark-2026-11-12.md`](../../evidence/image-benchmark-2026-11-12.md)
+Every one of the twenty-four images, with the prompt that produced it, is in
+[`evidence/image-benchmark-2026-11-12.md`](../../evidence/image-benchmark-2026-11-12.md),
+[`evidence/image-benchmark-flux3-2026-11-12.md`](../../evidence/image-benchmark-flux3-2026-11-12.md)
 and
-[`evidence/image-benchmark-flux3-2026-11-12.md`](../../evidence/image-benchmark-flux3-2026-11-12.md).
+[`evidence/image-benchmark-zimage-2026-11-14.md`](../../evidence/image-benchmark-zimage-2026-11-14.md).
 
 ## Video generation — a separate layer
 

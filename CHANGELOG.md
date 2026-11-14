@@ -6,6 +6,21 @@ date-based snapshots rather than semver releases.
 
 ## [Unreleased]
 
+### Added — Z-Image Turbo, a third image profile
+
+- **`z-image-turbo-q4`** — Z-Image Turbo (`Tongyi-MAI/Z-Image-Turbo`), MLX 4-bit via
+  `mflux-community/z-image-turbo-mflux-q4`, a 9-step distilled 6B DiT, **Apache-2.0**.
+  Eight prompts, **95.8 s/img** (`s/img`: mean of the seven steady-state images, the
+  first dropped). It lands between the two FLUX models — ~4.3× slower than `klein-q8`
+  (22.5 s) and ~1.9× faster than `flux3-klein-q8` (180.6 s). Profile in
+  `profiles/mflux-profiles.json`; data in `reference/image-benchmark-zimage.json`;
+  evidence in `evidence/image-benchmark-zimage-2026-11-14.md`.
+- **A correction it surfaced:** the documented `--compute-precision float16` no longer
+  exists in mflux 0.38.0 (shipped by `mlx-gen` 0.38.0). The new profile carries **no**
+  precision flag; the two FLUX profiles retain the value from the run that produced
+  their figures, but a fresh run on the current venv fails on that flag until it is
+  dropped. Noted in `docs/reference/PROFILES.md` and `profiles/mflux-profiles.json`.
+
 ### Fixed — the FLUX 3 average, and a tolerance that let it drift
 
 - **The published `s/img` for FLUX 3 was 180.4 s; the data gives 180.55.** The
