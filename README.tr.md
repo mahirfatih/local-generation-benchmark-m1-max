@@ -34,9 +34,26 @@ her çıktı yazdığı dosyaya karşı doğrulandı — görsellerde PNG başl�
 [`evidence/`](evidence/) altında, yani iddia güvenmekle değil **bakarak**
 kontrol edilebilir.
 
-**Ne yapacağına göre seç:**
-[`docs/reference/COMPARISON.md`](docs/reference/COMPARISON.md) iki katmanı tek
-sayfada verir; her rakam geldiği koşu dosyasına izlenir.
+**Ne yapacağına göre seç.** Aşağıdaki akış çoğu kararı kendisi verir; her rakamı
+geldiği koşu dosyasına izlenen tam karşılaştırma
+[`docs/reference/COMPARISON.md`](docs/reference/COMPARISON.md) içindedir.
+
+```mermaid
+flowchart TD
+    A[Ne yapmak istiyorsun?] --> B{Görsel mi, video mu?}
+    B -->|Görsel| C{Ticari kullanım?}
+    B -->|Video| D{Ticari kullanım?}
+    C -->|Evet| E[klein-q8 · 22.5 s · Apache-2.0 · 8.0 GB]
+    C -->|Evet, disk veya RAM dar| E4[klein-q4 · 23.8 s · Apache-2.0 · 4.3 GB]
+    C -->|Hayır, kalite önce| F[flux3-klein-q8 · 180.6 s · FLUX Kommunity]
+    D -->|Evet| G[Wan2.2 TI2V 5B · Apache-2.0 · 285.9 s/klip]
+    D -->|Hayır / araştırma| H[cogvideox q4 · 256.3 s/klip · CogVideoX License]
+    E --> I[Hızlı, yazı temiz çıkar]
+    E4 --> I4[Aynı hız sınıfı, diskte en küçük]
+    F --> J[El ve yazı daha iyi, 8 kat yavaş]
+    G --> K[En iyi lisans, 25 kare, 16 fps]
+    H --> L[q8'den %4 hızlı, aynı çıktı]
+```
 
 ## İçindekiler
 

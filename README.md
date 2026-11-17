@@ -42,11 +42,13 @@ flowchart TD
     A[What do you need?] --> B{Image or video?}
     B -->|Image| C{Commercial use?}
     B -->|Video| D{Commercial use?}
-    C -->|Yes| E[klein-q8 · 22.5 s · Apache-2.0]
+    C -->|Yes| E[klein-q8 · 22.5 s · Apache-2.0 · 8.0 GB]
+    C -->|Yes, tight disk or RAM| E4[klein-q4 · 23.8 s · Apache-2.0 · 4.3 GB]
     C -->|No, quality first| F[flux3-klein-q8 · 180.6 s · FLUX Kommunity]
     D -->|Yes| G[Wan2.2 TI2V 5B · Apache-2.0 · 285.9 s/clip]
     D -->|No / research| H[cogvideox q4 · 256.3 s/clip · CogVideoX License]
     E --> I[Fast, text renders clean]
+    E4 --> I4[Same speed class, smallest on disk]
     F --> J[Hands and text look better, 8x slower]
     G --> K[Best licence, 25 frames, 16 fps]
     H --> L[4% faster than q8, same output]
