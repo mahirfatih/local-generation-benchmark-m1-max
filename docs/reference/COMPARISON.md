@@ -22,7 +22,8 @@ measured on the same M1 Max.
 
 | Task | Model | Tool | Licence | Time | Output |
 | :--- | :--- | :--- | :--- | ---: | :--- |
-| **Image** | `flux2-klein-4b` | mflux | Apache-2.0 | **22.5 s** | 1024×1024, 4 steps |
+| **Image** | `flux2-klein-4b` (q8) | mflux | Apache-2.0 | **22.5 s** | 1024×1024, 4 steps |
+| Image | `flux2-klein-4b` (q4) | mflux | Apache-2.0 | 23.8 s | 1024×1024, 4 steps |
 | Image | `z-image-turbo` | mflux | Apache-2.0 | 95.8 s | 1024×1024, 9 steps |
 | Image | `flux-3-image-klein-base` | mflux | FLUX Kommunity | 180.6 s | 1024×1024, 16 steps |
 | **Video** | `CogVideoX-Fun-V1.5-5b-InP` | VideoX-Fun-mlx | **CogVideoX License** | **266.1 s** | 672×384, 5 frames, GIF |
@@ -43,16 +44,21 @@ written PNG checked.
 | Model | Licence | s/img | s/step | Steps | Size |
 | :--- | :--- | ---: | ---: | ---: | :--- |
 | `flux2-klein-4b-mflux-q8` | Apache-2.0 | **22.5** | 5.6 | 4 | 1024×1024 |
+| `FLUX.2-klein-4B-mflux-4bit` | Apache-2.0 | 23.8 | 5.9 | 4 | 1024×1024 |
 | `z-image-turbo-mflux-q4` | Apache-2.0 | 95.8 | 10.6 | 9 | 1024×1024 |
 | `flux-3-image-klein-base-mflux-q8` | FLUX Kommunity | 180.6 | 11.3 | 16 | 1024×1024 |
 
-All three were run on eight prompts covering the surfaces that separate image
+All four were run on eight prompts covering the surfaces that separate image
 models: photorealism, hands, legible text, composition, style. **klein-q8 wins
-by 8×** and is the one to use unless you need FLUX 3 specifically. **Z-Image
+by 8×** and is the one to use unless you need FLUX 3 specifically. The **4-bit
+klein** is the smallest on disk but not the fastest: at 23.8 s it is +1.3 s
+(+5.8 %) behind the 8-bit sibling, because the checkpoint ships its own 4-bit
+weights that are dequantised on the fly rather than narrowing the compute — the
+saving is disk and memory, not seconds. **Z-Image
 Turbo** is the middle option and the Apache-2.0 one: ~4.3× slower than klein,
 ~1.9× faster than FLUX 3. The PNGs are committed in
 [`evidence/images/`](../../evidence/images/); legible text and correct hands came
-out clean on all three.
+out clean on all of them.
 
 The same prompt — a poster whose whole point is whether the two words render as
 words — on all three models. The cheap one did not need the others' help here:

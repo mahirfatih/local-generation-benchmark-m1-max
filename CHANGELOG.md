@@ -6,6 +6,19 @@ date-based snapshots rather than semver releases.
 
 ## [Unreleased]
 
+### Added — the 4-bit klein, a fourth image profile
+
+- **`klein-q4`** — FLUX.2 klein 4B (`black-forest-labs/FLUX.2-klein-4B`), MLX 4-bit
+  via `Runpod/FLUX.2-klein-4B-mflux-4bit`, the 4-step distilled 4B model one
+  quantisation step below `klein-q8`. **Apache-2.0**. Eight prompts, **23.8 s/img**
+  (`s/img`: mean of the seven steady-state images, the first dropped for model load).
+  It is the smallest profile on disk (4.3 GB) and **not** the fastest: at 23.8 s it
+  is **+1.3 s (+5.8 %)** behind the 8-bit sibling, because the checkpoint ships its
+  own 4-bit weights that are dequantised on the fly, so the saving is disk and
+  memory rather than compute. The profile needs no `--compute-precision` flag. Data
+  in `reference/image-benchmark-klein-q4.json`; evidence in
+  `evidence/image-benchmark-klein-q4-2026-11-17.md`.
+
 ### Added — Z-Image Turbo, a third image profile
 
 - **`z-image-turbo-q4`** — Z-Image Turbo (`Tongyi-MAI/Z-Image-Turbo`), MLX 4-bit via

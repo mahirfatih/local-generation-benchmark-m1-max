@@ -58,6 +58,18 @@ inherited from the base model, so it is the profile to reach for when FLUX 3's
 [FLUX Kommunity License](https://huggingface.co/black-forest-labs/flux-3-image-klein-base/blob/main/LICENSE.md)
 rules it out. It measured **95.8 s/img** — between klein and FLUX 3.
 
+**`klein-q4`** — the same FLUX.2 klein 4B as `klein-q8`, with the weights
+quantized one step further: `mlx-affine` 4-bit across the text encoder, transformer
+and VAE, stored in the checkpoint (no `--quantize` flag), on
+`Runpod/FLUX.2-klein-4B-mflux-4bit`. Apache-2.0. It is the smallest profile on
+disk (4.3 GB) and it measured **23.8 s/img** — **+1.3 s (+5.8 %)** *slower* than
+the 8-bit sibling, not faster. A smaller quantisation does not buy seconds here:
+the checkpoint ships its own 4-bit weights that are dequantised on the fly, so the
+saving is disk and memory, not compute. Because the weights carry the level, the
+profile needs no `--compute-precision` flag. Eight prompts, 22.8–25.2 s, run
+2026-11-17; data in
+[`reference/image-benchmark-klein-q4.json`](../../reference/image-benchmark-klein-q4.json).
+
 Both FLUX profiles run **float16 compute** (`--compute-precision float16`): the
 Apple M1 family has no native bfloat16, and MLX's matmul and attention kernels are
 fastest in float16 there. mflux measured FLUX.2 klein 4B (q4) at 6.8 → 5.0 s/step

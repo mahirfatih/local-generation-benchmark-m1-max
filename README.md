@@ -146,13 +146,14 @@ flowchart TB
 | Model | Disk | Quant | Licence | Source |
 |---|---:|---|---|---|
 | `flux2-klein-4b-mflux-q8` | 8.0 GB | int8 | Apache-2.0 | [HF](https://huggingface.co/mflux-community/flux2-klein-4b-mflux-q8) |
+| `FLUX.2-klein-4B-mflux-4bit` | 4.3 GB | int4 | Apache-2.0 | [HF](https://huggingface.co/Runpod/FLUX.2-klein-4B-mflux-4bit) |
 | `flux-3-image-klein-base-mflux-q8` | 9.2 GB | int8 | FLUX Kommunity | [HF](https://huggingface.co/mflux-community/flux-3-image-klein-base-mflux-q8) |
 | `z-image-turbo-mflux-q4` | 5.5 GB | int4 | Apache-2.0 | [HF](https://huggingface.co/mflux-community/z-image-turbo-mflux-q4) |
 | `CogVideoX-Fun-V1.5-5b-InP-mlx-q8` | 15 GB | int8 | CogVideoX License | [HF](https://huggingface.co/dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8) |
 | `CogVideoX-Fun-V1.5-5b-InP-mlx-q4` | 13 GB | int4 | CogVideoX License | [HF](https://huggingface.co/dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4) |
 | `wan2.2-ti2v-5b-diffusers-8bit` | 17 GB | int8 | Apache-2.0 | [HF](https://huggingface.co/AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit) |
 
-**Total on disk:** ~68 GB · **Runtime memory:** up to ~30 GB per loaded model on 64 GB unified memory. Every model runs from weights on disk — no API, no account.
+**Total on disk:** ~72 GB · **Runtime memory:** up to ~30 GB per loaded model on 64 GB unified memory. Every model runs from weights on disk — no API, no account.
 
 ## Model map
 
@@ -194,21 +195,26 @@ written PNG verified.
 | Model (profile) | Licence | s/img | s/step | Steps | Size |
 | :--- | :--- | ---: | ---: | ---: | :--- |
 | [`flux2-klein-4b-mflux-q8`](https://huggingface.co/mflux-community/flux2-klein-4b-mflux-q8) (`klein-q8`) | Apache-2.0 | **22.5** | 5.6 | 4 | 1024×1024 |
+| [`FLUX.2-klein-4B-mflux-4bit`](https://huggingface.co/Runpod/FLUX.2-klein-4B-mflux-4bit) (`klein-q4`) | Apache-2.0 | 23.8 | 5.9 | 4 | 1024×1024 |
 | [`z-image-turbo-mflux-q4`](https://huggingface.co/mflux-community/z-image-turbo-mflux-q4) (`z-image-turbo-q4`) | Apache-2.0 | 95.8 | 10.6 | 9 | 1024×1024 |
 | [`flux-3-image-klein-base-mflux-q8`](https://huggingface.co/mflux-community/flux-3-image-klein-base-mflux-q8) (`flux3-klein-q8`) | FLUX Kommunity | 180.6 | 11.3 | 16 | 1024×1024 |
 
 ```mermaid
 xychart-beta
     title "Seconds per image (lower is better, model load included)"
-    x-axis ["klein-q8", "z-image-turbo-q4", "flux3-klein-q8"]
+    x-axis ["klein-q8", "klein-q4", "z-image-turbo-q4", "flux3-klein-q8"]
     y-axis "seconds" 0 --> 200
-    bar [22.5, 95.8, 180.6]
+    bar [22.5, 23.8, 95.8, 180.6]
 ```
 
 A 4-step distilled 4B model runs ~22.5 s per 1024×1024 image (the first is slower,
 ~28 s, because the model loads); FLUX 3 at 16 steps and a 5.6B transformer takes
 ~180 s. Z-Image Turbo — a 9-step distilled 6B model, Apache-2.0 — sits between them
-at **95.8 s**, ~4.3× slower than klein and ~1.9× faster than FLUX 3. All figures are
+at **95.8 s**, ~4.3× slower than klein and ~1.9× faster than FLUX 3. The **4-bit
+klein** (`klein-q4`) is the smallest on disk at 4.3 GB but *not* the fastest: at
+**23.8 s** it is +1.3 s (+5.8 %) behind the 8-bit sibling, because the checkpoint
+ships its own 4-bit weights that are dequantised on the fly — the saving is disk and
+memory, not seconds. All figures are
 the mean of the seven steady-state images, with the first — the one that includes
 model load — left out; that is the `s/img` column. **klein-q8 wins by 8×** and is the
 one to use unless you need FLUX 3 specifically. Legible text and correct hands — the
