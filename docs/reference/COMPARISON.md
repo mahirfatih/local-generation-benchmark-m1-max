@@ -61,13 +61,13 @@ Turbo** is the middle option and the Apache-2.0 one: ~4.3× slower than klein,
 out clean on all of them.
 
 The same prompt — a poster whose whole point is whether the two words render as
-words — on all three models. The cheap one did not need the others' help here:
+words — on all four models. The cheap one did not need the others' help here:
 
-| `flux2-klein-4b` (22.5 s) | `z-image-turbo` (95.8 s) | `flux-3-klein-base` (180.6 s) |
-| :---: | :---: | :---: |
-| ![LOCAL FIRST poster, klein-q8](../../evidence/images/klein-q8--text-poster.png) | ![LOCAL FIRST poster, z-image-turbo-q4](../../evidence/images/z-image-turbo-q4--text-poster.png) | ![LOCAL FIRST poster, flux-3-klein q8](../../evidence/images/flux3-klein-q8--text-poster.png) |
+| `flux2-klein-4b` q8 (22.5 s) | `flux2-klein-4b` q4 (23.8 s) | `z-image-turbo` (95.8 s) | `flux-3-klein-base` (180.6 s) |
+| :---: | :---: | :---: | :---: |
+| ![LOCAL FIRST poster, klein-q8](../../evidence/images/klein-q8--text-poster.png) | ![LOCAL FIRST poster, klein-q4](../../evidence/images/klein-q4--text-poster.png) | ![LOCAL FIRST poster, z-image-turbo-q4](../../evidence/images/z-image-turbo-q4--text-poster.png) | ![LOCAL FIRST poster, flux-3-klein q8](../../evidence/images/flux3-klein-q8--text-poster.png) |
 
-Every one of the twenty-four images, with the prompt that produced it, is in
+Every one of the thirty-two images, with the prompt that produced it, is in
 [`evidence/image-benchmark-2026-11-12.md`](../../evidence/image-benchmark-2026-11-12.md),
 [`evidence/image-benchmark-flux3-2026-11-12.md`](../../evidence/image-benchmark-flux3-2026-11-12.md)
 and
@@ -80,8 +80,8 @@ with `ffprobe`. Seconds per clip, model load included.
 
 | Model | Licence | Runner | s/clip | Output | Status |
 | :--- | :--- | :--- | ---: | :--- | :--- |
-| `CogVideoX-Fun-V1.5-5b-InP` (int8) | **The CogVideoX License** | VideoX-Fun-mlx | **266.1** | 672×384, 5 frames, GIF | ✅ 4/4 |
 | `CogVideoX-Fun-V1.5-5b-InP` (int4) | **The CogVideoX License** | VideoX-Fun-mlx | **256.3** | 672×384, 5 frames, GIF | ✅ 4/4 |
+| `CogVideoX-Fun-V1.5-5b-InP` (int8) | **The CogVideoX License** | VideoX-Fun-mlx | **266.1** | 672×384, 5 frames, GIF | ✅ 4/4 |
 | `Wan2.2-TI2V-5B` (int8) | Apache-2.0 | mlx-gen | **285.9** | 480×832, 25 frames, MP4 | ✅ 4/4 |
 
 CogVideoX-Fun renders a 5-frame 672×384 clip in **266.1 s on average** (four

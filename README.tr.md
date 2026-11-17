@@ -6,7 +6,7 @@
 [![Platform](https://img.shields.io/badge/platform-Apple%20Silicon%20(arm64)-000?logo=apple&logoColor=white)](#donanım--yazılım)
 [![mflux](https://img.shields.io/badge/image-mflux-blue)](https://github.com/filipstrand/mflux)
 [![VideoX-Fun-mlx](https://img.shields.io/badge/video-VideoX--Fun--mlx-blue)](https://github.com/dgrauet/VideoX-Fun-mlx)
-[![Outputs](https://img.shields.io/badge/outputs-24%20PNG%20%2B%204%20GIF-purple)](evidence/)
+[![Outputs](https://img.shields.io/badge/outputs-32%20PNG%20%2B%204%20GIF-purple)](evidence/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
 **Türkçe** · [English](README.md)
@@ -174,11 +174,12 @@ Okunabilir metin ve doğru eller — klasik başarısızlık yüzeyleri — dör
 temiz çıktı. FLUX 3'ün ticari-çıktı sınırı devreye girdiğinde ama klein'in hızı
 öncelik değilse, Apache-2.0 alternatifi Z-Image Turbo'dur.
 
-Yirmi dört görsel, her biri kendisini üreten prompt ile:
+Otuz iki görsel, her biri kendisini üreten prompt ile:
 
 [`evidence/image-benchmark-2026-11-12.md`](evidence/image-benchmark-2026-11-12.md),
-[`evidence/image-benchmark-flux3-2026-11-12.md`](evidence/image-benchmark-flux3-2026-11-12.md)
-ve [`evidence/image-benchmark-zimage-2026-11-14.md`](evidence/image-benchmark-zimage-2026-11-14.md).
+[`evidence/image-benchmark-flux3-2026-11-12.md`](evidence/image-benchmark-flux3-2026-11-12.md),
+[`evidence/image-benchmark-zimage-2026-11-14.md`](evidence/image-benchmark-zimage-2026-11-14.md)
+ve [`evidence/image-benchmark-klein-q4-2026-11-17.md`](evidence/image-benchmark-klein-q4-2026-11-17.md).
 
 ## Video üretimi
 
@@ -189,8 +190,8 @@ doğrulanır — runner'ın log satırıyla değil, dosyayla.
 
 | Model (profil) | Lisans | s/klip | Çıktı | Kare | OK |
 | :--- | :--- | ---: | :--- | ---: | :---: |
-| [`dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8`](https://huggingface.co/dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8) (`cogvideox-fun-1.5-5b-inp-q8`) | **The CogVideoX License** | **266.1** | 672×384, 1.6 s, GIF | 5 | ✅ 4/4 |
 | [`dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4`](https://huggingface.co/dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4) (`cogvideox-fun-1.5-5b-inp-q4`) | **The CogVideoX License** | **256.3** | 672×384, 1.6 s, GIF | 5 | ✅ 4/4 |
+| [`dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8`](https://huggingface.co/dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8) (`cogvideox-fun-1.5-5b-inp-q8`) | **The CogVideoX License** | **266.1** | 672×384, 1.6 s, GIF | 5 | ✅ 4/4 |
 | [`AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit`](https://huggingface.co/AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit) (`wan22-ti2v-5b-q8`) | Apache-2.0 | **285.9** | 480×832, 1.6 s, MP4 | 25 | ✅ 4/4 |
 
 5 karelik 672×384 bir klip için **266.1 s** — dört promptun ortalaması,

@@ -6,7 +6,7 @@ committed so you can look at it.**
 [![Platform](https://img.shields.io/badge/platform-Apple%20Silicon%20(arm64)-000?logo=apple&logoColor=white)](#hardware--software)
 [![mflux](https://img.shields.io/badge/image-mflux-blue)](https://github.com/filipstrand/mflux)
 [![VideoX-Fun-mlx](https://img.shields.io/badge/video-VideoX--Fun--mlx-blue)](https://github.com/dgrauet/VideoX-Fun-mlx)
-[![Outputs](https://img.shields.io/badge/outputs-24%20PNG%20%2B%204%20GIF-purple)](evidence/)
+[![Outputs](https://img.shields.io/badge/outputs-32%20PNG%20%2B%204%20GIF-purple)](evidence/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
 [English](README.md) · [Türkçe](README.tr.md)
@@ -44,7 +44,7 @@ flowchart TD
     B -->|Video| D{Commercial use?}
     C -->|Yes| E[klein-q8 · 22.5 s · Apache-2.0]
     C -->|No, quality first| F[flux3-klein-q8 · 180.6 s · FLUX Kommunity]
-    D -->|Yes| G[Wan2.2 TI2V 5B · Apache-2.0 · ~330 s/clip]
+    D -->|Yes| G[Wan2.2 TI2V 5B · Apache-2.0 · 285.9 s/clip]
     D -->|No / research| H[cogvideox q4 · 256.3 s/clip · CogVideoX License]
     E --> I[Fast, text renders clean]
     F --> J[Hands and text look better, 8x slower]
@@ -223,11 +223,12 @@ classic failure surfaces — come out clean on all. Z-Image Turbo is the Apache-
 alternative when FLUX 3's commercial-output cap rules it out but klein's speed is
 not the priority.
 
-Twenty-four images, each with the prompt that produced it:
+Thirty-two images, each with the prompt that produced it:
 
 [`evidence/image-benchmark-2026-11-12.md`](evidence/image-benchmark-2026-11-12.md),
-[`evidence/image-benchmark-flux3-2026-11-12.md`](evidence/image-benchmark-flux3-2026-11-12.md)
-and [`evidence/image-benchmark-zimage-2026-11-14.md`](evidence/image-benchmark-zimage-2026-11-14.md).
+[`evidence/image-benchmark-flux3-2026-11-12.md`](evidence/image-benchmark-flux3-2026-11-12.md),
+[`evidence/image-benchmark-zimage-2026-11-14.md`](evidence/image-benchmark-zimage-2026-11-14.md)
+and [`evidence/image-benchmark-klein-q4-2026-11-17.md`](evidence/image-benchmark-klein-q4-2026-11-17.md).
 
 ## Video generation
 
@@ -237,8 +238,8 @@ end, and every clip verified with `ffprobe` — the file, not the runner's log l
 
 | Model (profile) | Licence | s/clip | Output | Frames | OK |
 | :--- | :--- | ---: | :--- | ---: | :---: |
-| [`dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8`](https://huggingface.co/dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8) (`cogvideox-fun-1.5-5b-inp-q8`) | **The CogVideoX License** | **266.1** | 672×384, 1.6 s, GIF | 5 | ✅ 4/4 |
 | [`dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4`](https://huggingface.co/dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4) (`cogvideox-fun-1.5-5b-inp-q4`) | **The CogVideoX License** | **256.3** | 672×384, 1.6 s, GIF | 5 | ✅ 4/4 |
+| [`dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8`](https://huggingface.co/dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8) (`cogvideox-fun-1.5-5b-inp-q8`) | **The CogVideoX License** | **266.1** | 672×384, 1.6 s, GIF | 5 | ✅ 4/4 |
 | [`AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit`](https://huggingface.co/AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit) (`wan22-ti2v-5b-q8`) | Apache-2.0 | **285.9** | 480×832, 1.6 s, MP4 | 25 | ✅ 4/4 |
 
 ```mermaid
