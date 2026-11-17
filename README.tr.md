@@ -23,6 +23,7 @@ durur; burada oMLX'in çalıştıramadığı iki katman var:
 | Katman | Araç | Model | Süre | Çıktı |
 | :--- | :--- | :--- | ---: | :--- |
 | **Görsel** | [mflux](https://github.com/filipstrand/mflux) | FLUX.2 klein 4B (q8) | **22.5 s** | 1024×1024 PNG |
+| Görsel | mflux | FLUX.2 klein 4B (q4) | 23.8 s | 1024×1024 PNG |
 | Görsel | mflux | Z-Image Turbo (q4) | 95.8 s | 1024×1024 PNG |
 | Görsel | mflux | FLUX 3 Image Klein | 180.6 s | 1024×1024 PNG |
 | **Video** | [VideoX-Fun-mlx](https://github.com/dgrauet/VideoX-Fun-mlx) | CogVideoX-Fun V1.5 5B (int8) | **266.1 s** | 672×384, 5 kare GIF |
