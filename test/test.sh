@@ -85,6 +85,29 @@ for name, path in (("image", "profiles/mflux-profiles.json"),
     print(f"{name}: {len(gens)} profiles, each with a licence, settings and a command")
 PY
 
+step "4b. Profiles — a source link names the profile's own model"
+python3 - <<'PY'
+import json, pathlib
+# A profile's `sources[0]` is the checkpoint it was benchmarked on, so it must
+# be that profile's model — not the sibling quant's. The q4 CogVideoX profile
+# shipped the q8 URL: both repos exist, both are valid links, and a reader
+# following the row lands on a different precision than the one measured.
+# Step 11 cannot see this, because it reads the HF links out of README.md.
+for path in ("profiles/mflux-profiles.json", "profiles/video-profiles.json"):
+    gens = json.loads(pathlib.Path(path).read_text())["generation_profiles"]
+    for key, prof in gens.items():
+        model = prof.get("model")
+        sources = prof.get("sources", [])
+        assert sources, f"{key} has no sources"
+        if not model or "/" not in model:
+            continue
+        assert any(s.rstrip("/").endswith(model) for s in sources), (
+            f"{key}: no source links to its own model {model}\n"
+            + "\n".join(f"    {s}" for s in sources)
+        )
+    print(f"{path}: every profile links to its own model")
+PY
+
 step "5. Evidence — every clip and image named in the evidence pages exists"
 python3 - <<'PY'
 import pathlib, re, sys
