@@ -2,7 +2,7 @@
   "date": "2026-11-20",
   "rows": [
     {
-      "model": "Wan-AI/Wan2.2-TI2V-5B-Diffusers",
+      "model": "AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit",
       "profile": "wan22-ti2v-5b-q8",
       "license": "apache-2.0",
       "runner": "mlx-gen",
@@ -25,7 +25,7 @@
           },
           "bytes": 295858,
           "sha256_16": "7040eead71a1b093",
-          "stderr_tail": "Denoising video: 100%|██████████| 20/20 [03:20<00:00,  9.99s/step, generated; 25 frames]\nDenoising video: 100%|██████████| 20/20 [03:20<00:00,  9.99s/step, save; 25 frames]     \nDenoising video: 100%|██████████| 20/20 [03:51<00:00,  9.99s/step, complete; 25 frames]\nDenoising video: 100%|██████████| 20/20 [03:51<00:00, 11.55s/step, complete; 25 frames]",
+          "stderr_tail": "Denoising video: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 20/20 [03:20<00:00,  9.99s/step, generated; 25 frames]\nDenoising video: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 20/20 [03:20<00:00,  9.99s/step, save; 25 frames]     \nDenoising video: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 20/20 [03:51<00:00,  9.99s/step, complete; 25 frames]\nDenoising video: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 20/20 [03:51<00:00, 11.55s/step, complete; 25 frames]",
           "argv": [
             "mlxgen",
             "generate",
@@ -70,7 +70,7 @@
           },
           "bytes": 217441,
           "sha256_16": "486a66653530c60d",
-          "stderr_tail": "Denoising video: 100%|██████████| 20/20 [03:21<00:00, 10.06s/step, generated; 25 frames]\nDenoising video: 100%|██████████| 20/20 [03:21<00:00, 10.06s/step, save; 25 frames]     \nDenoising video: 100%|██████████| 20/20 [03:50<00:00, 10.06s/step, complete; 25 frames]\nDenoising video: 100%|██████████| 20/20 [03:50<00:00, 11.54s/step, complete; 25 frames]",
+          "stderr_tail": "Denoising video: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 20/20 [03:21<00:00, 10.06s/step, generated; 25 frames]\nDenoising video: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 20/20 [03:21<00:00, 10.06s/step, save; 25 frames]     \nDenoising video: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 20/20 [03:50<00:00, 10.06s/step, complete; 25 frames]\nDenoising video: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 20/20 [03:50<00:00, 11.54s/step, complete; 25 frames]",
           "argv": [
             "mlxgen",
             "generate",
@@ -115,7 +115,7 @@
           },
           "bytes": 234228,
           "sha256_16": "1035ee820ac762ea",
-          "stderr_tail": "Denoising video: 100%|██████████| 20/20 [03:21<00:00, 10.05s/step, generated; 25 frames]\nDenoising video: 100%|██████████| 20/20 [03:21<00:00, 10.05s/step, save; 25 frames]     \nDenoising video: 100%|██████████| 20/20 [03:51<00:00, 10.05s/step, complete; 25 frames]\nDenoising video: 100%|██████████| 20/20 [03:51<00:00, 11.55s/step, complete; 25 frames]",
+          "stderr_tail": "Denoising video: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 20/20 [03:21<00:00, 10.05s/step, generated; 25 frames]\nDenoising video: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 20/20 [03:21<00:00, 10.05s/step, save; 25 frames]     \nDenoising video: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 20/20 [03:51<00:00, 10.05s/step, complete; 25 frames]\nDenoising video: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 20/20 [03:51<00:00, 11.55s/step, complete; 25 frames]",
           "argv": [
             "mlxgen",
             "generate",
@@ -160,7 +160,7 @@
           },
           "bytes": 395350,
           "sha256_16": "eab4faec241e2a7c",
-          "stderr_tail": "Denoising video: 100%|██████████| 20/20 [03:20<00:00, 10.04s/step, generated; 25 frames]\nDenoising video: 100%|██████████| 20/20 [03:20<00:00, 10.04s/step, save; 25 frames]     \nDenoising video: 100%|██████████| 20/20 [03:50<00:00, 10.04s/step, complete; 25 frames]\nDenoising video: 100%|██████████| 20/20 [03:50<00:00, 11.54s/step, complete; 25 frames]",
+          "stderr_tail": "Denoising video: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 20/20 [03:20<00:00, 10.04s/step, generated; 25 frames]\nDenoising video: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 20/20 [03:20<00:00, 10.04s/step, save; 25 frames]     \nDenoising video: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 20/20 [03:50<00:00, 10.04s/step, complete; 25 frames]\nDenoising video: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 20/20 [03:50<00:00, 11.54s/step, complete; 25 frames]",
           "argv": [
             "mlxgen",
             "generate",
@@ -205,7 +205,7 @@
           },
           "bytes": 283598,
           "sha256_16": "58923d30e8a325c1",
-          "stderr_tail": "Denoising video: 100%|██████████| 20/20 [04:25<00:00, 10.14s/step, generated; 25 frames]\nDenoising video: 100%|██████████| 20/20 [04:25<00:00, 10.14s/step, save; 25 frames]     \nDenoising video: 100%|██████████| 20/20 [04:56<00:00, 10.14s/step, complete; 25 frames]\nDenoising video: 100%|██████████| 20/20 [04:56<00:00, 14.82s/step, complete; 25 frames]",
+          "stderr_tail": "Denoising video: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 20/20 [04:25<00:00, 10.14s/step, generated; 25 frames]\nDenoising video: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 20/20 [04:25<00:00, 10.14s/step, save; 25 frames]     \nDenoising video: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 20/20 [04:56<00:00, 10.14s/step, complete; 25 frames]\nDenoising video: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 20/20 [04:56<00:00, 14.82s/step, complete; 25 frames]",
           "argv": [
             "mlxgen",
             "generate",
@@ -250,7 +250,7 @@
           },
           "bytes": 985985,
           "sha256_16": "028b81a5345ea5c0",
-          "stderr_tail": "Denoising video: 100%|██████████| 20/20 [04:23<00:00, 10.27s/step, generated; 25 frames]\nDenoising video: 100%|██████████| 20/20 [04:23<00:00, 10.27s/step, save; 25 frames]     \nDenoising video: 100%|██████████| 20/20 [04:54<00:00, 10.27s/step, complete; 25 frames]\nDenoising video: 100%|██████████| 20/20 [04:54<00:00, 14.72s/step, complete; 25 frames]",
+          "stderr_tail": "Denoising video: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 20/20 [04:23<00:00, 10.27s/step, generated; 25 frames]\nDenoising video: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 20/20 [04:23<00:00, 10.27s/step, save; 25 frames]     \nDenoising video: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 20/20 [04:54<00:00, 10.27s/step, complete; 25 frames]\nDenoising video: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 20/20 [04:54<00:00, 14.72s/step, complete; 25 frames]",
           "argv": [
             "mlxgen",
             "generate",

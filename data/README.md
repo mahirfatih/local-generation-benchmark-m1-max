@@ -27,6 +27,13 @@ Both are small on purpose. Eight and six prompts are enough to show an 8× gap
 and a per-clip cost in the hundreds of seconds; a gap of a second or two is noise
 and the sample sizes are stated wherever the results are.
 
+**This file is the canonical wording.** A prompt's subject can appear in more than
+one repository — the app (`mlx-media-studio`) drives its own runs with prompts that
+share the fox and the sunset subject, and those are deliberately shorter. A prompt
+is quoted from whichever file produced the clip, never reworded to match: the two
+files' texts are not interchangeable, and `motion-snowy-fox` here is longer than
+the fox line in the app's evidence page.
+
 ## Adding a prompt
 
 Add it with a unique `id` and a `category` that exists. `test/test.sh` step 2 and

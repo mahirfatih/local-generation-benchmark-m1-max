@@ -88,7 +88,7 @@ CogVideoX-Fun.
 
 | Setting | `wan22-ti2v-5b-q8` | `cogvideox-fun-1.5-5b-inp-q8` |
 | :--- | ---: | ---: |
-| Model (as the runner resolves it) | `Wan-AI/Wan2.2-TI2V-5B-Diffusers` | `dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8` |
+| Model (as the runner resolves it) | `AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit` | `dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8` |
 | Base model | `Wan-AI/Wan2.2-TI2V-5B-Diffusers` | `alibaba-pai/CogVideoX-Fun-V1.5-5b-InP` |
 | Runner | `mlxgen generate` | `python scripts/quick_infer.py` |
 | Quantization | mixed q8 / BF16 | int8 (transformer block linears) |
@@ -108,9 +108,12 @@ machine** with `--low-ram`, deliberately smaller than the uploader's validation
 profile (1280×704, 17 frames, 20 steps on 128 GB, which peaked near 104 GiB). The
 licence is Apache-2.0, inherited from the base model.
 
-The model id is `Wan-AI/Wan2.2-TI2V-5B-Diffusers` and this is not cosmetic:
-mlx-gen resolves a model from an alias, a Hugging Face repo id, **or a local
-directory**. The local-directory form needs the family hint:
+The weights that were measured are `AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit`
+(the `model` the profile resolves to); the **base model** they quantise is
+upstream `Wan-AI/Wan2.2-TI2V-5B-Diffusers`, and the two are never the same file
+on disk. This is not cosmetic: mlx-gen resolves a model from an alias, a Hugging
+Face repo id, **or a local directory**. The local-directory form needs the family
+hint:
 `mlxgen capabilities --model ~/models/AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit --family wan`
 reports `wan.text-video`, so routing works. What that does not prove is that the
 8-bit quantisation in that folder loads — oMLX's scheme and mlx-gen's expectations
