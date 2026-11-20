@@ -6,6 +6,21 @@ date-based snapshots rather than semver releases.
 
 ## [Unreleased]
 
+### Added — two mlx-gen image profiles, and a source image for Wan
+
+- **`bonsai-image-ternary-2bit` and `ernie-image-turbo-q8`** join
+  [`profiles/mflux-profiles.json`](profiles/mflux-profiles.json). They are image
+  models, so they live in the image file, but they run through **`mlx-gen`**, not
+  mflux — each carries its own `invoke` and an explicit `"runner": "mlx-gen"`, and
+  neither takes `--base-model` or `--compute-precision`. **Not benchmarked yet**:
+  no timing or peak-memory row, and the tables leave them out rather than
+  guessing.
+- **`wan22-ti2v-5b-q8` takes a first frame.** Its `invoke` gains
+  `--image {image}` and the profile sets `"accepts_input_image": true`, so a caller
+  with an image can animate a still; without one the flag resolves away and the run
+  stays text-to-video. The CogVideoX profiles get no such flag — `quick_infer.py`
+  has no `--image`.
+
 ### Changed — the video prompt set grew from four prompts to six
 
 - **Two prompts added**: `scene-sunset-ocean` (scene) and `motion-snowy-fox`

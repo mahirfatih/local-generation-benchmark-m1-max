@@ -78,6 +78,45 @@ mflux build in the documented venv (`mlx-gen` 0.38.0) no longer accepts
 `--compute-precision`, so the harness passes no precision flag for this profile. The
 two FLUX profiles keep the `float16` value from the run that produced their figures.
 
+## Image generation through mlx-gen (not mflux)
+
+Two image models ship in
+[`profiles/mflux-profiles.json`](../../profiles/mflux-profiles.json) — the file
+groups *image* models, not mflux ones — but run through
+[`mlx-gen`](https://github.com/lpalbou/mlx-gen)'s `mlxgen` console script, with
+their own `invoke` argv. They are **not** benchmarked yet: their timings and peak
+memory are unmeasured, and the app shows them as such rather than quoting a guess.
+
+| Setting | `bonsai-image-ternary-2bit` | `ernie-image-turbo-q8` |
+| :--- | ---: | ---: |
+| Model | `prism-ml/bonsai-image-ternary-4B-mlx-2bit` | `AbstractFramework/ernie-image-turbo-8bit` |
+| Base model | `prism-ml/bonsai-image-ternary-4B-unpacked` | `baidu/ERNIE-Image-Turbo` |
+| CLI | `mlxgen` | `mlxgen` |
+| Quantization | ternary 1.58-bit g128 (transformer); 4-bit text encoder | MLX affine, 8-bit |
+| Width × height | 1024 × 1024 | 512 × 512 |
+| Steps | 4 | 8 |
+| Guidance scale | 1.0 | 1.0 |
+| Seed | 42 | 42 |
+| On-disk | 3.6 GB | 11.5 GB |
+| Licence | Apache-2.0 | Apache-2.0 |
+
+**`bonsai-image-ternary-2bit`** — Bonsai Image 4B is a **ternary** (1.58-bit, one
+scale per 128-weight group) deployment of the FLUX.2 Klein 4B architecture
+(`model_index.json` → `Flux2KleinPipeline`), 4 steps at guidance 1.0 with a
+FlowMatch-Euler sampler (shift 3.0), no CFG. The 3.88 GB payload includes a 4-bit
+text encoder that is offloaded after prompt encoding, so the denoising loop keeps
+only the compact transformer and VAE resident. Source:
+[`prism-ml/bonsai-image-ternary-4B-mlx-2bit`](https://huggingface.co/prism-ml/bonsai-image-ternary-4B-mlx-2bit).
+
+**`ernie-image-turbo-q8`** — ERNIE-Image-Turbo, MLX 8-bit weights in the
+mlx-gen saved-weight layout (not a Diffusers `from_pretrained` checkpoint). The
+uploader's own example runs **8 steps at guidance 1**. Source:
+[`AbstractFramework/ernie-image-turbo-8bit`](https://huggingface.co/AbstractFramework/ernie-image-turbo-8bit).
+
+Neither accepts `--base-model` or `--compute-precision`: the `mlxgen` CLI has
+neither flag, which is why each carries an explicit `invoke` template instead of
+falling back to the generic mflux argv.
+
 ## Video profiles
 
 Video is a **third layer** with its own runners and its own file,
@@ -107,6 +146,13 @@ canvas, frame count and step count here are a **conservative baseline for a 64 G
 machine** with `--low-ram`, deliberately smaller than the uploader's validation
 profile (1280×704, 17 frames, 20 steps on 128 GB, which peaked near 104 GiB). The
 licence is Apache-2.0, inherited from the base model.
+
+Its `invoke` carries `--image {image}` and the profile sets
+`accepts_input_image: true`, so a caller that has a first frame can pass it; a
+caller with no image resolves the placeholder to nothing and the flag goes with
+it, leaving a text-to-video run. Wan is the **only** video profile that takes an
+image — `quick_infer.py` has no `--image`, so the CogVideoX profiles stay
+text-to-video.
 
 The weights that were measured are `AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit`
 (the `model` the profile resolves to); the **base model** they quantise is

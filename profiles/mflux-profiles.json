@@ -150,12 +150,129 @@
         "https://huggingface.co/mflux-community/z-image-turbo-mflux-q4",
         "https://huggingface.co/Tongyi-MAI/Z-Image-Turbo"
       ]
+    },
+    "bonsai-image-ternary-2bit": {
+      "name": "bonsai-image-ternary-2bit",
+      "display_name": "bonsai-image-ternary-2bit",
+      "description": "Bonsai Image 4B, ternary 1.58-bit g128 (MLX 2-bit deployment). Apache-2.0. Runs through mlx-gen, not mflux: it is an MLX-Gen saved-weight package of the FLUX.2 Klein 4B architecture with no mflux console script.",
+      "task": "text-to-image",
+      "runner": "mlx-gen",
+      "runner_docs": "https://github.com/lpalbou/mlx-gen",
+      "cli": "mlxgen",
+      "invoke": [
+        "mlxgen",
+        "generate",
+        "--model",
+        "{model}",
+        "--prompt",
+        "{prompt}",
+        "--width",
+        "{width}",
+        "--height",
+        "{height}",
+        "--steps",
+        "{steps}",
+        "--guidance",
+        "{guidance}",
+        "--seed",
+        "{seed}",
+        "--output",
+        "{output}"
+      ],
+      "model": "prism-ml/bonsai-image-ternary-4B-mlx-2bit",
+      "base_model": "prism-ml/bonsai-image-ternary-4B-unpacked",
+      "license": "apache-2.0",
+      "license_note": "Apache-2.0, inherited from the base model. No output restrictions beyond the licence's own terms.",
+      "local_path": "~/models/prism-ml/bonsai-image-ternary-4B-mlx-2bit",
+      "on_disk_gb": 3.6,
+      "quantization": {
+        "scheme": "mlx-ternary-g128",
+        "bits": 2,
+        "applies_to": [
+          "transformer"
+        ],
+        "note": "Ternary values {-,0,+} with one FP16 scale per 128-weight group (1.58-bit g128). The level is stored in the weights, so no --quantize flag is needed. The text encoder is a separate MLX 4-bit directory."
+      },
+      "settings": {
+        "width": 1024,
+        "height": 1024,
+        "steps": 4,
+        "guidance_scale": 1.0,
+        "seed": 42
+      },
+      "compute_precision_note": "No compute_precision is set: mflux 0.38.0 (via mlx-gen 0.38.0) no longer accepts --compute-precision, and the mlx-gen CLI has no such flag. The model is designed for 4 steps at guidance 1.0 (FlowMatch-Euler, shift 3.0).",
+      "sources": [
+        "https://huggingface.co/prism-ml/bonsai-image-ternary-4B-mlx-2bit",
+        "https://huggingface.co/prism-ml/bonsai-image-ternary-4B-unpacked",
+        "https://huggingface.co/black-forest-labs/FLUX.2-klein-4B",
+        "https://github.com/lpalbou/mlx-gen"
+      ]
+    },
+    "ernie-image-turbo-q8": {
+      "name": "ernie-image-turbo-q8",
+      "display_name": "ernie-image-turbo-q8",
+      "description": "ERNIE-Image-Turbo, MLX 8-bit MLX-Gen saved weights. Apache-2.0. Runs through mlx-gen; the weights use the mflux/MLX saved-weight layout and are not a Diffusers from_pretrained checkpoint.",
+      "task": "text-to-image",
+      "runner": "mlx-gen",
+      "runner_docs": "https://github.com/lpalbou/mlx-gen",
+      "cli": "mlxgen",
+      "invoke": [
+        "mlxgen",
+        "generate",
+        "--model",
+        "{model}",
+        "--prompt",
+        "{prompt}",
+        "--width",
+        "{width}",
+        "--height",
+        "{height}",
+        "--steps",
+        "{steps}",
+        "--guidance",
+        "{guidance}",
+        "--seed",
+        "{seed}",
+        "--output",
+        "{output}"
+      ],
+      "model": "AbstractFramework/ernie-image-turbo-8bit",
+      "base_model": "baidu/ERNIE-Image-Turbo",
+      "license": "apache-2.0",
+      "license_note": "Apache-2.0, inherited from the source model. No output restrictions beyond the licence's own terms.",
+      "local_path": "~/models/AbstractFramework/ernie-image-turbo-8bit",
+      "on_disk_gb": 11.5,
+      "quantization": {
+        "scheme": "mlx-affine",
+        "bits": 8,
+        "applies_to": [
+          "text_encoder",
+          "transformer",
+          "vae"
+        ],
+        "note": "The level is stored in the weights, so no --quantize flag is needed."
+      },
+      "settings": {
+        "width": 512,
+        "height": 512,
+        "steps": 8,
+        "guidance_scale": 1.0,
+        "seed": 42
+      },
+      "compute_precision_note": "No compute_precision is set: mflux 0.38.0 (via mlx-gen 0.38.0) no longer accepts --compute-precision, and the mlx-gen CLI has no such flag. The uploader's own example runs 8 steps at guidance 1.",
+      "sources": [
+        "https://huggingface.co/AbstractFramework/ernie-image-turbo-8bit",
+        "https://huggingface.co/baidu/ERNIE-Image-Turbo",
+        "https://github.com/lpalbou/mlx-gen"
+      ]
     }
   },
   "model_to_profile": {
     "mflux-community/flux2-klein-4b-mflux-q8": "klein-q8",
     "Runpod/FLUX.2-klein-4B-mflux-4bit": "klein-q4",
     "mflux-community/flux-3-image-klein-base-mflux-q8": "flux3-klein-q8",
-    "mflux-community/z-image-turbo-mflux-q4": "z-image-turbo-q4"
+    "mflux-community/z-image-turbo-mflux-q4": "z-image-turbo-q4",
+    "prism-ml/bonsai-image-ternary-4B-mlx-2bit": "bonsai-image-ternary-2bit",
+    "AbstractFramework/ernie-image-turbo-8bit": "ernie-image-turbo-q8"
   }
 }
