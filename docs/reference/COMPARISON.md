@@ -26,13 +26,15 @@ measured on the same M1 Max.
 | Image | `flux2-klein-4b` (q4) | mflux | Apache-2.0 | 23.8 s | 1024×1024, 4 steps |
 | Image | `z-image-turbo` | mflux | Apache-2.0 | 95.8 s | 1024×1024, 9 steps |
 | Image | `flux-3-image-klein-base` | mflux | FLUX Kommunity | 180.6 s | 1024×1024, 16 steps |
-| **Video** | `CogVideoX-Fun-V1.5-5b-InP` | VideoX-Fun-mlx | **CogVideoX License** | **266.1 s** | 672×384, 5 frames, GIF |
+| **Video** | `CogVideoX-Fun-V1.5-5b-InP` | VideoX-Fun-mlx | **CogVideoX License** | **262.1 s** | 672×384, 5 frames, GIF |
+| Video | `CogVideoX-Fun-V1.5-5b-InP` (int4) | VideoX-Fun-mlx | **CogVideoX License** | 247.7 s | 672×384, 5 frames, GIF |
+| Video | `Wan2.2-TI2V-5B` (int8) | mlx-gen | Apache-2.0 | 255.6 s | 480×832, 25 frames, MP4 |
 
 Read down each column, not across the rows: seconds per image and seconds per
 clip are not comparable units, and nor are the two ways they are averaged —
 `s/img` is the mean **after the first image**, whose number carries the one-time
-model load, while `s/clip` is the mean of all four clips. **22.5 s buys a still;
-266.1 s buys 1.6 s of motion.** That gap is the whole story of local generation
+model load, while `s/clip` is the mean of all six clips. **22.5 s buys a still;
+262.1 s buys 1.6 s of motion.** That gap is the whole story of local generation
 on this machine.
 
 ## Image generation — a separate layer
@@ -80,19 +82,19 @@ with `ffprobe`. Seconds per clip, model load included.
 
 | Model | Licence | Runner | s/clip | Output | Status |
 | :--- | :--- | :--- | ---: | :--- | :--- |
-| `CogVideoX-Fun-V1.5-5b-InP` (int4) | **The CogVideoX License** | VideoX-Fun-mlx | **256.3** | 672×384, 5 frames, GIF | ✅ 4/4 |
-| `CogVideoX-Fun-V1.5-5b-InP` (int8) | **The CogVideoX License** | VideoX-Fun-mlx | **266.1** | 672×384, 5 frames, GIF | ✅ 4/4 |
-| `Wan2.2-TI2V-5B` (int8) | Apache-2.0 | mlx-gen | **285.9** | 480×832, 25 frames, MP4 | ✅ 4/4 |
+| `CogVideoX-Fun-V1.5-5b-InP` (int4) | **The CogVideoX License** | VideoX-Fun-mlx | **247.7** | 672×384, 5 frames, GIF | ✅ 6/6 |
+| `CogVideoX-Fun-V1.5-5b-InP` (int8) | **The CogVideoX License** | VideoX-Fun-mlx | **262.1** | 672×384, 5 frames, GIF | ✅ 6/6 |
+| `Wan2.2-TI2V-5B` (int8) | Apache-2.0 | mlx-gen | **255.6** | 480×832, 25 frames, MP4 | ✅ 6/6 |
 
-CogVideoX-Fun renders a 5-frame 672×384 clip in **266.1 s on average** (four
-prompts, 265.2–267.2 s), which is ~4.4 minutes of waiting for a clip that plays
-for 1.6 s. The spread is under 2 s, so any single figure in that range is honest;
-266.1 is the mean of the four. The frame count
+CogVideoX-Fun renders a 5-frame 672×384 clip in **262.1 s on average** (six
+prompts, 258.7–274.9 s), which is over four minutes of waiting for a clip that
+plays for 1.6 s. The spread is under 17 s, so any single figure in that range is
+honest; 262.1 is the mean of the six. The frame count
 is a `1 mod 4` choice, not a ceiling: `--frames` is not linear, the pipeline
 decodes `(F-1)//4*4+1` frames (4 → 1, 5 and 8 → 5, 13 → 13), and 9, 17 and 25
 raise a reshape error. Five is the cheapest usable value, so more frames are
 available at more compute — but a larger request does not simply buy more.
-All four clips — with
+All six clips — with
 the prompt under each — are in
 [`evidence/video-benchmark-2026-11-12.md`](../../evidence/video-benchmark-2026-11-12.md).
 
@@ -134,7 +136,7 @@ the licence readings, and the `ffprobe`-verified output checks.
 Every figure traces to a JSON file in [`reference/`](../../reference/), produced
 by the harness named beside it. Nothing on this page was typed by hand.
 
-**Sample sizes are small.** Eight image prompts, four video prompts. A gap of a
+**Sample sizes are small.** Eight image prompts, six video prompts. A gap of a
 second or two is noise; an 8× gap is not.
 
 Speed and quality are **not a single score**. The images and clips are committed —

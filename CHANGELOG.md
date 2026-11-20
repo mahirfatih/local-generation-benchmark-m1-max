@@ -6,6 +6,20 @@ date-based snapshots rather than semver releases.
 
 ## [Unreleased]
 
+### Changed — the video prompt set grew from four prompts to six
+
+- **Two prompts added**: `scene-sunset-ocean` (scene) and `motion-snowy-fox`
+  (motion), in [`data/video-prompts.json`](data/video-prompts.json). The video
+  benchmark now runs three profiles over six prompts, and every `s/clip` figure
+  moved with it: CogVideoX int8 **266.1 → 262.1 s**, int4 **256.3 → 247.7 s**,
+  Wan2.2 **285.9 → 255.6 s**. All 18 clips are committed in
+  [`evidence/videos/`](evidence/videos/) and the regenerated page is
+  [`evidence/video-benchmark-2026-11-12.md`](evidence/video-benchmark-2026-11-12.md).
+- **Wan2.2's per-clip time is the most prompt-dependent of the three.** On the
+  same six prompts it spans 233.7–299.8 s — the two added prompts cost ~64 s more
+  than the four originals — where CogVideoX spans under 17 s. The mean is still
+  the published figure, but the range is stated beside it.
+
 ### Fixed — the CogVideoX `--frames` rule, and a quality caveat for the q4
 
 - **`--frames` must be `1 mod 4`, and 5 is not a ceiling.** The `--frames` notes

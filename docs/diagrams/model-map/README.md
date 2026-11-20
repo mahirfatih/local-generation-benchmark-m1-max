@@ -14,8 +14,8 @@ Two bands, because the two units are not comparable. Images: seconds per 1024×1
 over mflux — 22.5 s for FLUX.2 klein (q8), 23.8 s for its 4-bit sibling (smallest on disk
 but not the fastest), 95.8 s for Z-Image Turbo and 180.6 s for FLUX 3, an
 8× spread. Video:
-seconds per clip over VideoX-Fun-mlx and mlx-gen — 256.3 / 266.1 / 285.9 s, which looks like
-a tie until you count frames: 5 frames against 25, so 51–53 s per frame against 11.4 s.
+seconds per clip over VideoX-Fun-mlx and mlx-gen — 247.7 / 262.1 / 255.6 s, which looks like
+a tie until you count frames: 5 frames against 25, so 49.5–52.4 s per frame against 10.2 s.
 
 Licence differences are on the poster, not in a footnote: FLUX 3 carries a US$5M commercial
 output cap, the CogVideoX quant says Apache-2.0 while the base model does not, and Wan2.2 is

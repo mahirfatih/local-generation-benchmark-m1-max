@@ -27,6 +27,16 @@
       "id": "scene-storm-coast",
       "category": "scene",
       "prompt": "A wide fixed shot of a stormy coastline, large waves breaking against black rocks, sea spray thrown into the air, low grey clouds moving quickly inland, grass on the clifftop bending in the wind, no people."
+    },
+    {
+      "id": "scene-sunset-ocean",
+      "category": "scene",
+      "prompt": "A beautiful sunset over the ocean, waves rolling gently toward the shore, the sun low and orange on the horizon, warm light reflecting on the water, a calm wide establishing shot."
+    },
+    {
+      "id": "motion-snowy-fox",
+      "category": "motion",
+      "prompt": "A red fox running through a snowy pine forest, soft falling snow, camera tracking sideways alongside the animal as it moves across the frame."
     }
   ]
 }

@@ -9,14 +9,14 @@ a number.
 | [`image-benchmark-flux3-2026-11-12.md`](image-benchmark-flux3-2026-11-12.md) | mflux / FLUX 3 | The same, for the second model |
 | [`image-benchmark-zimage-2026-11-14.md`](image-benchmark-zimage-2026-11-14.md) | mflux / Z-Image Turbo | The same, for the third model |
 | [`image-benchmark-klein-q4-2026-11-17.md`](image-benchmark-klein-q4-2026-11-17.md) | mflux / klein-q4 | The same, for the fourth model |
-| [`video-benchmark-2026-11-12.md`](video-benchmark-2026-11-12.md) | VideoX-Fun-mlx | 4 clips, each with its prompt, its seconds and its `ffprobe` reading, plus a 2-clip quality check outside the timed rows |
+| [`video-benchmark-2026-11-12.md`](video-benchmark-2026-11-12.md) | VideoX-Fun-mlx / mlx-gen | 18 clips over 3 models and 6 prompts, each with its prompt, its seconds and its `ffprobe` reading |
 
 The outputs themselves sit beside the pages:
 
 - [`images/`](images/) — 32 PNGs, named `<profile>--<prompt-id>.png`
-- [`videos/`](videos/) — 12 clips: 4 GIFs and 4 MP4s over `<profile>--<prompt-id>`,
-  and 2 more (a GIF and an MP4) named `<profile>--snowy-fox-s42` for the quality
-  check the timed prompt set cannot carry
+- [`videos/`](videos/) — 18 clips (4 GIF batches and 2 MP4 batches) named
+  `<profile>--<prompt-id>`: six CogVideoX int8 and six int4 GIFs, and six Wan2.2
+  MP4s
 
 Every prompt is quoted **verbatim** under its output, so a page can be read
 without opening the JSON. Each file is named with the date it was produced.

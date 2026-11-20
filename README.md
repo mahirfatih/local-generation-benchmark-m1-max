@@ -24,15 +24,15 @@ here are the two layers oMLX cannot serve:
 | Image | mflux | FLUX.2 klein 4B (q4) | 23.8 s | 1024×1024 PNG |
 | Image | mflux | Z-Image Turbo (q4) | 95.8 s | 1024×1024 PNG |
 | Image | mflux | FLUX 3 Image Klein | 180.6 s | 1024×1024 PNG |
-| **Video** | [VideoX-Fun-mlx](https://github.com/dgrauet/VideoX-Fun-mlx) | CogVideoX-Fun V1.5 5B (int8) | **266.1 s** | 672×384, 5-frame GIF |
-| Video | VideoX-Fun-mlx | CogVideoX-Fun V1.5 5B (int4) | 256.3 s | 672×384, 5-frame GIF |
-| Video | [mlx-gen](https://github.com/lpalbou/mlx-gen) | Wan2.2 TI2V 5B (int8) | 285.9 s | 480×832, 25-frame MP4 |
+| **Video** | [VideoX-Fun-mlx](https://github.com/dgrauet/VideoX-Fun-mlx) | CogVideoX-Fun V1.5 5B (int8) | **262.1 s** | 672×384, 5-frame GIF |
+| Video | VideoX-Fun-mlx | CogVideoX-Fun V1.5 5B (int4) | 247.7 s | 672×384, 5-frame GIF |
+| Video | [mlx-gen](https://github.com/lpalbou/mlx-gen) | Wan2.2 TI2V 5B (int8) | 255.6 s | 480×832, 25-frame MP4 |
 
 Every number is wall clock on this one machine, **model load included**, and every
 output is verified against the file it wrote — the PNG header for images, `ffprobe`
 for clips — not against a tool's log line. The image figures are the mean **after
 the first image**, which is the one that pays the one-time model load; each video
-figure is that model's own mean over its four clips. The images and clips are in
+figure is that model's own mean over its six clips. The images and clips are in
 [`evidence/`](evidence/) so the claim can be checked by looking, not by trusting.
 
 **Pick by what you are doing.** The chart and the flowchart below settle most
@@ -47,8 +47,8 @@ flowchart TD
     C -->|Yes| E[klein-q8 · 22.5 s · Apache-2.0 · 8.0 GB]
     C -->|Yes, tight disk or RAM| E4[klein-q4 · 23.8 s · Apache-2.0 · 4.3 GB]
     C -->|No, quality first| F[flux3-klein-q8 · 180.6 s · FLUX Kommunity]
-    D -->|Yes| G[Wan2.2 TI2V 5B · Apache-2.0 · 285.9 s/clip]
-    D -->|No / research| H[cogvideox q4 · 256.3 s/clip · CogVideoX License]
+    D -->|Yes| G[Wan2.2 TI2V 5B · Apache-2.0 · 255.6 s/clip]
+    D -->|No / research| H[cogvideox q4 · 247.7 s/clip · CogVideoX License]
     E --> I[Fast, text renders clean]
     E4 --> I4[Same speed class, smallest on disk]
     F --> J[Hands and text look better, 8x slower]
@@ -242,31 +242,33 @@ end, and every clip verified with `ffprobe` — the file, not the runner's log l
 
 | Model (profile) | Licence | s/clip | Output | Frames | OK |
 | :--- | :--- | ---: | :--- | ---: | :---: |
-| [`dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4`](https://huggingface.co/dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4) (`cogvideox-fun-1.5-5b-inp-q4`) | **The CogVideoX License** | **256.3** | 672×384, 1.6 s, GIF | 5 | ✅ 4/4 |
-| [`dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8`](https://huggingface.co/dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8) (`cogvideox-fun-1.5-5b-inp-q8`) | **The CogVideoX License** | **266.1** | 672×384, 1.6 s, GIF | 5 | ✅ 4/4 |
-| [`AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit`](https://huggingface.co/AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit) (`wan22-ti2v-5b-q8`) | Apache-2.0 | **285.9** | 480×832, 1.6 s, MP4 | 25 | ✅ 4/4 |
+| [`dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4`](https://huggingface.co/dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4) (`cogvideox-fun-1.5-5b-inp-q4`) | **The CogVideoX License** | **247.7** | 672×384, 1.6 s, GIF | 5 | ✅ 6/6 |
+| [`dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8`](https://huggingface.co/dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8) (`cogvideox-fun-1.5-5b-inp-q8`) | **The CogVideoX License** | **262.1** | 672×384, 1.6 s, GIF | 5 | ✅ 6/6 |
+| [`AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit`](https://huggingface.co/AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit) (`wan22-ti2v-5b-q8`) | Apache-2.0 | **255.6** | 480×832, 1.6 s, MP4 | 25 | ✅ 6/6 |
 
 ```mermaid
 xychart-beta
     title "Seconds per clip (lower is better, model load included)"
     x-axis ["cogvideox q4", "cogvideox q8", "wan2.2"]
     y-axis "seconds" 0 --> 350
-    bar [256.3, 266.1, 285.9]
+    bar [247.7, 262.1, 255.6]
 ```
 
-**266.1 s** for a 5-frame 672×384 clip — the mean of four prompts spanning
-265.2–267.2 s — so a clip that plays for 1.6 s costs about 4.4 minutes of GPU.
+**262.1 s** for a 5-frame 672×384 clip — the mean of six prompts spanning
+258.7–274.9 s — so a clip that plays for 1.6 s costs over four minutes of GPU.
 Five frames is the cheapest usable value, not a ceiling: `--frames` must be
 `1 mod 4` and the pipeline decodes `(F-1)//4*4+1` frames, so 4 gives 1, 8 gives
 the same 5 as 5, and 13 gives 13 — while 9, 17 and 25 raise a reshape error.
 
-A q4 quantisation of the same model runs at 256.3 s/clip (about 4% faster) with
+A q4 quantisation of the same model runs at 247.7 s/clip (about 5.5% faster) with
 the same output shape but **no quality guarantee on either quant**: both are
 prompt- and seed-sensitive, so a fast row is a compute measurement — the file is
-the proof. Both rows are in
+the proof. Wan2.2's `s/clip` is the most prompt-dependent of the three
+(233.7–299.8 s across the same six prompts) against CogVideoX's under-17 s spread.
+All three rows are in
 [`evidence/video-benchmark-2026-11-12.md`](evidence/video-benchmark-2026-11-12.md).
 
-The four clips, each with the prompt that produced it, are in
+The eighteen clips, each with the prompt that produced it, are in
 [`evidence/video-benchmark-2026-11-12.md`](evidence/video-benchmark-2026-11-12.md).
 
 ## Profiles
@@ -309,7 +311,7 @@ run are in [`docs/reference/PROFILES.md`](docs/reference/PROFILES.md).
 # Image: the whole eight-prompt suite
 python3 scripts/measure/image-benchmark.py --profile klein-q8 --out-dir ./out
 
-# Video: the whole four-prompt suite
+# Video: the whole six-prompt suite
 python3 scripts/measure/video-benchmark.py \
   --profile cogvideox-fun-1.5-5b-inp-q8 \
   --repo ~/Sites/VideoX-Fun-mlx \
@@ -365,7 +367,7 @@ runs every linter at once.
 ## Notes & disclaimer
 
 - **Timings are for this machine only.** A different M1/M2/M3/M4 changes them.
-- **Sample sizes are small.** Eight image prompts, four video prompts. A gap of a
+- **Sample sizes are small.** Eight image prompts, six video prompts. A gap of a
   second or two is noise; an 8× gap is not.
 - **Speed and quality are not one score.** Look at
   [`evidence/images/`](evidence/images/) and [`evidence/videos/`](evidence/videos/)

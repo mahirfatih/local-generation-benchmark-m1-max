@@ -26,9 +26,9 @@ durur; burada oMLX'in çalıştıramadığı iki katman var:
 | Görsel | mflux | FLUX.2 klein 4B (q4) | 23.8 s | 1024×1024 PNG |
 | Görsel | mflux | Z-Image Turbo (q4) | 95.8 s | 1024×1024 PNG |
 | Görsel | mflux | FLUX 3 Image Klein | 180.6 s | 1024×1024 PNG |
-| **Video** | [VideoX-Fun-mlx](https://github.com/dgrauet/VideoX-Fun-mlx) | CogVideoX-Fun V1.5 5B (int8) | **266.1 s** | 672×384, 5 kare GIF |
-| Video | VideoX-Fun-mlx | CogVideoX-Fun V1.5 5B (int4) | 256.3 s | 672×384, 5 kare GIF |
-| Video | [mlx-gen](https://github.com/lpalbou/mlx-gen) | Wan2.2 TI2V 5B (int8) | 285.9 s | 480×832, 25 kare MP4 |
+| **Video** | [VideoX-Fun-mlx](https://github.com/dgrauet/VideoX-Fun-mlx) | CogVideoX-Fun V1.5 5B (int8) | **262.1 s** | 672×384, 5 kare GIF |
+| Video | VideoX-Fun-mlx | CogVideoX-Fun V1.5 5B (int4) | 247.7 s | 672×384, 5 kare GIF |
+| Video | [mlx-gen](https://github.com/lpalbou/mlx-gen) | Wan2.2 TI2V 5B (int8) | 255.6 s | 480×832, 25 kare MP4 |
 
 Her sayı bu tek makinede **duvar saatiyle**, **model yüklemesi dahil** ölçüldü ve
 her çıktı yazdığı dosyaya karşı doğrulandı — görsellerde PNG başlığı, kliplerde
@@ -48,8 +48,8 @@ flowchart TD
     C -->|Evet| E[klein-q8 · 22.5 s · Apache-2.0 · 8.0 GB]
     C -->|Evet, disk veya RAM dar| E4[klein-q4 · 23.8 s · Apache-2.0 · 4.3 GB]
     C -->|Hayır, kalite önce| F[flux3-klein-q8 · 180.6 s · FLUX Kommunity]
-    D -->|Evet| G[Wan2.2 TI2V 5B · Apache-2.0 · 285.9 s/klip]
-    D -->|Hayır / araştırma| H[cogvideox q4 · 256.3 s/klip · CogVideoX License]
+    D -->|Evet| G[Wan2.2 TI2V 5B · Apache-2.0 · 255.6 s/klip]
+    D -->|Hayır / araştırma| H[cogvideox q4 · 247.7 s/klip · CogVideoX License]
     E --> I[Hızlı, yazı temiz çıkar]
     E4 --> I4[Aynı hız sınıfı, diskte en küçük]
     F --> J[El ve yazı daha iyi, 8 kat yavaş]
@@ -209,20 +209,21 @@ doğrulanır — runner'ın log satırıyla değil, dosyayla.
 
 | Model (profil) | Lisans | s/klip | Çıktı | Kare | OK |
 | :--- | :--- | ---: | :--- | ---: | :---: |
-| [`dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4`](https://huggingface.co/dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4) (`cogvideox-fun-1.5-5b-inp-q4`) | **The CogVideoX License** | **256.3** | 672×384, 1.6 s, GIF | 5 | ✅ 4/4 |
-| [`dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8`](https://huggingface.co/dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8) (`cogvideox-fun-1.5-5b-inp-q8`) | **The CogVideoX License** | **266.1** | 672×384, 1.6 s, GIF | 5 | ✅ 4/4 |
-| [`AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit`](https://huggingface.co/AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit) (`wan22-ti2v-5b-q8`) | Apache-2.0 | **285.9** | 480×832, 1.6 s, MP4 | 25 | ✅ 4/4 |
+| [`dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4`](https://huggingface.co/dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4) (`cogvideox-fun-1.5-5b-inp-q4`) | **The CogVideoX License** | **247.7** | 672×384, 1.6 s, GIF | 5 | ✅ 6/6 |
+| [`dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8`](https://huggingface.co/dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8) (`cogvideox-fun-1.5-5b-inp-q8`) | **The CogVideoX License** | **262.1** | 672×384, 1.6 s, GIF | 5 | ✅ 6/6 |
+| [`AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit`](https://huggingface.co/AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit) (`wan22-ti2v-5b-q8`) | Apache-2.0 | **255.6** | 480×832, 1.6 s, MP4 | 25 | ✅ 6/6 |
 
-5 karelik 672×384 bir klip için **266.1 s** — dört promptun ortalaması,
-265.2–267.2 s aralığında — yani 1.6 s oynayan bir klip yaklaşık 4.4 dakika GPU
+5 karelik 672×384 bir klip için **262.1 s** — altı promptun ortalaması,
+258.7–274.9 s aralığında — yani 1.6 s oynayan bir klip dört dakikadan fazla GPU
 demek. Beş kare kullanılabilir en ucuz değer, bir **tavan** değil: `--frames`
 `1 mod 4` olmalı ve pipeline `(F-1)//4*4+1` kare çözüyor; yani 4 → 1 kare,
 8 → 5 ile aynı, 13 → 13 kare. 9, 17 ve 25 ise reshape hatası verir.
 
-Aynı modelin q4 kuantizasyonu 256.3 s/klip (yaklaşık %4 hızlı) çalışıyor; çıktı
+Aynı modelin q4 kuantizasyonu 247.7 s/klip (yaklaşık %5,5 hızlı) çalışıyor; çıktı
 şekli aynı ama **iki kuantizasyonda da kalite garantisi yok**: ikisi de prompt ve
 seed'e duyarlı, ve hızlı bir satır bir hesaplama ölçümüdür — kanıt dosyanın
-kendisidir.
+kendisidir. Wan2.2'nin s/klip değeri üçün en prompt'a bağımlısı (aynı altı
+promptta 233.7–299.8 s), CogVideoX'in 17 s'nin altındaki yayılımına karşı.
 İki satır da
 [`evidence/video-benchmark-2026-11-12.md`](evidence/video-benchmark-2026-11-12.md)
 içinde.
@@ -271,7 +272,7 @@ tam komutlar [`docs/reference/PROFILES.md`](docs/reference/PROFILES.md) içinde.
 # Görsel: sekiz promptluk paketin tamamı
 python3 scripts/measure/image-benchmark.py --profile klein-q8 --out-dir ./out
 
-# Video: dört promptluk paketin tamamı
+# Video: altı promptluk paketin tamamı
 python3 scripts/measure/video-benchmark.py \
   --profile cogvideox-fun-1.5-5b-inp-q8 \
   --repo ~/Sites/VideoX-Fun-mlx \
@@ -319,7 +320,7 @@ Local Image and Video Generation on an Apple M1 Max 64GB/
 ## Notlar ve sorumluluk reddi
 
 - **Süreler yalnızca bu makine için.** Farklı bir M1/M2/M3/M4 bunları değiştirir.
-- **Örneklem küçük.** Sekiz görsel promptu, dört video promptu. Bir iki saniyelik
+- **Örneklem küçük.** Sekiz görsel promptu, altı video promptu. Bir iki saniyelik
   fark gürültüdür; 8× fark değildir.
 - **Hız ve kalite tek bir puan değil.** [`evidence/images/`](evidence/images/) ve
   [`evidence/videos/`](evidence/videos/) klasörlerine bak ve çıktıyı kendin yargıla.

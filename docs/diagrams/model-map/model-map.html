@@ -266,12 +266,12 @@
       <div class="row">
         <div class="task">
           <div class="k">Video · en hızlı klip</div>
-          <div class="d">Aynı modelin int4 hâli: klip başına <b>~4% hızlı</b>, diskte 2 GB daha az —
+          <div class="d">Aynı modelin int4 hâli: klip başına <b>~5,5% hızlı</b>, diskte 2 GB daha az —
             ama <b>kalite garantisi yok</b>: ikisi de prompt ve seed'e duyarlı. 5 kare kuralı burada da geçerli.</div>
         </div>
         <div class="pick">
           <div class="m">CogVideoX-Fun 5B <span class="tiny">· q4 · 5 kare · 672×384</span> <a class="hf" href="https://huggingface.co/dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4">HF</a></div>
-          <div class="bar"><div class="track"><div class="fill" style="width:90%"></div></div><span class="val">256,3 s/clip</span></div>
+          <div class="bar"><div class="track"><div class="fill" style="width:94%"></div></div><span class="val">247,7 s/klip</span></div>
         </div>
       </div>
 
@@ -284,19 +284,19 @@
         </div>
         <div class="pick">
           <div class="m">CogVideoX-Fun 5B <span class="tiny">· q8 · 5 kare · The CogVideoX License</span> <a class="hf" href="https://huggingface.co/dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8">HF</a></div>
-          <div class="bar"><div class="track"><div class="fill" style="width:93%"></div></div><span class="val">266,1 s/clip</span></div>
+          <div class="bar"><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">262,1 s/klip</span></div>
         </div>
       </div>
 
       <div class="row">
         <div class="task">
           <div class="k">Video · ticari kullanım</div>
-          <div class="d">480×832, <b>25 kare</b> — 5× daha fazla. Klip başına yalnızca <b>7% yavaş</b>,
-            kare başına <b>4,5× ucuz</b>. Tek Apache-2.0 video profili.</div>
+          <div class="d">480×832, <b>25 kare</b> — 5× daha fazla. Klip başına <b>%2,5 daha hızlı</b>,
+            kare başına <b>5× ucuz</b>. Tek Apache-2.0 video profili.</div>
         </div>
         <div class="pick">
           <div class="m">Wan2.2 TI2V 5B <span class="tiny">· int8 · 25 kare · Apache-2.0</span> <a class="hf" href="https://huggingface.co/AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit">HF</a><span class="flag">ticari</span></div>
-          <div class="bar"><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">285,9 s/clip</span></div>
+          <div class="bar"><div class="track"><div class="fill" style="width:98%"></div></div><span class="val">255,6 s/klip</span></div>
         </div>
       </div>
     </div>
@@ -304,9 +304,9 @@
 
   <div class="callout">
     <div class="cap">Asıl bulgu — klipte değil, karede</div>
-    <p>Üç video profili klip başına neredeyse aynı (256,3 · 266,1 · 285,9 s). Ama biri <b>5 kare</b>,
-      diğeri <b>25 kare</b> üretiyor: kare başına <span class="mut">51–53 s</span> ile
-      <b>11,4 s</b> arasındaki fark, klipte görünmeyen <b>4,5×</b>. Aynı GPU dakikasıyla 5× daha
+    <p>Üç video profili klip başına neredeyse aynı (247,7 · 262,1 · 255,6 s). Ama biri <b>5 kare</b>,
+      diğeri <b>25 kare</b> üretiyor: kare başına <span class="mut">49,5–52,4 s</span> ile
+      <b>10,2 s</b> arasındaki fark, klipte görünmeyen <b>5×</b>. Aynı GPU dakikasıyla 5× daha
       uzun video — ve lisansı da ticari kullanıma açık.</p>
   </div>
 
@@ -318,8 +318,8 @@
         <div class="lbl">görselde hız farkı: 22,5 s vs 180,6 s</div>
       </div>
       <div class="card">
-        <div class="big">4,5×</div>
-        <div class="lbl">video kare başına maliyet farkı (11,4 s vs 51–53 s)</div>
+        <div class="big">5×</div>
+        <div class="lbl">video kare başına maliyet farkı (10,2 s vs 49,5–52,4 s)</div>
       </div>
       <div class="card">
         <div class="big">25 vs 5</div>

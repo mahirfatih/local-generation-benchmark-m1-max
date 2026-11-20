@@ -23,9 +23,9 @@ hands, legible text, composition and style. The video set asks for motion a
 still cannot show — a gallop, an orbit, a pour, weather — because a video model
 that only produces a drifting still has not produced a video.
 
-Both are small on purpose. Eight and four prompts are enough to show an 8× gap
-and a 265 s-per-clip cost; a gap of a second or two is noise and the sample sizes
-are stated wherever the results are.
+Both are small on purpose. Eight and six prompts are enough to show an 8× gap
+and a per-clip cost in the hundreds of seconds; a gap of a second or two is noise
+and the sample sizes are stated wherever the results are.
 
 ## Adding a prompt
 

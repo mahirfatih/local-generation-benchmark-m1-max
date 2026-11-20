@@ -125,7 +125,7 @@ here: 672×384, 5 frames, 50 steps, guidance 6.0). Its licence is **not** the
 The runner *code* (VideoX-Fun-mlx) is Apache-2.0; the *weights* are not.
 
 A q4 quantisation of the same port (`cogvideox-fun-1.5-5b-inp-q4`, 13 GB) runs
-at 256.3 s/clip against q8's 266.1 s (about 4% faster) at identical output
+at 247.7 s/clip against q8's 262.1 s (about 5.5% faster) at identical output
 settings (672×384, 5 frames, 3.125 fps) — the only change is the weight file. The
 q4 download is missing `spiece.model`; it is byte-identical to q8's tokenizer, so
 copying that file (773 KB) completes it.
@@ -260,7 +260,7 @@ Two traps, both already hit here:
   plain `curl -C -` against the resolve endpoint measured **7.7 MB/s**, 19× faster,
   and resumed cleanly. If a large video download looks stuck, switch to curl.
 
-To run the whole four-prompt video suite instead of one prompt:
+To run the whole six-prompt video suite instead of one prompt:
 
 ```bash
 python3 scripts/measure/video-benchmark.py \

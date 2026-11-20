@@ -1,19 +1,51 @@
 # Video generation — seconds per clip
 
-**Date:** 2026-11-12. One runner process per prompt, through an MLX video tool ([`VideoX-Fun-mlx`](https://github.com/dgrauet/VideoX-Fun-mlx) for the CogVideoX-Fun layer), which is separate from the oMLX text server and from the mflux image layer. Time is end-to-end wall clock, **model load included**; the runner is one-shot. Each output is probed with `ffprobe`, so the size and length are read from the file, not from the runner's log.
+**Date:** 2026-11-20. One runner process per prompt, through an MLX video tool ([`mlx-gen`](https://github.com/lpalbou/mlx-gen) for Wan2.2, [`VideoX-Fun-mlx`](https://github.com/dgrauet/VideoX-Fun-mlx) for the CogVideoX-Fun layer), which is separate from the oMLX text server and from the mflux image layer. Time is end-to-end wall clock, **model load included**; the runner is one-shot. Each output is probed with `ffprobe`, so the size and length are read from the file, not from the runner's log.
+
+Six prompts per profile — the four original ones plus `scene-sunset-ocean` and `motion-snowy-fox`.
+
+## CogVideoX-Fun V1.5 5B (int8) — The CogVideoX License
 
 | Model (profile) | Licence | Prompt | s/clip | Output | Frames | fps | Codec | OK |
-|---|---|---|---:|---|---:|---:|---|:---:|
-| `dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8` (cogvideox-fun-1.5-5b-inp-q8) | The CogVideoX License (the quant is tagged apache-2.0) | `motion-horse-gallop` | 265.17 | 672×384, 1.6s, 0.8 MB | 5 | 3.125 | gif | ✅ |
-| `dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8` (cogvideox-fun-1.5-5b-inp-q8) | The CogVideoX License (the quant is tagged apache-2.0) | `camera-orbit-tower` | 267.19 | 672×384, 1.6s, 0.1 MB | 5 | 3.125 | gif | ✅ |
-| `dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8` (cogvideox-fun-1.5-5b-inp-q8) | The CogVideoX License (the quant is tagged apache-2.0) | `physics-tea-pour` | 266.27 | 672×384, 1.6s, 0.3 MB | 5 | 3.125 | gif | ✅ |
-| `dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8` (cogvideox-fun-1.5-5b-inp-q8) | The CogVideoX License (the quant is tagged apache-2.0) | `scene-storm-coast` | 265.96 | 672×384, 1.6s, 0.4 MB | 5 | 3.125 | gif | ✅ |
+|---|---|---|---|---:|---|---:|---:|---|:---:|
+| `dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8` (cogvideox-fun-1.5-5b-inp-q8) | The CogVideoX License (the quant is tagged apache-2.0) | `motion-horse-gallop` | 274.90 | 672×384, 1.6s, 0.7 MB | 5 | 3.125 | gif | ✅ |
+| `dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8` (cogvideox-fun-1.5-5b-inp-q8) | The CogVideoX License (the quant is tagged apache-2.0) | `camera-orbit-tower` | 259.18 | 672×384, 1.6s, 0.1 MB | 5 | 3.125 | gif | ✅ |
+| `dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8` (cogvideox-fun-1.5-5b-inp-q8) | The CogVideoX License (the quant is tagged apache-2.0) | `physics-tea-pour` | 260.12 | 672×384, 1.6s, 0.3 MB | 5 | 3.125 | gif | ✅ |
+| `dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8` (cogvideox-fun-1.5-5b-inp-q8) | The CogVideoX License (the quant is tagged apache-2.0) | `scene-storm-coast` | 259.87 | 672×384, 1.6s, 0.3 MB | 5 | 3.125 | gif | ✅ |
+| `dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8` (cogvideox-fun-1.5-5b-inp-q8) | The CogVideoX License (the quant is tagged apache-2.0) | `scene-sunset-ocean` | 258.67 | 672×384, 1.6s, 0.2 MB | 5 | 3.125 | gif | ✅ |
+| `dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8` (cogvideox-fun-1.5-5b-inp-q8) | The CogVideoX License (the quant is tagged apache-2.0) | `motion-snowy-fox` | 259.91 | 672×384, 1.6s, 0.6 MB | 5 | 3.125 | gif | ✅ |
 
-_s/clip is what a person waits for one finished clip on this machine, model load included. The size, length and frame count come from `ffprobe` on the written file, not from the runner's own log line._
+_q8 mean: 262.1 s/clip (six prompts, 258.7–274.9 s)._
+
+## CogVideoX-Fun V1.5 5B (int4) — quantisation comparison
+
+Same runner, same six prompts, same settings, one quantisation step down. The only change is the weight file (q4 vs q8).
+
+| Model (profile) | Licence | Prompt | s/clip | Output | Frames | fps | Codec | OK |
+|---|---|---|---|---:|---|---:|---:|---|:---:|
+| `dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4` (cogvideox-fun-1.5-5b-inp-q4) | The CogVideoX License (the quant is tagged apache-2.0) | `motion-horse-gallop` | 253.43 | 672×384, 1.6s, 0.9 MB | 5 | 3.125 | gif | ✅ |
+| `dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4` (cogvideox-fun-1.5-5b-inp-q4) | The CogVideoX License (the quant is tagged apache-2.0) | `camera-orbit-tower` | 247.44 | 672×384, 1.6s, 0.1 MB | 5 | 3.125 | gif | ✅ |
+| `dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4` (cogvideox-fun-1.5-5b-inp-q4) | The CogVideoX License (the quant is tagged apache-2.0) | `physics-tea-pour` | 246.61 | 672×384, 1.6s, 0.4 MB | 5 | 3.125 | gif | ✅ |
+| `dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4` (cogvideox-fun-1.5-5b-inp-q4) | The CogVideoX License (the quant is tagged apache-2.0) | `scene-storm-coast` | 245.62 | 672×384, 1.6s, 0.3 MB | 5 | 3.125 | gif | ✅ |
+| `dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4` (cogvideox-fun-1.5-5b-inp-q4) | The CogVideoX License (the quant is tagged apache-2.0) | `scene-sunset-ocean` | 247.76 | 672×384, 1.6s, 0.2 MB | 5 | 3.125 | gif | ✅ |
+| `dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4` (cogvideox-fun-1.5-5b-inp-q4) | The CogVideoX License (the quant is tagged apache-2.0) | `motion-snowy-fox` | 245.17 | 672×384, 1.6s, 0.6 MB | 5 | 3.125 | gif | ✅ |
+
+_q4 mean: 247.7 s/clip vs q8's 262.1 s/clip — about 5.5% faster, same frame count and resolution._
+
+The time is shorter and the **quality is not guaranteed on either quant**. On the
+`motion-snowy-fox` prompt at seed 42 both the q4 and the q8 resolve to green
+dither with a red shape (the q4 clip is in the q4 section below); a sunset prompt
+at seed 42 gave a clean sunset on the q8, and a q4 sunset at seed 7 was coherent —
+the same quant that dithers on the fox. The failure tracks the prompt/seed pair,
+not the weight file. So treat a fast q4 row as a compute measurement and check the
+file before trusting the picture.
 
 ## The clips themselves
 
-These are the model's normal output at the profile's settings, not a selected best-of. Each is written as an animated GIF of a handful of frames, so **it plays in the browser but stops abruptly** — that is the model's clip length, not an export error. The prompt is quoted under each clip so you can judge the result against what was actually asked.
+These are the models' normal output at the profiles' settings, not a selected
+best-of. Each CogVideoX clip is an animated GIF of five frames, so it **plays in
+the browser but stops abruptly** — that is the model's clip length, not an export
+error. The Wan clip is a 25-frame MP4. The prompt is quoted under each clip.
 
 ### `motion-horse-gallop` — motion
 
@@ -39,78 +71,48 @@ These are the model's normal output at the profile's settings, not a selected be
 
 ![scene-storm-coast, cogvideox-fun-1.5-5b-inp-q8](videos/cogvideox-fun-1.5-5b-inp-q8--scene-storm-coast.gif)
 
-4 of 4 clips rendered. The `--frames` flag is not linear: the pipeline decodes
+### `scene-sunset-ocean` — scene
+
+> A beautiful sunset over the ocean, waves rolling gently toward the shore, the sun low and orange on the horizon, warm light reflecting on the water, a calm wide establishing shot.
+
+![scene-sunset-ocean, cogvideox-fun-1.5-5b-inp-q8](videos/cogvideox-fun-1.5-5b-inp-q8--scene-sunset-ocean.gif)
+
+### `motion-snowy-fox` — motion
+
+> A red fox running through a snowy pine forest, soft falling snow, camera tracking sideways alongside the animal as it moves across the frame.
+
+![motion-snowy-fox, cogvideox-fun-1.5-5b-inp-q8](videos/cogvideox-fun-1.5-5b-inp-q8--motion-snowy-fox.gif)
+
+![motion-snowy-fox, cogvideox-fun-1.5-5b-inp-q4](videos/cogvideox-fun-1.5-5b-inp-q4--motion-snowy-fox.gif)
+
+18 of 18 clips rendered. The `--frames` flag is not linear: the pipeline decodes
 `(F-1)//4*4+1` frames, so asking for 4 decodes to 1 frame and asking for 6 or 8
 decodes to the same 5 as asking for 5, while 9, 17 and 25 raise a reshape error —
 `F` must be `1 mod 4`. Five frames is the cheapest usable value, not a ceiling:
 `--frames 13` decodes to 13. The runner's log line disagrees with the file, which
 is why the frame column above is `ffprobe`'s.
 
----
-
-## q4 (int4) — quantisation comparison
-
-Same runner, same four prompts, same settings, one quantisation step down. The only change is the weight file (q4 vs q8); the profile, the prompt set and the harness are identical.
-
-| Model (profile) | Licence | Prompt | s/clip | Output | Frames | fps | Codec | OK |
-|---|---|---|---:|---|---:|---:|---|:---:|
-| `dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4` (cogvideox-fun-1.5-5b-inp-q4) | The CogVideoX License (the quant is tagged apache-2.0) | `motion-horse-gallop` | 254.90 | 672×384, 1.6s, 0.9 MB | 5 | 3.125 | gif | ✅ |
-| `dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4` (cogvideox-fun-1.5-5b-inp-q4) | The CogVideoX License (the quant is tagged apache-2.0) | `camera-orbit-tower` | 256.50 | 672×384, 1.6s, 0.1 MB | 5 | 3.125 | gif | ✅ |
-| `dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4` (cogvideox-fun-1.5-5b-inp-q4) | The CogVideoX License (the quant is tagged apache-2.0) | `physics-tea-pour` | 256.15 | 672×384, 1.6s, 0.4 MB | 5 | 3.125 | gif | ✅ |
-| `dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4` (cogvideox-fun-1.5-5b-inp-q4) | The CogVideoX License (the quant is tagged apache-2.0) | `scene-storm-coast` | 257.79 | 672×384, 1.6s, 0.4 MB | 5 | 3.125 | gif | ✅ |
-
-_q4 mean: 256.3 s/clip vs q8's 266.1 s/clip — about 4% faster, same frame count and resolution._
-
-The time is 4% shorter and the **quality is not guaranteed on either quant**. These
-four clips are the q4's normal output, and opening them is the only way to know:
-on a snowy-fox prompt at seed 42 the q4 resolved to green dither with a red shape
-while a q4 sunset at another seed was coherent — and the **q8** produced that same
-dither on the fox prompt at seed 42. The failure tracks the prompt/seed pair, not
-the weight file. So treat a fast q4 row as a compute measurement and check the
-file before trusting the picture.
-
-## The clips themselves (q4)
-
-Same prompts as above, one quantisation step down.
-
-### `motion-horse-gallop` — motion
-
-> A single brown horse galloping left to right across a flat green field, legs moving in a correct gait, dust kicked up behind the hooves, camera tracking alongside at a constant distance, overcast afternoon light.
-
-![motion-horse-gallop, cogvideox-fun-1.5-5b-inp-q4](videos/cogvideox-fun-1.5-5b-inp-q4--motion-horse-gallop.gif)
-
-### `camera-orbit-tower` — camera
-
-> A slow smooth camera orbit around a small stone lighthouse on a rocky headland, the sea behind it, the light in the tower rotating once, late golden hour, the horizon staying level throughout.
-
-![camera-orbit-tower, cogvideox-fun-1.5-5b-inp-q4](videos/cogvideox-fun-1.5-5b-inp-q4--camera-orbit-tower.gif)
-
-### `physics-tea-pour` — physics
-
-> Close-up of dark tea being poured from a ceramic pot into a small glass cup, a steady stream that narrows as the cup fills, gentle steam rising, the surface rippling, a warm kitchen background slightly out of focus.
-
-![physics-tea-pour, cogvideox-fun-1.5-5b-inp-q4](videos/cogvideox-fun-1.5-5b-inp-q4--physics-tea-pour.gif)
-
-### `scene-storm-coast` — scene
-
-> A wide fixed shot of a stormy coastline, large waves breaking against black rocks, sea spray thrown into the air, low grey clouds moving quickly inland, grass on the clifftop bending in the wind, no people.
-
-![scene-storm-coast, cogvideox-fun-1.5-5b-inp-q4](videos/cogvideox-fun-1.5-5b-inp-q4--scene-storm-coast.gif)
-
----
-
 ## Wan2.2 TI2V 5B (int8) — Apache-2.0, local MLX
 
-Run through `mlxgen generate --family wan` against the local folder `~/models/AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit` (17 GB, oMLX-style quantisation). Settings: 480×832, 25 frames at 16 fps, 20 steps, guidance 5, seed 42, `--low-ram`. Licence Apache-2.0, inherited from the base model.
+Run through `mlxgen generate` against the local folder `~/models/AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit` (17 GB, oMLX-style quantisation). Settings: 480×832, 25 frames at 16 fps, 20 steps, guidance 5, seed 42, `--low-ram`. Licence Apache-2.0, inherited from the base model.
 
 | Model (profile) | Licence | Prompt | s/clip | Output | Frames | fps | Codec | OK |
-|---|---|---|---:|---|---:|---:|---|:---:|
-| `AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit` (wan22-ti2v-5b-q8) | Apache-2.0 | `motion-horse-gallop` | 237.00 | 480×832, 1.6s, 0.3 MB | 25 | 16.0 | mp4 | ✅ |
-| `AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit` (wan22-ti2v-5b-q8) | Apache-2.0 | `camera-orbit-tower` | 299.44 | 480×832, 1.6s, 0.2 MB | 25 | 16.0 | mp4 | ✅ |
-| `AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit` (wan22-ti2v-5b-q8) | Apache-2.0 | `physics-tea-pour` | 305.30 | 480×832, 1.6s, 0.2 MB | 25 | 16.0 | mp4 | ✅ |
-| `AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit` (wan22-ti2v-5b-q8) | Apache-2.0 | `scene-storm-coast` | 301.93 | 480×832, 1.6s, 0.4 MB | 25 | 16.0 | mp4 | ✅ |
+|---|---|---|---|---:|---|---:|---:|---|:---:|
+| `AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit` (wan22-ti2v-5b-q8) | Apache-2.0 | `motion-horse-gallop` | 234.80 | 480×832, 1.6s, 0.2 MB | 25 | 16.0 | h264 | ✅ |
+| `AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit` (wan22-ti2v-5b-q8) | Apache-2.0 | `camera-orbit-tower` | 233.65 | 480×832, 1.6s, 0.2 MB | 25 | 16.0 | h264 | ✅ |
+| `AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit` (wan22-ti2v-5b-q8) | Apache-2.0 | `physics-tea-pour` | 233.99 | 480×832, 1.6s, 0.2 MB | 25 | 16.0 | h264 | ✅ |
+| `AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit` (wan22-ti2v-5b-q8) | Apache-2.0 | `scene-storm-coast` | 233.71 | 480×832, 1.6s, 0.3 MB | 25 | 16.0 | h264 | ✅ |
+| `AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit` (wan22-ti2v-5b-q8) | Apache-2.0 | `scene-sunset-ocean` | 299.83 | 480×832, 1.6s, 0.2 MB | 25 | 16.0 | h264 | ✅ |
+| `AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit` (wan22-ti2v-5b-q8) | Apache-2.0 | `motion-snowy-fox` | 297.88 | 480×832, 1.6s, 0.9 MB | 25 | 16.0 | h264 | ✅ |
 
-_Wan mean: 285.9 s/clip (237.0–305.3 s range), 25 frames at 16 fps._
+_Wan mean: 255.6 s/clip (233.7–299.8 s), 25 frames at 16 fps._
+
+The **spread is wider than the other two profiles** (233.7–299.8 s): the two
+prompts added on 2026-11-20 (`scene-sunset-ocean`, `motion-snowy-fox`) cost ~64 s
+more than the four original prompts (~234 s each). Wan's sampler evidently scales
+with something in the prompt's token count or conditioning, so its `s/clip` is
+more prompt-dependent than CogVideoX's, whose six clips span under 17 s. Read the
+mean with that in mind, and the range beside it.
 
 ## The clips themselves (Wan2.2)
 
@@ -138,28 +140,14 @@ _Wan mean: 285.9 s/clip (237.0–305.3 s range), 25 frames at 16 fps._
 
 ![scene-storm-coast, wan22-ti2v-5b-q8](videos/wan22-ti2v-5b-q8--scene-storm-coast.mp4)
 
----
+### `scene-sunset-ocean` — scene
 
-## A quality check that is not a benchmark row
+> A beautiful sunset over the ocean, waves rolling gently toward the shore, the sun low and orange on the horizon, warm light reflecting on the water, a calm wide establishing shot.
 
-The four rows above are timed runs on this repository's own prompt set. This is
-**not** one of those: it is a separate comparison, run on a prompt that is not in
-`data/video-prompts.json`, committed only because it shows something the timing
-tables cannot.
+![scene-sunset-ocean, wan22-ti2v-5b-q8](videos/wan22-ti2v-5b-q8--scene-sunset-ocean.mp4)
 
-The prompt is _"A red fox running through a snowy pine forest, soft falling snow,
-camera tracking sideways"_ at seed 42, five frames, the profiles' other settings
-unchanged. Both quantisations produced green dither with a red shape:
+### `motion-snowy-fox` — motion
 
-| Profile | Prompt | Seed | Clip |
-| :--- | :--- | ---: | :--- |
-| `cogvideox-fun-1.5-5b-inp-q4` | snowy fox | 42 | ![q4 snowy fox](videos/cogvideox-fun-1.5-5b-inp-q4--snowy-fox-s42.gif) |
-| `cogvideox-fun-1.5-5b-inp-q8` | snowy fox | 42 | ![q8 snowy fox](videos/cogvideox-fun-1.5-5b-inp-q8--snowy-fox-s42.mp4) |
+> A red fox running through a snowy pine forest, soft falling snow, camera tracking sideways alongside the animal as it moves across the frame.
 
-The q8 clip is the app's own end-to-end output (a real GUI run of the q8 profile,
-which is why it is an `.mp4` and not a GIF). The point is the pairing: **the q8
-fails on this prompt too**, so the noise is not the 4-bit weights' fault. A
-sunset prompt at seed 42 gave a clean sunset on the q8, and a q4 sunset at seed 7
-was coherent — the same quant that dithers here. The prompt/seed pair decides it;
-the file is the only proof. These two clips are the evidence for that claim and
-are deliberately outside the timed tables above.
+![motion-snowy-fox, wan22-ti2v-5b-q8](videos/wan22-ti2v-5b-q8--motion-snowy-fox.mp4)
