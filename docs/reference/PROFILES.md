@@ -117,6 +117,20 @@ Neither accepts `--base-model` or `--compute-precision`: the `mlxgen` CLI has
 neither flag, which is why each carries an explicit `invoke` template instead of
 falling back to the generic mflux argv.
 
+**`bonsai-image-ternary-2bit` does not currently run.** On `mlx-gen 0.38.0`
+(the newest on PyPI) a generation fails before the first step:
+
+```text
+AttributeError: 'BonsaiImage' object has no attribute 'compiled_predict_cache'
+```
+
+`BonsaiImage(Flux2Klein)` calls `nn.Module.__init__` and its own initializer, not
+`Flux2Klein.__init__`; the field is built only by `Flux2Initializer.init`, which
+Bonsai's path never reaches, and `Flux2Klein.generate_image` reads it. The profile
+here is correct — the fault is upstream in mlx-gen, so this is a **known-broken**
+row until that is fixed, not a misconfigured one. `ernie-image-turbo-q8` was run
+end to end: 29 s for 512×512 at 8 steps.
+
 ## Video profiles
 
 Video is a **third layer** with its own runners and its own file,
