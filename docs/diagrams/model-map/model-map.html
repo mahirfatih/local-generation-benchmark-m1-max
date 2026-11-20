@@ -266,8 +266,8 @@
       <div class="row">
         <div class="task">
           <div class="k">Video · en hızlı klip</div>
-          <div class="d">Aynı modelin int4 hâli: klip başına <b>~4% hızlı</b>, çıktı ayırt edilemez,
-            diskte 2 GB daha az. 5 kare tavanı burada da geçerli.</div>
+          <div class="d">Aynı modelin int4 hâli: klip başına <b>~4% hızlı</b>, diskte 2 GB daha az —
+            ama <b>kalite garantisi yok</b>: ikisi de prompt ve seed'e duyarlı. 5 kare kuralı burada da geçerli.</div>
         </div>
         <div class="pick">
           <div class="m">CogVideoX-Fun 5B <span class="tiny">· q4 · 5 kare · 672×384</span> <a class="hf" href="https://huggingface.co/dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4">HF</a></div>
@@ -278,8 +278,8 @@
       <div class="row">
         <div class="task">
           <div class="k">Video · referans</div>
-          <div class="d">672×384, <b>5 kare</b> — bu modelin tavanı, bir ayar değil (4 kare → 1 kare,
-            8 kare → aynı 5). 1,6 s'lik klip ≈ 4,4 dakika GPU.
+          <div class="d">672×384, <b>5 kare</b> — kullanılabilir en ucuz değer, bir tavan değil: kare
+            sayısı <b>1 mod 4</b> olmalı (4 → 1, 8 → 5 ile aynı, 13 → 13). 1,6 s'lik klip ≈ 4,4 dakika GPU.
             <span class="warn">lisans: quant apache-2.0 diyor, taban model değil</span></div>
         </div>
         <div class="pick">
@@ -323,7 +323,7 @@
       </div>
       <div class="card">
         <div class="big">25 vs 5</div>
-        <div class="lbl">kare — Wan2.2 ile CogVideoX'in tavanı</div>
+        <div class="lbl">kare — profillerin değeri (CogVideoX'te 13'e kadar çıkar)</div>
       </div>
       <div class="card">
         <div class="big">28</div>

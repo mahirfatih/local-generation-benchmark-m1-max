@@ -88,8 +88,11 @@ CogVideoX-Fun renders a 5-frame 672×384 clip in **266.1 s on average** (four
 prompts, 265.2–267.2 s), which is ~4.4 minutes of waiting for a clip that plays
 for 1.6 s. The spread is under 2 s, so any single figure in that range is honest;
 266.1 is the mean of the four. The frame count
-is this model's ceiling, not a choice: `--frames` is not linear and 5 is as far as
-it decodes, so more steps or a larger request buys nothing. All four clips — with
+is a `1 mod 4` choice, not a ceiling: `--frames` is not linear, the pipeline
+decodes `(F-1)//4*4+1` frames (4 → 1, 5 and 8 → 5, 13 → 13), and 9, 17 and 25
+raise a reshape error. Five is the cheapest usable value, so more frames are
+available at more compute — but a larger request does not simply buy more.
+All four clips — with
 the prompt under each — are in
 [`evidence/video-benchmark-2026-11-12.md`](../../evidence/video-benchmark-2026-11-12.md).
 

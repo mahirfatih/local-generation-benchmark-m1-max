@@ -39,7 +39,12 @@ These are the model's normal output at the profile's settings, not a selected be
 
 ![scene-storm-coast, cogvideox-fun-1.5-5b-inp-q8](videos/cogvideox-fun-1.5-5b-inp-q8--scene-storm-coast.gif)
 
-4 of 4 clips rendered. The `--frames` flag is not linear and this model tops out at 5 frames: asking for 4 decodes to 1 frame, asking for 8 decodes to the same 5 as asking for 5, and an odd count raises a reshape error because the patch size is 2. The runner's log line disagrees with the file, which is why the frame column above is `ffprobe`'s.
+4 of 4 clips rendered. The `--frames` flag is not linear: the pipeline decodes
+`(F-1)//4*4+1` frames, so asking for 4 decodes to 1 frame and asking for 6 or 8
+decodes to the same 5 as asking for 5, while 9, 17 and 25 raise a reshape error —
+`F` must be `1 mod 4`. Five frames is the cheapest usable value, not a ceiling:
+`--frames 13` decodes to 13. The runner's log line disagrees with the file, which
+is why the frame column above is `ffprobe`'s.
 
 ---
 
@@ -55,6 +60,14 @@ Same runner, same four prompts, same settings, one quantisation step down. The o
 | `dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4` (cogvideox-fun-1.5-5b-inp-q4) | The CogVideoX License (the quant is tagged apache-2.0) | `scene-storm-coast` | 257.79 | 672×384, 1.6s, 0.4 MB | 5 | 3.125 | gif | ✅ |
 
 _q4 mean: 256.3 s/clip vs q8's 266.1 s/clip — about 4% faster, same frame count and resolution._
+
+The time is 4% shorter and the **quality is not guaranteed on either quant**. These
+four clips are the q4's normal output, and opening them is the only way to know:
+on a snowy-fox prompt at seed 42 the q4 resolved to green dither with a red shape
+while a q4 sunset at another seed was coherent — and the **q8** produced that same
+dither on the fox prompt at seed 42. The failure tracks the prompt/seed pair, not
+the weight file. So treat a fast q4 row as a compute measurement and check the
+file before trusting the picture.
 
 ## The clips themselves (q4)
 
@@ -124,3 +137,29 @@ _Wan mean: 285.9 s/clip (237.0–305.3 s range), 25 frames at 16 fps._
 > A wide fixed shot of a stormy coastline, large waves breaking against black rocks, sea spray thrown into the air, low grey clouds moving quickly inland, grass on the clifftop bending in the wind, no people.
 
 ![scene-storm-coast, wan22-ti2v-5b-q8](videos/wan22-ti2v-5b-q8--scene-storm-coast.mp4)
+
+---
+
+## A quality check that is not a benchmark row
+
+The four rows above are timed runs on this repository's own prompt set. This is
+**not** one of those: it is a separate comparison, run on a prompt that is not in
+`data/video-prompts.json`, committed only because it shows something the timing
+tables cannot.
+
+The prompt is _"A red fox running through a snowy pine forest, soft falling snow,
+camera tracking sideways"_ at seed 42, five frames, the profiles' other settings
+unchanged. Both quantisations produced green dither with a red shape:
+
+| Profile | Prompt | Seed | Clip |
+| :--- | :--- | ---: | :--- |
+| `cogvideox-fun-1.5-5b-inp-q4` | snowy fox | 42 | ![q4 snowy fox](videos/cogvideox-fun-1.5-5b-inp-q4--snowy-fox-s42.gif) |
+| `cogvideox-fun-1.5-5b-inp-q8` | snowy fox | 42 | ![q8 snowy fox](videos/cogvideox-fun-1.5-5b-inp-q8--snowy-fox-s42.mp4) |
+
+The q8 clip is the app's own end-to-end output (a real GUI run of the q8 profile,
+which is why it is an `.mp4` and not a GIF). The point is the pairing: **the q8
+fails on this prompt too**, so the noise is not the 4-bit weights' fault. A
+sunset prompt at seed 42 gave a clean sunset on the q8, and a q4 sunset at seed 7
+was coherent — the same quant that dithers here. The prompt/seed pair decides it;
+the file is the only proof. These two clips are the evidence for that claim and
+are deliberately outside the timed tables above.

@@ -52,7 +52,7 @@ flowchart TD
     E4 --> I4[Aynı hız sınıfı, diskte en küçük]
     F --> J[El ve yazı daha iyi, 8 kat yavaş]
     G --> K[En iyi lisans, 25 kare, 16 fps]
-    H --> L[q8'den %4 hızlı, aynı çıktı]
+    H --> L[q8'den %4 hızlı, ikisi de prompt/seed'e duyarlı]
 ```
 
 ## İçindekiler
@@ -213,9 +213,17 @@ doğrulanır — runner'ın log satırıyla değil, dosyayla.
 
 5 karelik 672×384 bir klip için **266.1 s** — dört promptun ortalaması,
 265.2–267.2 s aralığında — yani 1.6 s oynayan bir klip yaklaşık 4.4 dakika GPU
-demek. Beş kare bu modelin **tavanı**, bir ayar değil: `--frames` doğrusal değil
-(4 → 1 kare, 8 → 5 ile aynı, tek sayı reshape hatası verir), yani fazlasını
-istemek fazlasını getirmiyor.
+demek. Beş kare kullanılabilir en ucuz değer, bir **tavan** değil: `--frames`
+`1 mod 4` olmalı ve pipeline `(F-1)//4*4+1` kare çözüyor; yani 4 → 1 kare,
+8 → 5 ile aynı, 13 → 13 kare. 9, 17 ve 25 ise reshape hatası verir.
+
+Aynı modelin q4 kuantizasyonu 256.3 s/klip (yaklaşık %4 hızlı) çalışıyor; çıktı
+şekli aynı ama **iki kuantizasyonda da kalite garantisi yok**: ikisi de prompt ve
+seed'e duyarlı, ve hızlı bir satır bir hesaplama ölçümüdür — kanıt dosyanın
+kendisidir.
+İki satır da
+[`evidence/video-benchmark-2026-11-12.md`](evidence/video-benchmark-2026-11-12.md)
+içinde.
 
 Dört klip, her biri kendisini üreten prompt ile:
 [`evidence/video-benchmark-2026-11-12.md`](evidence/video-benchmark-2026-11-12.md).

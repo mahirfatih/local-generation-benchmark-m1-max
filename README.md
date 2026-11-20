@@ -51,7 +51,7 @@ flowchart TD
     E4 --> I4[Same speed class, smallest on disk]
     F --> J[Hands and text look better, 8x slower]
     G --> K[Best licence, 25 frames, 16 fps]
-    H --> L[4% faster than q8, same output]
+    H --> L[4% faster than q8, both prompt/seed-sensitive]
 ```
 
 ## Table of Contents
@@ -253,12 +253,15 @@ xychart-beta
 ```
 
 **266.1 s** for a 5-frame 672×384 clip — the mean of four prompts spanning
-265.2–267.2 s — so a clip that plays for 1.6 s costs about 4.4 minutes of GPU. Five frames is the model's ceiling,
-not a setting: `--frames` is not linear (4 → 1 frame, 8 → the same 5 as 5, an odd
-count raises a reshape error), so asking for more does not get you more.
+265.2–267.2 s — so a clip that plays for 1.6 s costs about 4.4 minutes of GPU.
+Five frames is the cheapest usable value, not a ceiling: `--frames` must be
+`1 mod 4` and the pipeline decodes `(F-1)//4*4+1` frames, so 4 gives 1, 8 gives
+the same 5 as 5, and 13 gives 13 — while 9, 17 and 25 raise a reshape error.
 
-A q4 quantisation of the same model runs at 256.3 s/clip (about 4% faster) at
-identical output; both rows are in
+A q4 quantisation of the same model runs at 256.3 s/clip (about 4% faster) with
+the same output shape but **no quality guarantee on either quant**: both are
+prompt- and seed-sensitive, so a fast row is a compute measurement — the file is
+the proof. Both rows are in
 [`evidence/video-benchmark-2026-11-12.md`](evidence/video-benchmark-2026-11-12.md).
 
 The four clips, each with the prompt that produced it, are in

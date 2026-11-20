@@ -126,9 +126,19 @@ The runner *code* (VideoX-Fun-mlx) is Apache-2.0; the *weights* are not.
 
 A q4 quantisation of the same port (`cogvideox-fun-1.5-5b-inp-q4`, 13 GB) runs
 at 256.3 s/clip against q8's 266.1 s (about 4% faster) at identical output
-(672×384, 5 frames, 3.125 fps) — the only difference is the weight file. The
+settings (672×384, 5 frames, 3.125 fps) — the only change is the weight file. The
 q4 download is missing `spiece.model`; it is byte-identical to q8's tokenizer, so
 copying that file (773 KB) completes it.
+
+**The q4 is cheaper and more prompt- and seed-sensitive, and the q8 shares the
+failure mode.** The timing tables above compare wall clock, not quality, and a
+look at the files says they differ: on a snowy-fox prompt at seed 42 the q4 clip
+resolved to green dither with a red shape, a q4 sunset at another seed was
+coherent, and the q8 itself produced the same dither on that fox prompt at seed
+42. So the failure tracks the prompt/seed pair rather than the weight file —
+neither quant is "the same output" as the other across seeds, and a clip that
+plays is not the same as a clip that shows the prompt. The timing row says which
+is faster; only opening the file says which is usable.
 
 A real run of either profile needs its runner installed and its model downloaded;
 `scripts/measure/video-benchmark.py` refuses to start while any other GPU job is
@@ -137,19 +147,30 @@ back with **ffprobe** rather than trusting the runner's log.
 
 ### `--frames` is not linear
 
-Measured on `cogvideox-fun-1.5-5b-inp-q8`, and worth knowing before you tune it:
+Measured on `cogvideox-fun-1.5-5b-inp-q8`, and worth knowing before you tune it.
+The pipeline decodes `(F-1)//4*4+1` frames, so the GIF is nine times out of ten
+not the number you asked for, and a value the transformer cannot reshape aborts
+the run:
 
 | `--frames` | Frames in the written GIF | Note |
 | ---: | ---: | :--- |
 | 4 | **1** | Not four. The VAE's temporal compression collapses it. |
-| 5 | **5** | The practical ceiling — and the profile's value. |
-| 8 | **5** | Same output as 5; the extra frames are not in the file. |
-| 9 | — | `ValueError: [reshape] ...` — the patch size is 2 and 9 is odd. |
+| 5 | **5** | The profile's value — and the cheapest usable one. |
+| 6 | **5** | Same output as 5; the extra frames are not in the file. |
+| 8 | **5** | Same as 5 too. |
+| 13 | **13** | More frames *are* available: 13 decodes to 13. |
+| 9 | — | `ValueError: [reshape] ...` |
+| 17 | — | `ValueError: [reshape] ...` |
+| 25 | — | `ValueError: [reshape] ...` |
 
-Two consequences. **Five frames is this model's ceiling, not a choice**: asking for
-more does not get you more. And **the runner's own `Saved N frames` log line is
-unreliable** — it counts the decoded array, so `--frames 8` logs "Saved 8 frames"
-while the file holds 5. The harness counts with `ffprobe`, not with that line.
+Three consequences. **`--frames` must be `1 mod 4`** — 1, 5, 9, 13, … — because
+the patch size is 2 and `frames // 2` has to divide evenly into the latent grid;
+the odd values 9, 17 and 25 are rejected not for being odd but because they land
+on the wrong slot. **`--frames 5` is the cheapest value that yields a usable
+clip**, which is why the profile ships it; 13 gives a longer clip for more
+compute, and this is not a ceiling. And **the runner's own `Saved N frames` log
+line is unreliable** — it counts the decoded array, so `--frames 8` logs "Saved 8
+frames" while the file holds 5. The harness counts with `ffprobe`, not that line.
 
 ## Running these yourself
 

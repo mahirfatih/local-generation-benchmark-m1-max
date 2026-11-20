@@ -6,6 +6,30 @@ date-based snapshots rather than semver releases.
 
 ## [Unreleased]
 
+### Fixed — the CogVideoX `--frames` rule, and a quality caveat for the q4
+
+- **`--frames` must be `1 mod 4`, and 5 is not a ceiling.** The `--frames` notes
+  in [`docs/reference/PROFILES.md`](docs/reference/PROFILES.md) and
+  [`evidence/video-benchmark-2026-11-12.md`](evidence/video-benchmark-2026-11-12.md)
+  said the model "tops out at 5 frames". It does not: the pipeline decodes
+  `(F-1)//4*4+1` frames, so `--frames 13` decodes to **13**, and `--frames 9`,
+  `17` and `25` are the values that abort — not because they are odd but because
+  they miss the `1 mod 4` slot. `--frames 5` remains the profile's value as the
+  cheapest usable one.
+- **The q4 is 4% faster and more prompt- and seed-sensitive — and so is the q8.**
+  The q4 row said "identical output"; the timing is identical in shape but the
+  picture is not. On a snowy-fox prompt at seed 42 the q4 resolved to green
+  dither with a red shape, a q4 sunset at another seed was coherent, and the q8
+  produced that same dither on the fox prompt at seed 42 — so the failure tracks
+  the prompt/seed pair, not the weight file. The video page and `PROFILES.md` now
+  say a fast q4 row is a compute measurement, and the file is the only proof of
+  quality.
+- **The q4 and q8 snowy-fox clips are committed as evidence**, in
+  `evidence/videos/cogvideox-fun-1.5-5b-inp-{q4,q8}--snowy-fox-s42`, outside the
+  timed tables because the prompt is not in `data/video-prompts.json`. They are
+  the proof for the pairing above: on this prompt at seed 42 both quantisations
+  produced the same dither.
+
 ### Added — the 4-bit klein, a fourth image profile
 
 - **`klein-q4`** — FLUX.2 klein 4B (`black-forest-labs/FLUX.2-klein-4B`), MLX 4-bit
