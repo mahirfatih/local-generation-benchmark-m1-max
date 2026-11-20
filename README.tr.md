@@ -27,6 +27,8 @@ durur; burada oMLX'in çalıştıramadığı iki katman var:
 | Görsel | mflux | Z-Image Turbo (q4) | 95.8 s | 1024×1024 PNG |
 | Görsel | mflux | FLUX 3 Image Klein | 180.6 s | 1024×1024 PNG |
 | **Video** | [VideoX-Fun-mlx](https://github.com/dgrauet/VideoX-Fun-mlx) | CogVideoX-Fun V1.5 5B (int8) | **266.1 s** | 672×384, 5 kare GIF |
+| Video | VideoX-Fun-mlx | CogVideoX-Fun V1.5 5B (int4) | 256.3 s | 672×384, 5 kare GIF |
+| Video | [mlx-gen](https://github.com/lpalbou/mlx-gen) | Wan2.2 TI2V 5B (int8) | 285.9 s | 480×832, 25 kare MP4 |
 
 Her sayı bu tek makinede **duvar saatiyle**, **model yüklemesi dahil** ölçüldü ve
 her çıktı yazdığı dosyaya karşı doğrulandı — görsellerde PNG başlığı, kliplerde
