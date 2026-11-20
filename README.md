@@ -1,4 +1,4 @@
-# local-generation-benchmark-m1-max
+# Local Image and Video Generation on an Apple M1 Max 64GB
 
 **Local image and video generation on an Apple M1 Max — measured, and the output
 committed so you can look at it.**
@@ -326,7 +326,7 @@ The offline gate needs no model and no network:
 ## Repository structure
 
 ```text
-local-generation-benchmark-m1-max/
+Local Image and Video Generation on an Apple M1 Max 64GB/
 ├── README.md · README.tr.md
 ├── CHANGELOG.md · CONTRIBUTING.md · CODE_OF_CONDUCT.md · SECURITY.md
 ├── data/                       # the prompt sets, one JSON per layer

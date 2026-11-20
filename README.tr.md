@@ -1,4 +1,4 @@
-# local-generation-benchmark-m1-max
+# Local Image and Video Generation on an Apple M1 Max 64GB
 
 > Apple **M1 Max (64 GB)** üzerinde **yerel görsel ve video üretimi** — ölçülmüş,
 > ve çıktılar depoya konmuş ki bakarak doğrulayabilesin.
@@ -288,7 +288,7 @@ python3 scripts/measure/video-benchmark.py \
 ## Depo yapısı
 
 ```text
-local-generation-benchmark-m1-max/
+Local Image and Video Generation on an Apple M1 Max 64GB/
 ├── README.md · README.tr.md
 ├── CHANGELOG.md · CONTRIBUTING.md · CODE_OF_CONDUCT.md · SECURITY.md
 ├── data/                       # prompt setleri, katman başına bir JSON

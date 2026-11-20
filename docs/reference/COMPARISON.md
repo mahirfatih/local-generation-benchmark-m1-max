@@ -14,7 +14,7 @@ measured on the same M1 Max.
 
 | | This repository | The text benchmark |
 | :--- | :--- | :--- |
-| Repository | [`local-generation-benchmark-m1-max`](https://github.com/mahirfatih/local-generation-benchmark-m1-max) | [`omlx-m1-max-benchmark`](https://github.com/mahirfatih/omlx-m1-max-benchmark) |
+| Repository | [`Local Image and Video Generation on an Apple M1 Max 64GB`](https://github.com/mahirfatih/local-generation-benchmark-m1-max) | [`omlx-m1-max-benchmark`](https://github.com/mahirfatih/omlx-m1-max-benchmark) |
 | Layers | Image (mflux), video (VideoX-Fun-mlx / mlx-gen) | Text (oMLX) |
 | Numbers | Seconds per image, per clip, `ffprobe`/PNG verified | tok/s, coding, format, context, hallucination, red-team |
 
