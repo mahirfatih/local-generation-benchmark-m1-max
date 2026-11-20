@@ -52,7 +52,7 @@
       "license": "apache-2.0",
       "license_note": "Apache-2.0. No output restrictions beyond the licence's own terms.",
       "local_path": "~/models/Runpod/FLUX.2-klein-4B-mflux-4bit",
-      "on_disk_gb": 4.6,
+      "on_disk_gb": 4.3,
       "quantization": {
         "scheme": "mlx-affine",
         "bits": 4,
