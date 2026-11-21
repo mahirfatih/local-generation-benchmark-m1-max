@@ -324,8 +324,8 @@ Local Image and Video Generation on an Apple M1 Max 64GB/
 ├── evidence/                   # koşular: sayfalar ve görseller/klipler
 │   ├── image-benchmark-*.md
 │   ├── video-benchmark-*.md
-│   ├── images/                 # 24 PNG
-│   └── videos/                 # 4 GIF
+│   ├── images/                 # 40 PNG
+│   └── videos/                 # 18 klip
 ├── reference/                  # her sayının makine-okunur kopyası
 ├── docs/
 │   ├── README.md

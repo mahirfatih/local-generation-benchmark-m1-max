@@ -363,8 +363,8 @@ Local Image and Video Generation on an Apple M1 Max 64GB/
 ├── evidence/                   # the runs: pages, and the images/clips themselves
 │   ├── image-benchmark-*.md
 │   ├── video-benchmark-*.md
-│   ├── images/                 # 24 PNGs
-│   └── videos/                 # 4 GIFs
+│   ├── images/                 # 40 PNGs
+│   └── videos/                 # 18 clips
 ├── reference/                  # machine-readable copies of every number
 ├── docs/
 │   ├── README.md
