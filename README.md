@@ -24,6 +24,7 @@ here are the two layers oMLX cannot serve:
 | Image | mflux | FLUX.2 klein 4B (q4) | 23.8 s | 1024×1024 PNG |
 | Image | mflux | Z-Image Turbo (q4) | 95.8 s | 1024×1024 PNG |
 | Image | mflux | FLUX 3 Image Klein | 180.6 s | 1024×1024 PNG |
+| Image | [mlx-gen](https://github.com/lpalbou/mlx-gen) | Qwen Image (mixed q4/q8) | 30.5 s | 512×512 PNG |
 | **Video** | [VideoX-Fun-mlx](https://github.com/dgrauet/VideoX-Fun-mlx) | CogVideoX-Fun V1.5 5B (int8) | **262.1 s** | 672×384, 5-frame GIF |
 | Video | VideoX-Fun-mlx | CogVideoX-Fun V1.5 5B (int4) | 247.7 s | 672×384, 5-frame GIF |
 | Video | [mlx-gen](https://github.com/lpalbou/mlx-gen) | Wan2.2 TI2V 5B (int8) | 255.6 s | 480×832, 25-frame MP4 |
@@ -32,7 +33,9 @@ Every number is wall clock on this one machine, **model load included**, and eve
 output is verified against the file it wrote — the PNG header for images, `ffprobe`
 for clips — not against a tool's log line. The image figures are the mean **after
 the first image**, which is the one that pays the one-time model load; each video
-figure is that model's own mean over its six clips. The images and clips are in
+figure is that model's own mean over its six clips. Qwen Image is the one image row
+at **512×512** rather than 1024×1024, so read it per step, not per image. The images
+and clips are in
 [`evidence/`](evidence/) so the claim can be checked by looking, not by trusting.
 
 **Pick by what you are doing.** The chart and the flowchart below settle most

@@ -26,6 +26,7 @@ measured on the same M1 Max.
 | Image | `flux2-klein-4b` (q4) | mflux | Apache-2.0 | 23.8 s | 1024×1024, 4 steps |
 | Image | `z-image-turbo` | mflux | Apache-2.0 | 95.8 s | 1024×1024, 9 steps |
 | Image | `flux-3-image-klein-base` | mflux | FLUX Kommunity | 180.6 s | 1024×1024, 16 steps |
+| Image | `qwen-image-4bit` | mlx-gen | Apache-2.0 | 30.5 s | 512×512, 9 steps |
 | **Video** | `CogVideoX-Fun-V1.5-5b-InP` | VideoX-Fun-mlx | **CogVideoX License** | **262.1 s** | 672×384, 5 frames, GIF |
 | Video | `CogVideoX-Fun-V1.5-5b-InP` (int4) | VideoX-Fun-mlx | **CogVideoX License** | 247.7 s | 672×384, 5 frames, GIF |
 | Video | `Wan2.2-TI2V-5B` (int8) | mlx-gen | Apache-2.0 | 255.6 s | 480×832, 25 frames, MP4 |
@@ -49,8 +50,9 @@ written PNG checked.
 | `FLUX.2-klein-4B-mflux-4bit` | Apache-2.0 | 23.8 | 5.9 | 4 | 1024×1024 |
 | `z-image-turbo-mflux-q4` | Apache-2.0 | 95.8 | 10.6 | 9 | 1024×1024 |
 | `flux-3-image-klein-base-mflux-q8` | FLUX Kommunity | 180.6 | 11.3 | 16 | 1024×1024 |
+| `qwen-image-4bit` (mlx-gen) | Apache-2.0 | 30.5 | 3.4 | 9 | **512×512** |
 
-All four were run on eight prompts covering the surfaces that separate image
+All five were run on eight prompts covering the surfaces that separate image
 models: photorealism, hands, legible text, composition, style. **klein-q8 wins
 by 8×** and is the one to use unless you need FLUX 3 specifically. The **4-bit
 klein** is the smallest on disk but not the fastest: at 23.8 s it is +1.3 s
@@ -58,7 +60,11 @@ klein** is the smallest on disk but not the fastest: at 23.8 s it is +1.3 s
 weights that are dequantised on the fly rather than narrowing the compute — the
 saving is disk and memory, not seconds. **Z-Image
 Turbo** is the middle option and the Apache-2.0 one: ~4.3× slower than klein,
-~1.9× faster than FLUX 3. The PNGs are committed in
+~1.9× faster than FLUX 3. **Qwen Image** runs through **mlx-gen**, not mflux, and
+at **512×512** rather than 1024×1024 — a quarter of the pixels — so its 30.5 s/img
+is not the 22.5 s/img comparison: per step it is the **cheapest of the five**
+(3.4 s/step), and it is the row to read for cost per step rather than cost per
+finished image. The PNGs are committed in
 [`evidence/images/`](../../evidence/images/); legible text and correct hands came
 out clean on all of them.
 
@@ -69,11 +75,13 @@ words — on all four models. The cheap one did not need the others' help here:
 | :---: | :---: | :---: | :---: |
 | ![LOCAL FIRST poster, klein-q8](../../evidence/images/klein-q8--text-poster.png) | ![LOCAL FIRST poster, klein-q4](../../evidence/images/klein-q4--text-poster.png) | ![LOCAL FIRST poster, z-image-turbo-q4](../../evidence/images/z-image-turbo-q4--text-poster.png) | ![LOCAL FIRST poster, flux-3-klein q8](../../evidence/images/flux3-klein-q8--text-poster.png) |
 
-Every one of the thirty-two images, with the prompt that produced it, is in
+Every one of the forty images, with the prompt that produced it, is in
 [`evidence/image-benchmark-2026-11-12.md`](../../evidence/image-benchmark-2026-11-12.md),
-[`evidence/image-benchmark-flux3-2026-11-12.md`](../../evidence/image-benchmark-flux3-2026-11-12.md)
+[`evidence/image-benchmark-flux3-2026-11-12.md`](../../evidence/image-benchmark-flux3-2026-11-12.md),
+[`evidence/image-benchmark-zimage-2026-11-14.md`](../../evidence/image-benchmark-zimage-2026-11-14.md),
+[`evidence/image-benchmark-klein-q4-2026-11-17.md`](../../evidence/image-benchmark-klein-q4-2026-11-17.md)
 and
-[`evidence/image-benchmark-zimage-2026-11-14.md`](../../evidence/image-benchmark-zimage-2026-11-14.md).
+[`evidence/image-benchmark-qwen.md`](../../evidence/image-benchmark-qwen.md).
 
 ## Video generation — a separate layer
 
