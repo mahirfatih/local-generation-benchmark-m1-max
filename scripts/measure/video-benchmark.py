@@ -83,7 +83,8 @@ def resolve_model(profile, override=""):
     return payload
 
 
-def token_map(profile, prompt, out_path, model=None, seed=None, steps=None, repo=None):
+def token_map(profile, prompt, out_path, model=None, seed=None, steps=None, repo=None,
+              image=None):
     s = profile.get("settings", {})
     return {
         "model": resolve_model(profile, model or ""),
@@ -97,14 +98,33 @@ def token_map(profile, prompt, out_path, model=None, seed=None, steps=None, repo
         "steps": str(steps if steps is not None else s.get("steps", "")),
         "guidance": str(s.get("guidance", "")),
         "seed": str(seed if seed is not None else s.get("seed", "")),
+        "image": os.path.expanduser(image) if image else "",
     }
 
 
-def build_argv(profile, prompt, out_path, model=None, seed=None, steps=None, repo=None):
-    """The runner command line for one video, from a profile and one prompt."""
-    tokens = token_map(profile, prompt, out_path, model=model, seed=seed, steps=steps, repo=repo)
+def build_argv(profile, prompt, out_path, model=None, seed=None, steps=None, repo=None,
+               image=None):
+    """The runner command line for one video, from a profile and one prompt.
+
+    A profile whose `invoke` carries `--image {image}` (Wan's image-to-video)
+    takes a source still. When none is given the flag and its value are dropped
+    together, the way the app's `JobRunner.resolve` does it: leaving a bare
+    `--image` behind would make the runner exit on "expected one argument", and
+    that is a silent failure a benchmark should not be able to produce.
+    """
+    tokens = token_map(profile, prompt, out_path, model=model, seed=seed, steps=steps,
+                       repo=repo, image=image)
     argv = []
-    for part in profile["invoke"]:
+    skip_next = False
+    for i, part in enumerate(profile["invoke"]):
+        if skip_next:
+            skip_next = False
+            continue
+        # An unresolved image token drops the flag before it and this value.
+        if part == "{image}" and not tokens["image"]:
+            if argv:
+                argv.pop()
+            continue
         out = part
         for key, val in tokens.items():
             out = out.replace("{" + key + "}", val)
@@ -239,11 +259,15 @@ def selftest():
         if p.get("category") not in prompts["categories"]:
             ok = False
             print("FAIL: unknown category:", p.get("category"))
-    # arg builder: every token resolves, and the essentials are present
+    # arg builder: every token resolves, and the essentials are present.
+    # A profile that takes a source image is also checked both ways: with an
+    # image the flag and the path are there, without one neither survives. The
+    # second is the case that matters — a dropped value with the flag left
+    # behind is the runner exiting on "expected one argument".
     for name, prof in gens.items():
         argv = build_argv(prof, "a test", Path("/tmp/x." + prof.get("output_format", "mp4")))
         joined = " ".join(argv)
-        if "{prompt}" in joined or "{output}" in joined or "{model}" in joined:
+        if "{" in joined or "}" in joined:
             ok = False
             print(f"FAIL: {name} left a token unresolved:", argv)
         if "a test" not in argv or "--prompt" not in argv or "--output" not in argv:
@@ -252,6 +276,16 @@ def selftest():
         if not any("{model}" not in a and (prof["model"] in a or "models" in a) for a in argv):
             ok = False
             print(f"FAIL: {name} did not resolve the model:", argv)
+        if prof.get("accepts_input_image"):
+            source = "/tmp/_imgbt_source.png"
+            with_image = build_argv(prof, "a test", Path("/tmp/x.mp4"), image=source)
+            if "--image" not in with_image or source not in with_image:
+                ok = False
+                print(f"FAIL: {name} dropped its source image:", with_image)
+            without = build_argv(prof, "a test", Path("/tmp/x.mp4"))
+            if "--image" in without:
+                ok = False
+                print(f"FAIL: {name} left a dangling --image without one:", without)
     # ffprobe parser against a hand-built report
     sample = json.dumps({
         "streams": [{"codec_name": "h264", "width": 480, "height": 832,

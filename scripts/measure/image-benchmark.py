@@ -103,8 +103,33 @@ def resolve_model(profile, override=""):
 
 
 def build_argv(profile, prompt, out_path, model=None, seed=None, steps=None):
-    """The mflux command line for one image, from a profile and one prompt."""
+    """The command line for one image, from a profile and one prompt.
+
+    A profile that carries its own `invoke` template — every mlx-gen profile —
+    is built from that template, exactly as the app's `JobRunner` and
+    `export-model-catalog.py` do. Only an mflux profile, which has no template,
+    falls through to the mflux argv below; its `--base-model` is required there
+    and absent by design in an mlxgen profile, so assuming the mflux shape is
+    what made the harness crash on a profile it should have run.
+    """
     s = profile["settings"]
+    if profile.get("invoke"):
+        subs = {
+            "{model}": resolve_model(profile, model or ""),
+            "{prompt}": prompt,
+            "{width}": str(s["width"]),
+            "{height}": str(s["height"]),
+            "{steps}": str(steps or s["steps"]),
+            "{seed}": str(seed if seed is not None else s["seed"]),
+            "{guidance}": str(s.get("guidance_scale", s.get("guidance", 0))),
+            "{output}": str(out_path),
+        }
+        argv = []
+        for token in profile["invoke"]:
+            for key, value in subs.items():
+                token = token.replace(key, value)
+            argv.append(token)
+        return argv
     argv = [
         profile.get("cli", "mflux-generate-flux2"),
         "--model", resolve_model(profile, model or ""),
@@ -183,9 +208,17 @@ def run_one(profile, item, out_dir, model=None, seed=None, steps=None, timeout=1
 def selftest():
     ok = True
     profiles, gens = load_profiles()
-    if set(gens) != {"klein-q8", "klein-q4", "flux3-klein-q8", "z-image-turbo-q4"}:
+    # Every profile that can run is checked, not a fixed list: the file grew
+    # past that list twice (the two mlx-gen image profiles, then a third) and
+    # the stale set reported a working profile as an error. The profiles that
+    # cannot run on this machine are named here instead, so a new one has to be
+    # classified deliberately rather than silently joining the run.
+    known_unrunnable = {"bonsai-image-ternary-2bit"}  # mlx-gen bug, issue #22
+    expected = {"klein-q8", "klein-q4", "flux3-klein-q8", "z-image-turbo-q4",
+                "ernie-image-turbo-q8", "qwen-image-4bit"} | known_unrunnable
+    if set(gens) != expected:
         ok = False
-        print("FAIL: unexpected profiles:", sorted(gens))
+        print("FAIL: unexpected profiles:", sorted(set(gens) ^ expected))
     prompts = load_prompts()
     ids = [p["id"] for p in prompts["prompts"]]
     if len(ids) != len(set(ids)):
@@ -200,16 +233,34 @@ def selftest():
             print("FAIL: unknown category:", p.get("category"))
     # arg builder: the fixed seed and steps must be present for every profile;
     # the M1-family float16 flag is only added when the profile opts into it,
-    # because not every mflux tool accepts --compute-precision.
+    # because not every mflux tool accepts --compute-precision. An mlx-gen
+    # profile uses its own template, where the values arrive already
+    # substituted, so the same two facts are checked on the built argv either
+    # way — the seed and steps must be there, and no `{placeholder}` may
+    # survive into the command actually run.
     for name, prof in gens.items():
         argv = build_argv(prof, "a test", Path("/tmp/x.png"))
-        if prof.get("settings", {}).get("compute_precision"):
-            if "--compute-precision" not in argv or "float16" not in argv:
-                ok = False
-                print(f"FAIL: {name} missing float16 flag:", argv)
         if "--seed" not in argv or "--steps" not in argv:
             ok = False
             print(f"FAIL: {name} missing seed/steps:", argv)
+        leftover = [t for t in argv if "{" in t and "}" in t]
+        if leftover:
+            ok = False
+            print(f"FAIL: {name} left a placeholder unsubstituted:", leftover)
+        if prof.get("invoke"):
+            if prof["invoke"][0] != prof.get("cli"):
+                ok = False
+                print(f"FAIL: {name} invoke does not start at its cli:", argv[:1])
+        else:
+            # An mflux profile has no template; it must not silently lose the
+            # flags it does need.
+            if "--base-model" not in argv:
+                ok = False
+                print(f"FAIL: {name} mflux argv has no --base-model:", argv)
+            if prof.get("settings", {}).get("compute_precision"):
+                if "--compute-precision" not in argv or "float16" not in argv:
+                    ok = False
+                    print(f"FAIL: {name} missing float16 flag:", argv)
     # PNG header reader against a hand-built IHDR
     tmp = Path("/tmp/_imgbt_selftest.png")
     tmp.write_bytes(b"\x89PNG\r\n\x1a\n" + b"\x00\x00\x00\rIHDR"
