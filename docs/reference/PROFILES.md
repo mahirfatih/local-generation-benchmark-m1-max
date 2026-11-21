@@ -80,12 +80,14 @@ two FLUX profiles keep the `float16` value from the run that produced their figu
 
 ## Image generation through mlx-gen (not mflux)
 
-Two image models ship in
+Three image models ship in
 [`profiles/mflux-profiles.json`](../../profiles/mflux-profiles.json) — the file
 groups *image* models, not mflux ones — but run through
 [`mlx-gen`](https://github.com/lpalbou/mlx-gen)'s `mlxgen` console script, with
-their own `invoke` argv. They are **not** benchmarked yet: their timings and peak
-memory are unmeasured, and the app shows them as such rather than quoting a guess.
+their own `invoke` argv. `qwen-image-4bit` is now **benchmarked** over the same 8
+prompts: **30.5 s/img** (3.4 s/step, 9 steps) at 512×512 — a quarter of the pixels
+the mflux rows render, so its image time is not comparable to theirs, only its
+per-step cost is. ERNIE and Bonsai stay unmeasured for now.
 
 | Setting | `bonsai-image-ternary-2bit` | `ernie-image-turbo-q8` | `qwen-image-4bit` |
 | :--- | ---: | ---: | ---: |
@@ -139,8 +141,11 @@ row until that is fixed, not a misconfigured one. It is reported as
 [mlx-gen issue #22](https://github.com/lpalbou/mlx-gen/issues/22).
 
 `ernie-image-turbo-q8` and `qwen-image-4bit` were each run end to end on the same
-machine: ERNIE 29 s for 512×512 at 8 steps, Qwen Image 54 s for 512×512 at 9
-steps.
+machine. ERNIE produced 512×512 in 29 s at 8 steps in a smoke run;
+`qwen-image-4bit` is benchmarked over the full 8-prompt set: **30.5 s/img** and
+**3.4 s/step** at 512×512, 9 steps, all 8 images written and verified
+(`reference/image-benchmark-qwen.json`,
+[`evidence/image-benchmark-qwen.md`](../../evidence/image-benchmark-qwen.md)).
 
 ## Video profiles
 

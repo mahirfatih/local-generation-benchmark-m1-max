@@ -207,6 +207,11 @@ written PNG verified.
 | [`z-image-turbo-mflux-q4`](https://huggingface.co/mflux-community/z-image-turbo-mflux-q4) (`z-image-turbo-q4`) | Apache-2.0 | 95.8 | 10.6 | 9 | 1024×1024 |
 | [`flux-3-image-klein-base-mflux-q8`](https://huggingface.co/mflux-community/flux-3-image-klein-base-mflux-q8) (`flux3-klein-q8`) | FLUX Kommunity | 180.6 | 11.3 | 16 | 1024×1024 |
 
+`qwen-image-4bit` is measured too, but at **512×512** rather than 1024×1024, so it is
+not in the table above: `AbstractFramework/qwen-image-4bit` runs through **mlx-gen**,
+not mflux, and its **30.5 s/img** (3.4 s/step, 9 steps) buys a quarter of the pixels
+the mflux rows do. Compare it with `z-image-turbo-q4` per step, not per image.
+
 ```mermaid
 xychart-beta
     title "Seconds per image (lower is better, model load included)"

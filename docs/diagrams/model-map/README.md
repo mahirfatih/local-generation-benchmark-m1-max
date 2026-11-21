@@ -13,7 +13,8 @@ what it cost in seconds on this machine.
 Two bands, because the two units are not comparable. Images: seconds per 1024×1024 image
 over mflux — 22.5 s for FLUX.2 klein (q8), 23.8 s for its 4-bit sibling (smallest on disk
 but not the fastest), 95.8 s for Z-Image Turbo and 180.6 s for FLUX 3, an
-8× spread. Video:
+8× spread — plus three mlx-gen models at 512×512, of which Qwen Image is the measured one:
+30.5 s/img, 3.4 s/step. Video:
 seconds per clip over VideoX-Fun-mlx and mlx-gen — 247.7 / 262.1 / 255.6 s, which looks like
 a tie until you count frames: 5 frames against 25, so 49.5–52.4 s per frame against 10.2 s.
 

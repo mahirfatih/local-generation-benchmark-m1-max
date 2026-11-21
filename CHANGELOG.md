@@ -13,12 +13,14 @@ date-based snapshots rather than semver releases.
   image models, so they live in the image file, but they run through **`mlx-gen`**,
   not mflux — each carries its own `invoke` and an explicit
   `"runner": "mlx-gen"`, and none takes `--base-model` or `--compute-precision`.
-  **Not benchmarked yet**: no timing or peak-memory row, and the tables leave them
-  out rather than guessing.
   - `qwen-image-4bit` is Qwen-Image in the MLX mixed q4/q8 saved-weight layout —
-    the transformer at 4-bit, the text encoder and VAE at 8-bit. A real run on
-    this machine produced a 512×512 image in **54 s** at 9 steps.
-  - `ernie-image-turbo-q8` was run end to end at **29 s** for 512×512 at 8 steps.
+    the transformer at 4-bit, the text encoder and VAE at 8-bit. **Benchmarked**
+    over the full 8-prompt set at 512×512: **30.5 s/img**, 3.4 s/step, 9 steps, all
+    8 images written and verified —
+    [`reference/image-benchmark-qwen.json`](reference/image-benchmark-qwen.json) and
+    [`evidence/image-benchmark-qwen.md`](evidence/image-benchmark-qwen.md).
+  - `ernie-image-turbo-q8` was run end to end at **29 s** for 512×512 at 8 steps
+    (a smoke run, not a benchmark row).
   - **`bonsai-image-ternary-2bit` does not run** on `mlx-gen 0.38.0`: the Bonsai
     model's own initializer never builds `compiled_predict_cache`, which the
     `Flux2Klein` generation path it inherits then reads, so every run raises
