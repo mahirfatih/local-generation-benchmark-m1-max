@@ -25,15 +25,24 @@ durur; burada oMLX'in çalıştıramadığı iki katman var:
 | **Görsel** | [mflux](https://github.com/filipstrand/mflux) | FLUX.2 klein 4B (q8) | **22.5 s** | 1024×1024 PNG |
 | Görsel | mflux | FLUX.2 klein 4B (q4) | 23.8 s | 1024×1024 PNG |
 | Görsel | mflux | Z-Image Turbo (q4) | 95.8 s | 1024×1024 PNG |
+| Görsel | [mlx-gen](https://github.com/lpalbou/mlx-gen) | Qwen Image (mixed q4/q8) | 124.9 s | 1024×1024 PNG |
 | Görsel | mflux | FLUX 3 Image Klein | 180.6 s | 1024×1024 PNG |
-| Görsel | [mlx-gen](https://github.com/lpalbou/mlx-gen) | Qwen Image (mixed q4/q8) | 30.5 s | 512×512 PNG |
-| **Video** | [VideoX-Fun-mlx](https://github.com/dgrauet/VideoX-Fun-mlx) | CogVideoX-Fun V1.5 5B (int8) | **262.1 s** | 672×384, 5 kare GIF |
-| Video | VideoX-Fun-mlx | CogVideoX-Fun V1.5 5B (int4) | 247.7 s | 672×384, 5 kare GIF |
+| **Video** | [VideoX-Fun-mlx](https://github.com/dgrauet/VideoX-Fun-mlx) | CogVideoX-Fun V1.5 5B (int4) | **247.7 s** | 672×384, 5 kare GIF |
 | Video | [mlx-gen](https://github.com/lpalbou/mlx-gen) | Wan2.2 TI2V 5B (int8) | 255.6 s | 480×832, 25 kare MP4 |
+| Video | VideoX-Fun-mlx | CogVideoX-Fun V1.5 5B (int8) | 262.1 s | 672×384, 5 kare GIF |
 
 Her sayı bu tek makinede **duvar saatiyle**, **model yüklemesi dahil** ölçüldü ve
 her çıktı yazdığı dosyaya karşı doğrulandı — görsellerde PNG başlığı, kliplerde
-`ffprobe` — aracın log satırına karşı değil. Görseller ve klipler
+`ffprobe` — aracın log satırına karşı değil. Satırlar süreye göre sıralı: önce
+görseller, sonra klipler, her blok kendi içinde en hızlısı başta — iki birim
+karşılaştırılabilir değil, bu yüzden video bloğu kendi ölçeğinde yeniden başlıyor.
+Görsel figürleri ilk görselden **sonraki** ortalamadır — ilk görsel tek seferlik
+model yüklemesini ödeyen görseldir; her video figürü o modelin altı klibinin kendi
+ortalamasıdır. **Bütün görsel satırları artık 1024×1024**, yani görsel kolonu
+benzeri benzeriyle karşılaştırır; `qwen-image-4bit` mflux'tan geçmeyen tek görsel
+satırıdır — mlx-gen'den geçer ve görsel başına figürü gerçek bir yayılım taşır
+(yazı yoğun promptlar ~131 s, geri kalanı ~117 s), bu yüzden tablo s/adım değerini
+de verir. Görseller ve klipler
 [`evidence/`](evidence/) altında, yani iddia güvenmekle değil **bakarak**
 kontrol edilebilir.
 
@@ -180,13 +189,16 @@ Görsel, native-MLX bir difüzyon aracı olan
 | [`flux2-klein-4b-mflux-q8`](https://huggingface.co/mflux-community/flux2-klein-4b-mflux-q8) (`klein-q8`) | Apache-2.0 | **22.5** | 5.6 | 4 | 1024×1024 |
 | [`FLUX.2-klein-4B-mflux-4bit`](https://huggingface.co/Runpod/FLUX.2-klein-4B-mflux-4bit) (`klein-q4`) | Apache-2.0 | 23.8 | 5.9 | 4 | 1024×1024 |
 | [`z-image-turbo-mflux-q4`](https://huggingface.co/mflux-community/z-image-turbo-mflux-q4) (`z-image-turbo-q4`) | Apache-2.0 | 95.8 | 10.6 | 9 | 1024×1024 |
+| [`qwen-image-4bit`](https://huggingface.co/AbstractFramework/qwen-image-4bit) (`qwen-image-4bit`) | Apache-2.0 | 124.9 | **13.8** | 9 | 1024×1024 |
 | [`flux-3-image-klein-base-mflux-q8`](https://huggingface.co/mflux-community/flux-3-image-klein-base-mflux-q8) (`flux3-klein-q8`) | FLUX Kommunity | 180.6 | 11.3 | 16 | 1024×1024 |
 
-`qwen-image-4bit` de ölçülmüştür, ama yukarıdaki tablo **1024×1024**, o ise
-**512×512**'de koştuğu için tabloda yer almaz: `AbstractFramework/qwen-image-4bit`
-**mlx-gen** üzerinden çalışır (mflux değil) ve **30.5 s/görsel** (3.4 s/adım,
-9 adım) değeri, mflux satırlarının ürettiği piksellerin **çeyreğini** satın alır.
-Onu `z-image-turbo-q4` ile görsel başına değil, **adım başına** karşılaştırın.
+Satırlar `s/görsel`'e göre, en hızlısı başta. Buradaki her satır **1024×1024**, yani
+kolon benzeri benzeriyle karşılaştırır. `qwen-image-4bit` **mlx-gen** üzerinden
+çalışır (mflux değil) ve tek mflux-dışı görsel satırıdır: 9 adımda ve 1024×1024'te
+`z-image-turbo-q4` ile FLUX 3 arasına oturur ve **13.8 s/adım** ile FLUX 3'ün
+altındaki dört ölçülü satırın en pahalı adımıdır — görsel başına ve adım başına
+sayıları birlikte okuyun, çünkü görsel başına yayılım yükleme değil gerçektir:
+uzun yazı çizimi gerektiren promptlar ~131 s, geri kalanı ~117 s sürer.
 
 4 adımlı distile 4B model 1024×1024 görsel başına ~22.5 s koşar (ilki daha
 yavaş, ~28 s, çünkü model yüklenir); FLUX 3 ise 16 adımda ve 5.6B transformer ile
@@ -199,16 +211,17 @@ değil. Bütün sayılar ilk görsel
 hariç, durağan 7 görselin ortalamasıdır — model yüklemesini taşıyan ilk görsel
 dışarıda bırakılır; `s/görsel` kolonu budur.
 **klein-q8 8× kazanır** ve özel olarak FLUX 3 gerekmiyorsa kullanılacak olandır.
-Okunabilir metin ve doğru eller — klasik başarısızlık yüzeyleri — dördünde de
+Okunabilir metin ve doğru eller — klasik başarısızlık yüzeyleri — beşinde de
 temiz çıktı. FLUX 3'ün ticari-çıktı sınırı devreye girdiğinde ama klein'in hızı
 öncelik değilse, Apache-2.0 alternatifi Z-Image Turbo'dur.
 
-Otuz iki görsel, her biri kendisini üreten prompt ile:
+Kırk görsel, her biri kendisini üreten prompt ile:
 
 [`evidence/image-benchmark-2026-11-12.md`](evidence/image-benchmark-2026-11-12.md),
 [`evidence/image-benchmark-flux3-2026-11-12.md`](evidence/image-benchmark-flux3-2026-11-12.md),
-[`evidence/image-benchmark-zimage-2026-11-14.md`](evidence/image-benchmark-zimage-2026-11-14.md)
-ve [`evidence/image-benchmark-klein-q4-2026-11-17.md`](evidence/image-benchmark-klein-q4-2026-11-17.md).
+[`evidence/image-benchmark-zimage-2026-11-14.md`](evidence/image-benchmark-zimage-2026-11-14.md),
+[`evidence/image-benchmark-klein-q4-2026-11-17.md`](evidence/image-benchmark-klein-q4-2026-11-17.md)
+ve [`evidence/image-benchmark-qwen.md`](evidence/image-benchmark-qwen.md).
 
 ## Video üretimi
 
@@ -220,8 +233,8 @@ doğrulanır — runner'ın log satırıyla değil, dosyayla.
 | Model (profil) | Lisans | s/klip | Çıktı | Kare | OK |
 | :--- | :--- | ---: | :--- | ---: | :---: |
 | [`dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4`](https://huggingface.co/dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4) (`cogvideox-fun-1.5-5b-inp-q4`) | **The CogVideoX License** | **247.7** | 672×384, 1.6 s, GIF | 5 | ✅ 6/6 |
-| [`dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8`](https://huggingface.co/dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8) (`cogvideox-fun-1.5-5b-inp-q8`) | **The CogVideoX License** | **262.1** | 672×384, 1.6 s, GIF | 5 | ✅ 6/6 |
 | [`AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit`](https://huggingface.co/AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit) (`wan22-ti2v-5b-q8`) | Apache-2.0 | **255.6** | 480×832, 1.6 s, MP4 | 25 | ✅ 6/6 |
+| [`dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8`](https://huggingface.co/dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8) (`cogvideox-fun-1.5-5b-inp-q8`) | **The CogVideoX License** | **262.1** | 672×384, 1.6 s, GIF | 5 | ✅ 6/6 |
 
 5 karelik 672×384 bir klip için **262.1 s** — altı promptun ortalaması,
 258.7–274.9 s aralığında — yani 1.6 s oynayan bir klip dört dakikadan fazla GPU

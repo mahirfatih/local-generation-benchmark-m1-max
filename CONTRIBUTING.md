@@ -28,8 +28,32 @@ arrive with the file it timed.
 4. Run `./test/test.sh` before you push; it must pass. It needs no model and no
    network: syntax and naming, prompt sets, profiles, evidence links, licences,
    both harness selftests, the reference figures recomputed from the JSON, the
-   Mermaid diagrams, and the model map's files, PNGs and Hugging Face links.
+   Mermaid diagrams, the model map's files, PNGs and Hugging Face links, and that
+   every profile is named in every document that lists models.
 5. Do **not** commit API keys, tokens or other secrets.
+
+## A table of measured things is ordered by the measurement
+
+When a page lists runs with their seconds, the rows go **fastest first** — images
+as one block, clips as another, because the two units are not comparable and the
+second block restarts at the top of its own scale. A row left where it was
+inserted is how a model measured at 30 s ended up below one at 96 s on three
+pages, and how a model re-measured at 512×512 kept its old 30 s row next to
+1024×1024 neighbours: the number was right and the placement told a different
+story.
+
+The same list is written in more than one place — `README.md`, `README.tr.md`,
+`docs/reference/COMPARISON.md`, the model map — so fix the order everywhere the
+table appears. Search for the number to find them; `test/test.sh` step 12 catches a
+model that is missing, not one that is merely out of order.
+
+**A number that was never measured must not look like one that was.** A profile
+setting is not a result: `bonsai-image-ternary-2bit` asks for 1024×1024 and has
+never produced a frame, while `qwen-image-4bit` asks for 512×512 and was measured
+there. Side by side in one column they read as two measurements at two sizes. Say
+which is which **in the table itself**, not only in the prose around it — and when
+two rows were measured at different sizes, say why the sizes differ, or the reader
+cannot tell a cheap model from a cheap measurement.
 
 ## Which layer does my change belong to?
 

@@ -10,19 +10,19 @@
         {
           "id": "photoreal-market",
           "category": "photoreal",
-          "seconds": 29.46,
+          "seconds": 117.33,
           "reported_seconds": null,
-          "s_per_step": 3.27,
+          "s_per_step": 13.04,
           "returncode": 0,
           "ok": true,
           "image": "evidence/images/qwen-image-4bit--photoreal-market.png",
           "dimensions": [
-            512,
-            512
+            1024,
+            1024
           ],
-          "bytes": 391684,
-          "sha256_16": "943929e76a2ecb2c",
-          "stderr_tail": " 78%|███████▊  | 7/9 [00:19<00:05,  2.74s/it]\n 89%|████████▉ | 8/9 [00:22<00:02,  2.71s/it]\n100%|██████████| 9/9 [00:25<00:00,  2.78s/it]\n100%|██████████| 9/9 [00:25<00:00,  2.81s/it]",
+          "bytes": 1436741,
+          "sha256_16": "9b543581cc67d727",
+          "stderr_tail": " 78%|███████▊  | 7/9 [01:25<00:24, 12.23s/it]\n 89%|████████▉ | 8/9 [01:38<00:12, 12.28s/it]\n100%|██████████| 9/9 [01:50<00:00, 12.27s/it]\n100%|██████████| 9/9 [01:50<00:00, 12.26s/it]",
           "argv": [
             "mlxgen",
             "generate",
@@ -31,9 +31,9 @@
             "--prompt",
             "Photorealistic rainy-night street market in Istanbul, wet cobblestones reflecting red and yellow awnings, steam rising from a food stall, shallow depth of field, shot on 35mm, natural colour grading.",
             "--width",
-            "512",
+            "1024",
             "--height",
-            "512",
+            "1024",
             "--steps",
             "9",
             "--guidance",
@@ -41,25 +41,25 @@
             "--seed",
             "42",
             "--output",
-            "/Users/MahirFatih/Sites/local-generation-benchmark-m1-max/evidence/images/qwen-image-4bit--photoreal-market.png"
+            "evidence/images/qwen-image-4bit--photoreal-market.png"
           ]
         },
         {
           "id": "portrait-hands",
           "category": "portrait",
-          "seconds": 30.62,
+          "seconds": 131.69,
           "reported_seconds": null,
-          "s_per_step": 3.4,
+          "s_per_step": 14.63,
           "returncode": 0,
           "ok": true,
           "image": "evidence/images/qwen-image-4bit--portrait-hands.png",
           "dimensions": [
-            512,
-            512
+            1024,
+            1024
           ],
-          "bytes": 346869,
-          "sha256_16": "942fe7234731746b",
-          "stderr_tail": " 78%|███████▊  | 7/9 [00:20<00:05,  2.99s/it]\n 89%|████████▉ | 8/9 [00:23<00:02,  2.99s/it]\n100%|██████████| 9/9 [00:26<00:00,  2.99s/it]\n100%|██████████| 9/9 [00:26<00:00,  2.97s/it]",
+          "bytes": 1146148,
+          "sha256_16": "8a31f545ee352e73",
+          "stderr_tail": " 78%|███████▊  | 7/9 [01:36<00:27, 13.91s/it]\n 89%|████████▉ | 8/9 [01:50<00:13, 13.93s/it]\n100%|██████████| 9/9 [02:04<00:00, 13.95s/it]\n100%|██████████| 9/9 [02:04<00:00, 13.79s/it]",
           "argv": [
             "mlxgen",
             "generate",
@@ -68,9 +68,9 @@
             "--prompt",
             "Close-up portrait of an older fisherman mending a net, weathered hands clearly visible with all fingers, warm low sun from the left, detailed skin and rope texture, neutral background.",
             "--width",
-            "512",
+            "1024",
             "--height",
-            "512",
+            "1024",
             "--steps",
             "9",
             "--guidance",
@@ -78,25 +78,25 @@
             "--seed",
             "42",
             "--output",
-            "/Users/MahirFatih/Sites/local-generation-benchmark-m1-max/evidence/images/qwen-image-4bit--portrait-hands.png"
+            "evidence/images/qwen-image-4bit--portrait-hands.png"
           ]
         },
         {
           "id": "text-poster",
           "category": "text",
-          "seconds": 30.57,
+          "seconds": 116.51,
           "reported_seconds": null,
-          "s_per_step": 3.4,
+          "s_per_step": 12.95,
           "returncode": 0,
           "ok": true,
           "image": "evidence/images/qwen-image-4bit--text-poster.png",
           "dimensions": [
-            512,
-            512
+            1024,
+            1024
           ],
-          "bytes": 324850,
-          "sha256_16": "fa9ddb1e2f8ccf2c",
-          "stderr_tail": " 78%|███████▊  | 7/9 [00:20<00:05,  2.97s/it]\n 89%|████████▉ | 8/9 [00:23<00:02,  2.97s/it]\n100%|██████████| 9/9 [00:26<00:00,  2.97s/it]\n100%|██████████| 9/9 [00:26<00:00,  2.95s/it]",
+          "bytes": 1047109,
+          "sha256_16": "b5700fe2cde955dd",
+          "stderr_tail": " 78%|███████▊  | 7/9 [01:25<00:24, 12.16s/it]\n 89%|████████▉ | 8/9 [01:37<00:12, 12.15s/it]\n100%|██████████| 9/9 [01:49<00:00, 12.17s/it]\n100%|██████████| 9/9 [01:49<00:00, 12.17s/it]",
           "argv": [
             "mlxgen",
             "generate",
@@ -105,9 +105,9 @@
             "--prompt",
             "Minimalist swiss-style poster with the exact headline \"LOCAL FIRST\" in bold black Helvetica on an off-white background, a single thin red horizontal rule below the text, generous margins, flat vector look.",
             "--width",
-            "512",
+            "1024",
             "--height",
-            "512",
+            "1024",
             "--steps",
             "9",
             "--guidance",
@@ -115,25 +115,25 @@
             "--seed",
             "42",
             "--output",
-            "/Users/MahirFatih/Sites/local-generation-benchmark-m1-max/evidence/images/qwen-image-4bit--text-poster.png"
+            "evidence/images/qwen-image-4bit--text-poster.png"
           ]
         },
         {
           "id": "composition-stilllife",
           "category": "composition",
-          "seconds": 30.67,
+          "seconds": 116.98,
           "reported_seconds": null,
-          "s_per_step": 3.41,
+          "s_per_step": 13.0,
           "returncode": 0,
           "ok": true,
           "image": "evidence/images/qwen-image-4bit--composition-stilllife.png",
           "dimensions": [
-            512,
-            512
+            1024,
+            1024
           ],
-          "bytes": 272509,
-          "sha256_16": "c1e9f75fd30fd351",
-          "stderr_tail": " 78%|███████▊  | 7/9 [00:20<00:05,  2.99s/it]\n 89%|████████▉ | 8/9 [00:23<00:02,  3.00s/it]\n100%|██████████| 9/9 [00:26<00:00,  3.00s/it]\n100%|██████████| 9/9 [00:26<00:00,  2.97s/it]",
+          "bytes": 951431,
+          "sha256_16": "0c3ffabf52251d99",
+          "stderr_tail": " 78%|███████▊  | 7/9 [01:25<00:24, 12.25s/it]\n 89%|████████▉ | 8/9 [01:38<00:12, 12.24s/it]\n100%|██████████| 9/9 [01:50<00:00, 12.23s/it]\n100%|██████████| 9/9 [01:50<00:00, 12.25s/it]",
           "argv": [
             "mlxgen",
             "generate",
@@ -142,9 +142,9 @@
             "--prompt",
             "Overhead still life on a dark oak table: exactly three objects — a white ceramic mug, a brass pocket watch, and a ripe pomegranate cut in half. Warm side light, soft shadows, each object distinct and fully in frame.",
             "--width",
-            "512",
+            "1024",
             "--height",
-            "512",
+            "1024",
             "--steps",
             "9",
             "--guidance",
@@ -152,25 +152,25 @@
             "--seed",
             "42",
             "--output",
-            "/Users/MahirFatih/Sites/local-generation-benchmark-m1-max/evidence/images/qwen-image-4bit--composition-stilllife.png"
+            "evidence/images/qwen-image-4bit--composition-stilllife.png"
           ]
         },
         {
           "id": "stylised-risograph",
           "category": "stylised",
-          "seconds": 30.48,
+          "seconds": 131.28,
           "reported_seconds": null,
-          "s_per_step": 3.39,
+          "s_per_step": 14.59,
           "returncode": 0,
           "ok": true,
           "image": "evidence/images/qwen-image-4bit--stylised-risograph.png",
           "dimensions": [
-            512,
-            512
+            1024,
+            1024
           ],
-          "bytes": 450123,
-          "sha256_16": "5357c4e0a19f89c2",
-          "stderr_tail": " 78%|███████▊  | 7/9 [00:20<00:05,  2.99s/it]\n 89%|████████▉ | 8/9 [00:23<00:02,  2.99s/it]\n100%|██████████| 9/9 [00:26<00:00,  2.99s/it]\n100%|██████████| 9/9 [00:26<00:00,  2.96s/it]",
+          "bytes": 1644365,
+          "sha256_16": "cf37c55b60dfa519",
+          "stderr_tail": " 78%|███████▊  | 7/9 [01:36<00:27, 13.98s/it]\n 89%|████████▉ | 8/9 [01:50<00:13, 13.99s/it]\n100%|██████████| 9/9 [02:04<00:00, 13.81s/it]\n100%|██████████| 9/9 [02:04<00:00, 13.79s/it]",
           "argv": [
             "mlxgen",
             "generate",
@@ -179,9 +179,9 @@
             "--prompt",
             "Two-colour risograph print of a fox sitting in tall grass at dusk, visible paper grain and slight misregistration, limited palette of teal and warm orange, bold shapes, no outlines.",
             "--width",
-            "512",
+            "1024",
             "--height",
-            "512",
+            "1024",
             "--steps",
             "9",
             "--guidance",
@@ -189,25 +189,25 @@
             "--seed",
             "42",
             "--output",
-            "/Users/MahirFatih/Sites/local-generation-benchmark-m1-max/evidence/images/qwen-image-4bit--stylised-risograph.png"
+            "evidence/images/qwen-image-4bit--stylised-risograph.png"
           ]
         },
         {
           "id": "product-headphones",
           "category": "product",
-          "seconds": 30.33,
+          "seconds": 131.04,
           "reported_seconds": null,
-          "s_per_step": 3.37,
+          "s_per_step": 14.56,
           "returncode": 0,
           "ok": true,
           "image": "evidence/images/qwen-image-4bit--product-headphones.png",
           "dimensions": [
-            512,
-            512
+            1024,
+            1024
           ],
-          "bytes": 213245,
-          "sha256_16": "32ca9e19217860e3",
-          "stderr_tail": " 78%|███████▊  | 7/9 [00:20<00:05,  2.97s/it]\n 89%|████████▉ | 8/9 [00:23<00:02,  2.97s/it]\n100%|██████████| 9/9 [00:26<00:00,  2.97s/it]\n100%|██████████| 9/9 [00:26<00:00,  2.95s/it]",
+          "bytes": 810184,
+          "sha256_16": "97451a24c8af18fa",
+          "stderr_tail": " 78%|███████▊  | 7/9 [01:36<00:27, 13.91s/it]\n 89%|████████▉ | 8/9 [01:50<00:13, 13.93s/it]\n100%|██████████| 9/9 [02:03<00:00, 13.92s/it]\n100%|██████████| 9/9 [02:03<00:00, 13.77s/it]",
           "argv": [
             "mlxgen",
             "generate",
@@ -216,9 +216,9 @@
             "--prompt",
             "Studio product shot of matte-black over-ear headphones on a seamless light-grey backdrop, three-point softbox lighting, subtle reflection on the surface below, crisp edges, commercial catalogue style.",
             "--width",
-            "512",
+            "1024",
             "--height",
-            "512",
+            "1024",
             "--steps",
             "9",
             "--guidance",
@@ -226,25 +226,25 @@
             "--seed",
             "42",
             "--output",
-            "/Users/MahirFatih/Sites/local-generation-benchmark-m1-max/evidence/images/qwen-image-4bit--product-headphones.png"
+            "evidence/images/qwen-image-4bit--product-headphones.png"
           ]
         },
         {
           "id": "photoreal-architecture",
           "category": "photoreal",
-          "seconds": 30.36,
+          "seconds": 130.32,
           "reported_seconds": null,
-          "s_per_step": 3.37,
+          "s_per_step": 14.48,
           "returncode": 0,
           "ok": true,
           "image": "evidence/images/qwen-image-4bit--photoreal-architecture.png",
           "dimensions": [
-            512,
-            512
+            1024,
+            1024
           ],
-          "bytes": 360083,
-          "sha256_16": "33f23a2bfd72a56e",
-          "stderr_tail": " 78%|███████▊  | 7/9 [00:20<00:05,  2.97s/it]\n 89%|████████▉ | 8/9 [00:23<00:02,  2.97s/it]\n100%|██████████| 9/9 [00:26<00:00,  2.97s/it]\n100%|██████████| 9/9 [00:26<00:00,  2.95s/it]",
+          "bytes": 1099094,
+          "sha256_16": "d2f876ae3659b3f2",
+          "stderr_tail": " 78%|███████▊  | 7/9 [01:35<00:27, 13.84s/it]\n 89%|████████▉ | 8/9 [01:49<00:13, 13.87s/it]\n100%|██████████| 9/9 [02:03<00:00, 13.88s/it]\n100%|██████████| 9/9 [02:03<00:00, 13.72s/it]",
           "argv": [
             "mlxgen",
             "generate",
@@ -253,9 +253,9 @@
             "--prompt",
             "Wide architectural photograph of a concrete brutalist library at golden hour, long shadows across a plaza, a single figure walking, tilt-shift correction so verticals are straight, high dynamic range.",
             "--width",
-            "512",
+            "1024",
             "--height",
-            "512",
+            "1024",
             "--steps",
             "9",
             "--guidance",
@@ -263,25 +263,25 @@
             "--seed",
             "42",
             "--output",
-            "/Users/MahirFatih/Sites/local-generation-benchmark-m1-max/evidence/images/qwen-image-4bit--photoreal-architecture.png"
+            "evidence/images/qwen-image-4bit--photoreal-architecture.png"
           ]
         },
         {
           "id": "text-signage",
           "category": "text",
-          "seconds": 30.69,
+          "seconds": 116.82,
           "reported_seconds": null,
-          "s_per_step": 3.41,
+          "s_per_step": 12.98,
           "returncode": 0,
           "ok": true,
           "image": "evidence/images/qwen-image-4bit--text-signage.png",
           "dimensions": [
-            512,
-            512
+            1024,
+            1024
           ],
-          "bytes": 294939,
-          "sha256_16": "2a489dc7f764fdce",
-          "stderr_tail": " 78%|███████▊  | 7/9 [00:20<00:05,  2.99s/it]\n 89%|████████▉ | 8/9 [00:23<00:02,  2.99s/it]\n100%|██████████| 9/9 [00:26<00:00,  2.99s/it]\n100%|██████████| 9/9 [00:26<00:00,  2.97s/it]",
+          "bytes": 1051746,
+          "sha256_16": "db0e76a30f35eaa4",
+          "stderr_tail": " 78%|███████▊  | 7/9 [01:25<00:24, 12.25s/it]\n 89%|████████▉ | 8/9 [01:37<00:12, 12.24s/it]\n100%|██████████| 9/9 [01:50<00:00, 12.23s/it]\n100%|██████████| 9/9 [01:50<00:00, 12.24s/it]",
           "argv": [
             "mlxgen",
             "generate",
@@ -290,9 +290,9 @@
             "--prompt",
             "Photograph of a small neighbourhood coffee shop window at night with the hand-painted sign reading \"OPEN\" in warm neon-green light, condensation on the glass, brass fittings, cinematic bokeh of the street behind.",
             "--width",
-            "512",
+            "1024",
             "--height",
-            "512",
+            "1024",
             "--steps",
             "9",
             "--guidance",
@@ -300,7 +300,7 @@
             "--seed",
             "42",
             "--output",
-            "/Users/MahirFatih/Sites/local-generation-benchmark-m1-max/evidence/images/qwen-image-4bit--text-signage.png"
+            "evidence/images/qwen-image-4bit--text-signage.png"
           ]
         }
       ]

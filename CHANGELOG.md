@@ -15,7 +15,8 @@ date-based snapshots rather than semver releases.
   `"runner": "mlx-gen"`, and none takes `--base-model` or `--compute-precision`.
   - `qwen-image-4bit` is Qwen-Image in the MLX mixed q4/q8 saved-weight layout —
     the transformer at 4-bit, the text encoder and VAE at 8-bit. **Benchmarked**
-    over the full 8-prompt set at 512×512: **30.5 s/img**, 3.4 s/step, 9 steps, all
+    over the full 8-prompt set at **1024×1024**: **124.9 s/img**, 13.8 s/step, 9
+    steps, all
     8 images written and verified —
     [`reference/image-benchmark-qwen.json`](reference/image-benchmark-qwen.json) and
     [`evidence/image-benchmark-qwen.md`](evidence/image-benchmark-qwen.md).

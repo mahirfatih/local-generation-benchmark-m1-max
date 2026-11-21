@@ -85,9 +85,10 @@ Three image models ship in
 groups *image* models, not mflux ones — but run through
 [`mlx-gen`](https://github.com/lpalbou/mlx-gen)'s `mlxgen` console script, with
 their own `invoke` argv. `qwen-image-4bit` is now **benchmarked** over the same 8
-prompts: **30.5 s/img** (3.4 s/step, 9 steps) at 512×512 — a quarter of the pixels
-the mflux rows render, so its image time is not comparable to theirs, only its
-per-step cost is. ERNIE and Bonsai stay unmeasured for now.
+prompts: **124.9 s/img** (13.8 s/step, 9 steps) at **1024×1024**, the same size the
+mflux rows render, so its image time is directly comparable to theirs — and it
+lands between Z-Image Turbo and FLUX 3. ERNIE and Bonsai stay unmeasured for
+now.
 
 | Setting | `bonsai-image-ternary-2bit` | `ernie-image-turbo-q8` | `qwen-image-4bit` |
 | :--- | ---: | ---: | ---: |
@@ -95,12 +96,27 @@ per-step cost is. ERNIE and Bonsai stay unmeasured for now.
 | Base model | `prism-ml/bonsai-image-ternary-4B-unpacked` | `baidu/ERNIE-Image-Turbo` | `Qwen/Qwen-Image` |
 | CLI | `mlxgen` | `mlxgen` | `mlxgen` |
 | Quantization | ternary 1.58-bit g128 (transformer); 4-bit text encoder | MLX affine, 8-bit | MLX mixed q4/q8 |
-| Width × height | 1024 × 1024 | 512 × 512 | 512 × 512 |
+| Width × height | 1024 × 1024 (**never produced a frame**) | 512 × 512 | 1024 × 1024 |
 | Steps | 4 | 8 | 9 |
 | Guidance scale | 1.0 | 1.0 | 1.0 |
 | Seed | 42 | 42 | 42 |
 | On-disk | 3.6 GB | 11.5 GB | 16.2 GB |
 | Licence | Apache-2.0 | Apache-2.0 | Apache-2.0 |
+
+A size in this table is a profile **setting**, and it is not a limit of the model.
+`qwen-image-4bit` was benchmarked at **1024×1024** — the same size the mflux rows
+render — and `Qwen/Qwen-Image` itself is trained for far more: its own card's
+`aspect_ratios` puts the square at **1328×1328** (and `16:9` at 1664×928), so
+1024 here is a measurement setting rather than a ceiling.
+`ernie-image-turbo-q8` carries 512×512 from its smoke run and has no benchmark row.
+`bonsai-image-ternary-2bit` carries the size its profile asks for (1024×1024)
+rather than a measured one, because it has never produced a frame — a setting
+there, where the other two are results.
+
+**Two sizes are not two measurements.** A profile setting and a benchmark result
+are different things, and one column holding both is how a size nobody rendered
+reads like a size somebody measured. Where a row carries a size but no `s/img`,
+that size is the profile's request and nothing was produced at it.
 
 **`bonsai-image-ternary-2bit`** — Bonsai Image 4B is a **ternary** (1.58-bit, one
 scale per 128-weight group) deployment of the FLUX.2 Klein 4B architecture
@@ -142,8 +158,8 @@ row until that is fixed, not a misconfigured one. It is reported as
 
 `ernie-image-turbo-q8` and `qwen-image-4bit` were each run end to end on the same
 machine. ERNIE produced 512×512 in 29 s at 8 steps in a smoke run;
-`qwen-image-4bit` is benchmarked over the full 8-prompt set: **30.5 s/img** and
-**3.4 s/step** at 512×512, 9 steps, all 8 images written and verified
+`qwen-image-4bit` is benchmarked over the full 8-prompt set: **124.9 s/img** and
+**13.8 s/step** at **1024×1024**, 9 steps, all 8 images written and verified
 (`reference/image-benchmark-qwen.json`,
 [`evidence/image-benchmark-qwen.md`](../../evidence/image-benchmark-qwen.md)).
 

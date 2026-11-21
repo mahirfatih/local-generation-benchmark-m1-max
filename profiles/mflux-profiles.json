@@ -253,8 +253,8 @@
         "note": "The level is stored in the weights, so no --quantize flag is needed."
       },
       "settings": {
-        "width": 512,
-        "height": 512,
+        "width": 1024,
+        "height": 1024,
         "steps": 8,
         "guidance_scale": 1.0,
         "seed": 42
@@ -311,8 +311,8 @@
         "note": "Mixed q4/q8 policy: the transformer is 4-bit while the uploader keeps the sensitive text_encoder and vae layers at 8-bit. The level is stored in the weights, so no --quantize flag is needed."
       },
       "settings": {
-        "width": 512,
-        "height": 512,
+        "width": 1024,
+        "height": 1024,
         "steps": 9,
         "guidance_scale": 1.0,
         "seed": 42

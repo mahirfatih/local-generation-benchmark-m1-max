@@ -25,11 +25,13 @@ measured on the same M1 Max.
 | **Image** | `flux2-klein-4b` (q8) | mflux | Apache-2.0 | **22.5 s** | 1024×1024, 4 steps |
 | Image | `flux2-klein-4b` (q4) | mflux | Apache-2.0 | 23.8 s | 1024×1024, 4 steps |
 | Image | `z-image-turbo` | mflux | Apache-2.0 | 95.8 s | 1024×1024, 9 steps |
+| Image | `qwen-image-4bit` | mlx-gen | Apache-2.0 | 124.9 s | 1024×1024, 9 steps |
 | Image | `flux-3-image-klein-base` | mflux | FLUX Kommunity | 180.6 s | 1024×1024, 16 steps |
-| Image | `qwen-image-4bit` | mlx-gen | Apache-2.0 | 30.5 s | 512×512, 9 steps |
-| **Video** | `CogVideoX-Fun-V1.5-5b-InP` | VideoX-Fun-mlx | **CogVideoX License** | **262.1 s** | 672×384, 5 frames, GIF |
-| Video | `CogVideoX-Fun-V1.5-5b-InP` (int4) | VideoX-Fun-mlx | **CogVideoX License** | 247.7 s | 672×384, 5 frames, GIF |
+| **Video** | `CogVideoX-Fun-V1.5-5b-InP` (int4) | VideoX-Fun-mlx | **CogVideoX License** | **247.7 s** | 672×384, 5 frames, GIF |
 | Video | `Wan2.2-TI2V-5B` (int8) | mlx-gen | Apache-2.0 | 255.6 s | 480×832, 25 frames, MP4 |
+| Video | `CogVideoX-Fun-V1.5-5b-InP` (int8) | VideoX-Fun-mlx | **CogVideoX License** | 262.1 s | 672×384, 5 frames, GIF |
+
+Rows are ordered by time — images first, then clips, each block fastest first.
 
 Read down each column, not across the rows: seconds per image and seconds per
 clip are not comparable units, and nor are the two ways they are averaged —
@@ -49,8 +51,8 @@ written PNG checked.
 | `flux2-klein-4b-mflux-q8` | Apache-2.0 | **22.5** | 5.6 | 4 | 1024×1024 |
 | `FLUX.2-klein-4B-mflux-4bit` | Apache-2.0 | 23.8 | 5.9 | 4 | 1024×1024 |
 | `z-image-turbo-mflux-q4` | Apache-2.0 | 95.8 | 10.6 | 9 | 1024×1024 |
+| `qwen-image-4bit` (mlx-gen) | Apache-2.0 | 124.9 | 13.8 | 9 | 1024×1024 |
 | `flux-3-image-klein-base-mflux-q8` | FLUX Kommunity | 180.6 | 11.3 | 16 | 1024×1024 |
-| `qwen-image-4bit` (mlx-gen) | Apache-2.0 | 30.5 | 3.4 | 9 | **512×512** |
 
 All five were run on eight prompts covering the surfaces that separate image
 models: photorealism, hands, legible text, composition, style. **klein-q8 wins
@@ -61,10 +63,13 @@ weights that are dequantised on the fly rather than narrowing the compute — th
 saving is disk and memory, not seconds. **Z-Image
 Turbo** is the middle option and the Apache-2.0 one: ~4.3× slower than klein,
 ~1.9× faster than FLUX 3. **Qwen Image** runs through **mlx-gen**, not mflux, and
-at **512×512** rather than 1024×1024 — a quarter of the pixels — so its 30.5 s/img
-is not the 22.5 s/img comparison: per step it is the **cheapest of the five**
-(3.4 s/step), and it is the row to read for cost per step rather than cost per
-finished image. The PNGs are committed in
+is the one image row that is not a distilled few-step model: at 9 steps and
+1024×1024 it lands between Z-Image Turbo and FLUX 3, and at **13.8 s/step** it is
+the priciest step of the measured rows below FLUX 3 — read the per-image and
+per-step figures together, because its per-image figure carries a real spread (the
+text-heavy prompts run ~131 s against ~117 s for the rest, where the other rows sit
+within a few seconds of each other). Every image row here is 1024×1024, so the
+`s/img` column compares like with like. The PNGs are committed in
 [`evidence/images/`](../../evidence/images/); legible text and correct hands came
 out clean on all of them.
 
@@ -103,8 +108,8 @@ with `ffprobe`. Seconds per clip, model load included.
 | Model | Licence | Runner | s/clip | Output | Status |
 | :--- | :--- | :--- | ---: | :--- | :--- |
 | `CogVideoX-Fun-V1.5-5b-InP` (int4) | **The CogVideoX License** | VideoX-Fun-mlx | **247.7** | 672×384, 5 frames, GIF | ✅ 6/6 |
-| `CogVideoX-Fun-V1.5-5b-InP` (int8) | **The CogVideoX License** | VideoX-Fun-mlx | **262.1** | 672×384, 5 frames, GIF | ✅ 6/6 |
 | `Wan2.2-TI2V-5B` (int8) | Apache-2.0 | mlx-gen | **255.6** | 480×832, 25 frames, MP4 | ✅ 6/6 |
+| `CogVideoX-Fun-V1.5-5b-InP` (int8) | **The CogVideoX License** | VideoX-Fun-mlx | **262.1** | 672×384, 5 frames, GIF | ✅ 6/6 |
 
 CogVideoX-Fun renders a 5-frame 672×384 clip in **262.1 s on average** (six
 prompts, 258.7–274.9 s), which is over four minutes of waiting for a clip that

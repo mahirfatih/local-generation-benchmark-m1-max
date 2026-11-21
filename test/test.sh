@@ -187,7 +187,7 @@ checks = [
     ("image-benchmark.json", image_mean, 22.5),
     ("image-benchmark-flux3.json", image_mean, 180.6),
     ("image-benchmark-klein-q4.json", image_mean, 23.8),
-    ("image-benchmark-qwen.json", image_mean, 30.5),
+    ("image-benchmark-qwen.json", image_mean, 124.9),
     ("video-benchmark.json", clip_mean, 255.6),
 ]
 for name, fn, claimed in checks:

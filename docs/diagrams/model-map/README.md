@@ -10,13 +10,19 @@ what it cost in seconds on this machine.
 
 ## What it shows
 
-Two bands, because the two units are not comparable. Images: seconds per 1024×1024 image
-over mflux — 22.5 s for FLUX.2 klein (q8), 23.8 s for its 4-bit sibling (smallest on disk
-but not the fastest), 95.8 s for Z-Image Turbo and 180.6 s for FLUX 3, an
-8× spread — plus three mlx-gen models at 512×512, of which Qwen Image is the measured one:
-30.5 s/img, 3.4 s/step. Video:
-seconds per clip over VideoX-Fun-mlx and mlx-gen — 247.7 / 262.1 / 255.6 s, which looks like
+Two bands, because the two units are not comparable, and each band fastest first.
+Images: seconds per 1024×1024 image
+over mflux and mlx-gen — 22.5 s for FLUX.2 klein (q8), 23.8 s for its 4-bit sibling
+(smallest on disk
+but not the fastest), 95.8 s for Z-Image Turbo, 124.9 s for Qwen Image and 180.6 s
+for FLUX 3, an
+8× spread. Video:
+seconds per clip over VideoX-Fun-mlx and mlx-gen — 247.7 / 255.6 / 262.1 s, which looks like
 a tie until you count frames: 5 frames against 25, so 49.5–52.4 s per frame against 10.2 s.
+
+Every image row is 1024×1024, so the image band compares like with like. ERNIE and
+Bonsai are drawn without a bar: Bonsai has never produced a frame, and ERNIE has a
+smoke run rather than a benchmark row.
 
 Licence differences are on the poster, not in a footnote: FLUX 3 carries a US$5M commercial
 output cap, the CogVideoX quant says Apache-2.0 while the base model does not, and Wan2.2 is

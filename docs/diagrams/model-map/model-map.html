@@ -201,8 +201,8 @@
 
   <div class="bands">
     <div class="band">
-      <span>Görsel · mflux</span>
-      <span class="hint">s/görsel — 1024×1024, ilk görsel hariç ortalama</span>
+      <span>Görsel · mflux + mlx-gen</span>
+      <span class="hint">s/görsel — hepsi 1024×1024, ilk görsel hariç ortalama</span>
     </div>
 
     <div class="rows">
@@ -245,6 +245,19 @@
 
       <div class="row">
         <div class="task">
+          <div class="k">Görsel · MLX-Gen, mixed q4/q8</div>
+          <div class="d">Qwen-Image, MLX-Gen saved-weight düzeni (transformer 4-bit, metin kodlayıcı ve VAE
+            8-bit). 1024×1024 üzerinde ölçüldü — adım başına 13,8 s; yazı yoğun promptlar
+            ~131 s, geri kalanı ~117 s. Diğer satırlar gibi distile bir az-adım modeli değil.</div>
+        </div>
+        <div class="pick">
+          <div class="m">Qwen Image <span class="tiny">· mixed q4/q8 · 9 adım · Apache-2.0</span> <a class="hf" href="https://huggingface.co/AbstractFramework/qwen-image-4bit">HF</a></div>
+          <div class="bar"><div class="track"><div class="fill" style="width:69%"></div></div><span class="val">124,9 s/img · 1024×1024</span></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="task">
           <div class="k">Görsel · yüksek kalite</div>
           <div class="d">16 adım, 5,6B transformer. Aynı prompt seti, aynı 1024×1024 — ama görsel
             başına <b>~3 dakika</b> GPU.
@@ -253,18 +266,6 @@
         <div class="pick">
           <div class="m">FLUX 3 Image Klein <span class="tiny">· q8 · 16 adım · FLUX Kommunity</span> <a class="hf" href="https://huggingface.co/mflux-community/flux-3-image-klein-base-mflux-q8">HF</a></div>
           <div class="bar"><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">180,6 s/img</span></div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="task">
-          <div class="k">Görsel · MLX-Gen, 4-bit</div>
-          <div class="d">Qwen-Image, MLX-Gen saved-weight düzeni (transformer 4-bit, metin kodlayıcı ve VAE
-            8-bit). 512×512 üzerinde ölçüldü — adım başına 3,4 s.</div>
-        </div>
-        <div class="pick">
-          <div class="m">Qwen Image <span class="tiny">· mixed q4/q8 · 9 adım · Apache-2.0</span> <a class="hf" href="https://huggingface.co/AbstractFramework/qwen-image-4bit">HF</a></div>
-          <div class="bar"><div class="track"><div class="fill" style="width:17%"></div></div><span class="val">30,5 s/img · 512×512</span></div>
         </div>
       </div>
 
@@ -311,6 +312,18 @@
 
       <div class="row">
         <div class="task">
+          <div class="k">Video · ticari kullanım</div>
+          <div class="d">480×832, <b>25 kare</b> — 5× daha fazla. Klip başına <b>%2,5 daha hızlı</b>,
+            kare başına <b>5× ucuz</b>. Tek Apache-2.0 video profili.</div>
+        </div>
+        <div class="pick">
+          <div class="m">Wan2.2 TI2V 5B <span class="tiny">· int8 · 25 kare · Apache-2.0</span> <a class="hf" href="https://huggingface.co/AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit">HF</a><span class="flag">ticari</span></div>
+          <div class="bar"><div class="track"><div class="fill" style="width:98%"></div></div><span class="val">255,6 s/klip</span></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="task">
           <div class="k">Video · referans</div>
           <div class="d">672×384, <b>5 kare</b> — kullanılabilir en ucuz değer, bir tavan değil: kare
             sayısı <b>1 mod 4</b> olmalı (4 → 1, 8 → 5 ile aynı, 13 → 13). 1,6 s'lik klip ≈ 4,4 dakika GPU.
@@ -319,18 +332,6 @@
         <div class="pick">
           <div class="m">CogVideoX-Fun 5B <span class="tiny">· q8 · 5 kare · The CogVideoX License</span> <a class="hf" href="https://huggingface.co/dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8">HF</a></div>
           <div class="bar"><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">262,1 s/klip</span></div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="task">
-          <div class="k">Video · ticari kullanım</div>
-          <div class="d">480×832, <b>25 kare</b> — 5× daha fazla. Klip başına <b>%2,5 daha hızlı</b>,
-            kare başına <b>5× ucuz</b>. Tek Apache-2.0 video profili.</div>
-        </div>
-        <div class="pick">
-          <div class="m">Wan2.2 TI2V 5B <span class="tiny">· int8 · 25 kare · Apache-2.0</span> <a class="hf" href="https://huggingface.co/AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit">HF</a><span class="flag">ticari</span></div>
-          <div class="bar"><div class="track"><div class="fill" style="width:98%"></div></div><span class="val">255,6 s/klip</span></div>
         </div>
       </div>
     </div>
@@ -360,8 +361,8 @@
         <div class="lbl">kare — profillerin değeri (CogVideoX'te 13'e kadar çıkar)</div>
       </div>
       <div class="card">
-        <div class="big">28</div>
-        <div class="lbl">çıktı dosyadan doğrulandı — 24 PNG + 12 klip</div>
+        <div class="big">58</div>
+        <div class="lbl">çıktı dosyadan doğrulandı — 40 PNG + 18 klip</div>
       </div>
       <div class="card">
         <div class="big">68 GB</div>
@@ -386,7 +387,7 @@
   <footer>
     <div>
       <span class="name">Mahir F. ÜNAL</span><br>
-      <span style="opacity:.7">6 model ölçüldü · 3 görsel + 3 video, hepsi bu sayfada</span>
+      <span style="opacity:.7">8 profil ölçüldü · 5 görsel + 3 video, hepsi bu sayfada</span>
     </div>
     <div style="display:flex;align-items:center;gap:14px">
       <button class="toggle" id="themeBtn" type="button">◐ tema</button>

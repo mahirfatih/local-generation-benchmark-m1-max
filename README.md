@@ -23,18 +23,23 @@ here are the two layers oMLX cannot serve:
 | **Image** | [mflux](https://github.com/filipstrand/mflux) | FLUX.2 klein 4B (q8) | **22.5 s** | 1024×1024 PNG |
 | Image | mflux | FLUX.2 klein 4B (q4) | 23.8 s | 1024×1024 PNG |
 | Image | mflux | Z-Image Turbo (q4) | 95.8 s | 1024×1024 PNG |
+| Image | [mlx-gen](https://github.com/lpalbou/mlx-gen) | Qwen Image (mixed q4/q8) | 124.9 s | 1024×1024 PNG |
 | Image | mflux | FLUX 3 Image Klein | 180.6 s | 1024×1024 PNG |
-| Image | [mlx-gen](https://github.com/lpalbou/mlx-gen) | Qwen Image (mixed q4/q8) | 30.5 s | 512×512 PNG |
-| **Video** | [VideoX-Fun-mlx](https://github.com/dgrauet/VideoX-Fun-mlx) | CogVideoX-Fun V1.5 5B (int8) | **262.1 s** | 672×384, 5-frame GIF |
-| Video | VideoX-Fun-mlx | CogVideoX-Fun V1.5 5B (int4) | 247.7 s | 672×384, 5-frame GIF |
+| **Video** | [VideoX-Fun-mlx](https://github.com/dgrauet/VideoX-Fun-mlx) | CogVideoX-Fun V1.5 5B (int4) | **247.7 s** | 672×384, 5-frame GIF |
 | Video | [mlx-gen](https://github.com/lpalbou/mlx-gen) | Wan2.2 TI2V 5B (int8) | 255.6 s | 480×832, 25-frame MP4 |
+| Video | VideoX-Fun-mlx | CogVideoX-Fun V1.5 5B (int8) | 262.1 s | 672×384, 5-frame GIF |
 
 Every number is wall clock on this one machine, **model load included**, and every
 output is verified against the file it wrote — the PNG header for images, `ffprobe`
-for clips — not against a tool's log line. The image figures are the mean **after
+for clips — not against a tool's log line. Rows are ordered by time, images first
+and then clips, fastest first — the two units are not comparable, so the video
+block restarts at the top of its own scale. The image figures are the mean **after
 the first image**, which is the one that pays the one-time model load; each video
-figure is that model's own mean over its six clips. Qwen Image is the one image row
-at **512×512** rather than 1024×1024, so read it per step, not per image. The images
+figure is that model's own mean over its six clips. **Every image row is now
+1024×1024**, so the image column compares like with like; `qwen-image-4bit` is the
+one image row that does not run through mflux — it runs through mlx-gen, and its
+per-image figure carries a real spread (the text-heavy prompts cost ~131 s against
+~117 s for the rest), which is why the table gives its s/step as well. The images
 and clips are in
 [`evidence/`](evidence/) so the claim can be checked by looking, not by trusting.
 
@@ -209,19 +214,24 @@ written PNG verified.
 | [`flux2-klein-4b-mflux-q8`](https://huggingface.co/mflux-community/flux2-klein-4b-mflux-q8) (`klein-q8`) | Apache-2.0 | **22.5** | 5.6 | 4 | 1024×1024 |
 | [`FLUX.2-klein-4B-mflux-4bit`](https://huggingface.co/Runpod/FLUX.2-klein-4B-mflux-4bit) (`klein-q4`) | Apache-2.0 | 23.8 | 5.9 | 4 | 1024×1024 |
 | [`z-image-turbo-mflux-q4`](https://huggingface.co/mflux-community/z-image-turbo-mflux-q4) (`z-image-turbo-q4`) | Apache-2.0 | 95.8 | 10.6 | 9 | 1024×1024 |
+| [`AbstractFramework/qwen-image-4bit`](https://huggingface.co/AbstractFramework/qwen-image-4bit) (`qwen-image-4bit`) | Apache-2.0 | 124.9 | **13.8** | 9 | 1024×1024 |
 | [`flux-3-image-klein-base-mflux-q8`](https://huggingface.co/mflux-community/flux-3-image-klein-base-mflux-q8) (`flux3-klein-q8`) | FLUX Kommunity | 180.6 | 11.3 | 16 | 1024×1024 |
 
-`qwen-image-4bit` is measured too, but at **512×512** rather than 1024×1024, so it is
-not in the table above: `AbstractFramework/qwen-image-4bit` runs through **mlx-gen**,
-not mflux, and its **30.5 s/img** (3.4 s/step, 9 steps) buys a quarter of the pixels
-the mflux rows do. Compare it with `z-image-turbo-q4` per step, not per image.
+Rows are ordered by `s/img`, fastest first. Every row here is **1024×1024**, so the
+column compares like with like. `qwen-image-4bit` runs through **mlx-gen**, not
+mflux, and is the one image row whose cost is not amortised by a distilled step
+budget: at 9 steps and 1024×1024 it sits between `z-image-turbo-q4` and FLUX 3, and
+at **13.8 s/step** it is the priciest step of the four measured rows below FLUX 3 —
+read the per-image and per-step figures together, because its per-image spread is
+real rather than load: the prompts that need a long text render run ~131 s, the
+rest ~117 s.
 
 ```mermaid
 xychart-beta
     title "Seconds per image (lower is better, model load included)"
-    x-axis ["klein-q8", "klein-q4", "z-image-turbo-q4", "flux3-klein-q8"]
+    x-axis ["klein-q8", "klein-q4", "z-image-turbo-q4", "qwen-image", "flux3-klein-q8"]
     y-axis "seconds" 0 --> 200
-    bar [22.5, 23.8, 95.8, 180.6]
+    bar [22.5, 23.8, 95.8, 124.9, 180.6]
 ```
 
 A 4-step distilled 4B model runs ~22.5 s per 1024×1024 image (the first is slower,
@@ -239,12 +249,13 @@ classic failure surfaces — come out clean on all. Z-Image Turbo is the Apache-
 alternative when FLUX 3's commercial-output cap rules it out but klein's speed is
 not the priority.
 
-Thirty-two images, each with the prompt that produced it:
+Forty images, each with the prompt that produced it:
 
 [`evidence/image-benchmark-2026-11-12.md`](evidence/image-benchmark-2026-11-12.md),
 [`evidence/image-benchmark-flux3-2026-11-12.md`](evidence/image-benchmark-flux3-2026-11-12.md),
-[`evidence/image-benchmark-zimage-2026-11-14.md`](evidence/image-benchmark-zimage-2026-11-14.md)
-and [`evidence/image-benchmark-klein-q4-2026-11-17.md`](evidence/image-benchmark-klein-q4-2026-11-17.md).
+[`evidence/image-benchmark-zimage-2026-11-14.md`](evidence/image-benchmark-zimage-2026-11-14.md),
+[`evidence/image-benchmark-klein-q4-2026-11-17.md`](evidence/image-benchmark-klein-q4-2026-11-17.md)
+and [`evidence/image-benchmark-qwen.md`](evidence/image-benchmark-qwen.md).
 
 ## Video generation
 
@@ -255,15 +266,15 @@ end, and every clip verified with `ffprobe` — the file, not the runner's log l
 | Model (profile) | Licence | s/clip | Output | Frames | OK |
 | :--- | :--- | ---: | :--- | ---: | :---: |
 | [`dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4`](https://huggingface.co/dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4) (`cogvideox-fun-1.5-5b-inp-q4`) | **The CogVideoX License** | **247.7** | 672×384, 1.6 s, GIF | 5 | ✅ 6/6 |
-| [`dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8`](https://huggingface.co/dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8) (`cogvideox-fun-1.5-5b-inp-q8`) | **The CogVideoX License** | **262.1** | 672×384, 1.6 s, GIF | 5 | ✅ 6/6 |
 | [`AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit`](https://huggingface.co/AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit) (`wan22-ti2v-5b-q8`) | Apache-2.0 | **255.6** | 480×832, 1.6 s, MP4 | 25 | ✅ 6/6 |
+| [`dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8`](https://huggingface.co/dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8) (`cogvideox-fun-1.5-5b-inp-q8`) | **The CogVideoX License** | **262.1** | 672×384, 1.6 s, GIF | 5 | ✅ 6/6 |
 
 ```mermaid
 xychart-beta
     title "Seconds per clip (lower is better, model load included)"
-    x-axis ["cogvideox q4", "cogvideox q8", "wan2.2"]
+    x-axis ["cogvideox q4", "wan2.2", "cogvideox q8"]
     y-axis "seconds" 0 --> 350
-    bar [247.7, 262.1, 255.6]
+    bar [247.7, 255.6, 262.1]
 ```
 
 **262.1 s** for a 5-frame 672×384 clip — the mean of six prompts spanning
