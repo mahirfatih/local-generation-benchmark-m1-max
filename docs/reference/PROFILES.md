@@ -318,7 +318,7 @@ which is why every `s/img` figure is the mean of the steady-state images with th
 first left out. Output size is whatever `--height`/`--width` say.
 
 ```bash
-# klein-q8 — the 22.5 s/image profile. Steps and guidance come from the model card.
+# klein-q8 — the 24.0 s/image profile. Steps and guidance come from the model card.
 mflux-generate-flux2 \
   --model mflux-community/flux2-klein-4b-mflux-q8 \
   --base-model flux2-klein-4b \

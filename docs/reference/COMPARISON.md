@@ -39,7 +39,7 @@ Rows are ordered by time — images first, then clips, each block fastest first.
 Read down each column, not across the rows: seconds per image and seconds per
 clip are not comparable units, and nor are the two ways they are averaged —
 `s/img` is the mean **after the first image**, whose number carries the one-time
-model load, while `s/clip` is the mean of all six clips. **22.5 s buys a still;
+model load, while `s/clip` is the mean of all six clips. **23.0 s buys a still;
 262.1 s buys 1.6 s of motion.** That gap is the whole story of local generation
 on this machine.
 
@@ -104,7 +104,7 @@ are in
 The same prompt — a poster whose whole point is whether the two words render as
 words — on all four models. The cheap one did not need the others' help here:
 
-| `flux2-klein-4b` q8 (22.5 s) | `flux2-klein-4b` q4 (23.8 s) | `z-image-turbo` (95.8 s) | `flux-3-klein-base` (180.6 s) |
+| `flux2-klein-4b` q4 (23.0 s) | `flux2-klein-4b` q8 (24.0 s) | `z-image-turbo` (95.8 s) | `flux-3-klein-base` (180.6 s) |
 | :---: | :---: | :---: | :---: |
 | ![LOCAL FIRST poster, klein-q8](../../evidence/images/klein-q8--text-poster.png) | ![LOCAL FIRST poster, klein-q4](../../evidence/images/klein-q4--text-poster.png) | ![LOCAL FIRST poster, z-image-turbo-q4](../../evidence/images/z-image-turbo-q4--text-poster.png) | ![LOCAL FIRST poster, flux-3-klein q8](../../evidence/images/flux3-klein-q8--text-poster.png) |
 
