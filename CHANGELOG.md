@@ -6,6 +6,25 @@ date-based snapshots rather than semver releases.
 
 ## [Unreleased]
 
+### Added — the gate catches a stale figure written in prose, not only in a table
+
+- **Step 9 now reads the sentences and the headings, not just the table rows.** A
+  re-measurement updated the tables and the surrounding prose but left the
+  superseded klein numbers in three places that read as current fact: the poster
+  comparison's heading, its own caption, and the `klein-q8` argv comment. Every
+  one was a figure the data no longer produces, and none was a table row, which
+  is why the step missed all three and a person found them instead.
+- A figure with a unit (`N.N s/img`, `N.N s/clip`), the image headline restated
+  (`N.N s buys a still`) or a per-model figure in parentheses — `(23.0 s)`, how a
+  table heading names it — must be one of the measured values. A clip's length in
+  seconds, a per-step cost and a range bound are derived numbers and are left
+  alone, and a line that keeps an old figure on purpose passes by saying so. The
+  CHANGELOG and the dated `evidence/` run reports are exempt: they record what the
+  figures were on their date, and a later re-measurement supersedes their numbers
+  without making the record wrong.
+- `z-image-turbo-q4` at **95.8 s** was also added to the recomputed set; it had
+  never been checked.
+
 ### Fixed — the harness dropped `guidance_scale`, and the two klein figures were re-measured
 
 - **`build_argv` never passed `--guidance`.** It read steps, seed and precision

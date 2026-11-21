@@ -196,7 +196,9 @@ proves the harnesses agree with their own fixtures. The gate is twelve steps —
 syntax and naming, prompt sets, profiles, evidence links, licences, both
 selftests, the reference figures recomputed from the JSON, the Mermaid diagrams,
 the model map's files, PNGs and Hugging Face links, and that every profile is
-named in every document that lists models.
+named in every document that lists models. Step 9 reads the prose as well as the
+tables: a figure carrying a unit, or the image headline restated, has to be one
+the data produces, so a second copy of a sentence goes red instead of drifting.
 
 The tools we measured **through**, without which there would be no column at all:
 [mflux](https://github.com/filipstrand/mflux),

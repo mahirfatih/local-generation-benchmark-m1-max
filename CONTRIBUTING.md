@@ -47,6 +47,15 @@ The same list is written in more than one place — `README.md`, `README.tr.md`,
 table appears. Search for the number to find them; `test/test.sh` step 12 catches a
 model that is missing, not one that is merely out of order.
 
+**A figure is written in more than one place too, and step 9 catches a stale
+copy.** The same second also lives in a sentence, a table heading or a code
+comment, where it reads as current fact long after the table beside it was
+updated. A figure with a unit (`N.N s/img`, `N.N s/clip`), the image headline
+restated (`N.N s buys a still`) or a per-model figure in parentheses — `(23.0 s)`,
+how a table heading names it — must match the data; a line that keeps an old
+figure on purpose must say it is old. The CHANGELOG and the dated `evidence/`
+run reports are exempt, because they record what the figures were on their date.
+
 **A number that was never measured must not look like one that was.** A profile
 setting is not a result: `bonsai-image-ternary-2bit` asks for 1024×1024 and has
 never produced a frame, so its row carries no `s/img` even though it names a size.

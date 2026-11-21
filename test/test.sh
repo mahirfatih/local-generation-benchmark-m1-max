@@ -142,7 +142,7 @@ python3 scripts/measure/video-benchmark.py --selftest
 
 step "9. Reference data — relative paths, and the headline figures match it"
 python3 - <<'PY'
-import json, pathlib, statistics, sys
+import json, pathlib, re, statistics, sys
 
 rows = {}
 for f in sorted(pathlib.Path("reference").glob("*.json")):
@@ -191,6 +191,7 @@ checks = [
     ("image-benchmark-ernie.json", image_mean, 123.5),
     ("image-benchmark-anima.json", image_mean, 36.4),
     ("image-benchmark-klein-base.json", image_mean, 97.1),
+    ("image-benchmark-zimage.json", image_mean, 95.8),
     ("video-benchmark.json", clip_mean, 255.6),
 ]
 for name, fn, claimed in checks:
@@ -198,10 +199,71 @@ for name, fn, claimed in checks:
     if abs(got - claimed) > TOLERANCE:
         bad.append(f"{name}: documents say {claimed} s, data gives {got:.3f} s")
 
+# 3. A headline figure written in the prose has to be one the data produces.
+#
+#    The table rows are checked above, but the same number also lives in
+#    sentences, table headings and code comments — "23.0 s buys a still", "the
+#    24.0 s/image profile" — and those are the copies a person reads as current
+#    fact while the table beside them is right. Three of them survived a
+#    re-measurement precisely because this step only looked at tables.
+#
+#    What makes a figure a headline claim, and not an honest derived one:
+#      - an explicit per-unit marker — `N.N s/img`, `N.N s/clip`, `N.N s/image`;
+#      - the comparison sentence's bare `N.N s buys a still`, which is the image
+#        headline restated;
+#      - a bare `N.N s` that neither names a unit nor is that sentence is not a
+#        claim about a run at all — a clip's length in seconds, a step cost
+#        (`N.N s/step`) and a range bound (`22.5–25.7 s`) all look like this and
+#        all move with the run rather than restating it, so they are skipped.
+#
+#    CHANGELOG.md and the dated `evidence/*-YYYY-MM-DD.md` run reports are
+#    skipped: they record what the figures were on their date, and a later
+#    re-measurement supersedes their numbers without making the record wrong.
+#    Everywhere else a superseded figure has to say so on its own line.
+known = {
+    "klein-q8": 24.0, "klein-q4": 23.0, "anima-turbo-q8": 36.4,
+    "z-image-turbo-q4": 95.8, "klein-base-q8": 97.1,
+    "ernie-image-turbo-q8": 123.5, "qwen-image-4bit": 124.9,
+    "flux3-klein-q8": 180.6,
+    "cogvideox-fun-1.5-5b-inp-q4": 247.7, "wan22-ti2v-5b-q8": 255.6,
+    "cogvideox-fun-1.5-5b-inp-q8": 262.1,
+}
+# A line that keeps an old figure on purpose says so; then it is history, not a
+# claim. Kept deliberately short so a figure cannot be excused by accident.
+HISTORY_MARKERS = ("earlier", "older", "eski", "used to", "was ", "previously", "once ")
+
+DOCS = [p for p in pathlib.Path(".").rglob("*.md")
+        if ".git" not in p.parts
+        and "evidence/images" not in str(p)
+        and p.name != "CHANGELOG.md"
+        and not re.search(r"-\d{4}-\d{2}-\d{2}\.md$", p.name)]
+# An explicit per-unit figure, the "buys a still" restatement of the image
+# headline, or a parenthesised figure right after a model name — `(23.0 s)`,
+# which is how a table heading names each model's seconds. Nothing else: a bare
+# `N.N s` in a sentence is a clip length or a derived cost.
+HEADLINE = re.compile(
+    r"\b(\d{1,3}\.\d)\s*(?:s/(?:img|clip|image)\b)"
+    r"|(?<![\d.–-])(\d{1,3}\.\d)\s+s\s+buys\s+a\s+still\b"
+    r"|\((\d{1,3}\.\d)\s+s\)"
+)
+
+for path in DOCS:
+    for lineno, line in enumerate(path.read_text().splitlines(), 1):
+        if any(marker in line for marker in HISTORY_MARKERS):
+            continue
+        for m in HEADLINE.finditer(line):
+            value = float(m.group(1) or m.group(2) or m.group(3))
+            if any(abs(value - v) <= TOLERANCE for v in known.values()):
+                continue
+            bad.append(
+                f"{path}:{lineno}: {m.group(0).strip()!r} is not one of the "
+                f"measured figures: {line.strip()[:90]}"
+            )
+
 if bad:
     print("\n".join(bad))
     sys.exit(1)
-print("paths are repo-relative; s/img and s/clip match the committed data")
+print("paths are repo-relative; every s/img and s/clip figure matches the committed data")
 PY
 
 printf '\n\033[1;32mAll checks passed.\033[0m\n'

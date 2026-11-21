@@ -22,7 +22,14 @@ easy to re-derive.
 | Licences | the Hugging Face model cards | (read by hand, dated in the doc) |
 
 `test/test.sh` step 9 recomputes the headline figures from these files, so a
-document cannot drift from the data it cites. The text numbers — tokens per
+document cannot drift from the data it cites. The check reads the tables and
+the prose: a figure with a unit (`N.N s/img`, `N.N s/clip`), the image headline
+restated (`N.N s buys a still`) or a parenthesised per-model figure (`(23.0 s)`,
+as a table heading names it) must be one the data produces, while a clip's
+length, a per-step cost and a range bound are derived numbers and are left
+alone. A superseded figure survives only on a line that says it is old. The
+CHANGELOG and the dated run reports under `evidence/` are exempt, because they
+record what the figures were on their date. The text numbers — tokens per
 second, coding, hallucination, red-team — are in the
 [companion repository](https://github.com/mahirfatih/omlx-m1-max-benchmark);
 oMLX cannot generate an image or a clip, which is why they are apart.
