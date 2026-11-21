@@ -87,18 +87,18 @@ groups *image* models, not mflux ones — but run through
 their own `invoke` argv. They are **not** benchmarked yet: their timings and peak
 memory are unmeasured, and the app shows them as such rather than quoting a guess.
 
-| Setting | `bonsai-image-ternary-2bit` | `ernie-image-turbo-q8` |
-| :--- | ---: | ---: |
-| Model | `prism-ml/bonsai-image-ternary-4B-mlx-2bit` | `AbstractFramework/ernie-image-turbo-8bit` |
-| Base model | `prism-ml/bonsai-image-ternary-4B-unpacked` | `baidu/ERNIE-Image-Turbo` |
-| CLI | `mlxgen` | `mlxgen` |
-| Quantization | ternary 1.58-bit g128 (transformer); 4-bit text encoder | MLX affine, 8-bit |
-| Width × height | 1024 × 1024 | 512 × 512 |
-| Steps | 4 | 8 |
-| Guidance scale | 1.0 | 1.0 |
-| Seed | 42 | 42 |
-| On-disk | 3.6 GB | 11.5 GB |
-| Licence | Apache-2.0 | Apache-2.0 |
+| Setting | `bonsai-image-ternary-2bit` | `ernie-image-turbo-q8` | `qwen-image-4bit` |
+| :--- | ---: | ---: | ---: |
+| Model | `prism-ml/bonsai-image-ternary-4B-mlx-2bit` | `AbstractFramework/ernie-image-turbo-8bit` | `AbstractFramework/qwen-image-4bit` |
+| Base model | `prism-ml/bonsai-image-ternary-4B-unpacked` | `baidu/ERNIE-Image-Turbo` | `Qwen/Qwen-Image` |
+| CLI | `mlxgen` | `mlxgen` | `mlxgen` |
+| Quantization | ternary 1.58-bit g128 (transformer); 4-bit text encoder | MLX affine, 8-bit | MLX mixed q4/q8 |
+| Width × height | 1024 × 1024 | 512 × 512 | 512 × 512 |
+| Steps | 4 | 8 | 9 |
+| Guidance scale | 1.0 | 1.0 | 1.0 |
+| Seed | 42 | 42 | 42 |
+| On-disk | 3.6 GB | 11.5 GB | 16.2 GB |
+| Licence | Apache-2.0 | Apache-2.0 | Apache-2.0 |
 
 **`bonsai-image-ternary-2bit`** — Bonsai Image 4B is a **ternary** (1.58-bit, one
 scale per 128-weight group) deployment of the FLUX.2 Klein 4B architecture
@@ -113,9 +113,16 @@ mlx-gen saved-weight layout (not a Diffusers `from_pretrained` checkpoint). The
 uploader's own example runs **8 steps at guidance 1**. Source:
 [`AbstractFramework/ernie-image-turbo-8bit`](https://huggingface.co/AbstractFramework/ernie-image-turbo-8bit).
 
-Neither accepts `--base-model` or `--compute-precision`: the `mlxgen` CLI has
-neither flag, which is why each carries an explicit `invoke` template instead of
-falling back to the generic mflux argv.
+**`qwen-image-4bit`** — Qwen-Image, MLX **mixed q4/q8** weights in the same
+saved-weight layout (the transformer is 4-bit; the uploader keeps the sensitive
+text encoder and VAE at 8-bit). It is the same family as the
+`qwen-image-edit-*` packages already on disk, but a **text-to-image** checkpoint
+rather than an editor. Source:
+[`AbstractFramework/qwen-image-4bit`](https://huggingface.co/AbstractFramework/qwen-image-4bit).
+
+None of the three accepts `--base-model` or `--compute-precision`: the `mlxgen`
+CLI has neither flag, which is why each carries an explicit `invoke` template
+instead of falling back to the generic mflux argv.
 
 **`bonsai-image-ternary-2bit` does not currently run.** On `mlx-gen 0.38.0`
 (the newest on PyPI) a generation fails before the first step:
@@ -128,8 +135,12 @@ AttributeError: 'BonsaiImage' object has no attribute 'compiled_predict_cache'
 `Flux2Klein.__init__`; the field is built only by `Flux2Initializer.init`, which
 Bonsai's path never reaches, and `Flux2Klein.generate_image` reads it. The profile
 here is correct — the fault is upstream in mlx-gen, so this is a **known-broken**
-row until that is fixed, not a misconfigured one. `ernie-image-turbo-q8` was run
-end to end: 29 s for 512×512 at 8 steps.
+row until that is fixed, not a misconfigured one. It is reported as
+[mlx-gen issue #22](https://github.com/lpalbou/mlx-gen/issues/22).
+
+`ernie-image-turbo-q8` and `qwen-image-4bit` were each run end to end on the same
+machine: ERNIE 29 s for 512×512 at 8 steps, Qwen Image 54 s for 512×512 at 9
+steps.
 
 ## Video profiles
 

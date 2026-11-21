@@ -6,15 +6,27 @@ date-based snapshots rather than semver releases.
 
 ## [Unreleased]
 
-### Added — two mlx-gen image profiles, and a source image for Wan
+### Added — three mlx-gen image profiles, and a source image for Wan
 
-- **`bonsai-image-ternary-2bit` and `ernie-image-turbo-q8`** join
-  [`profiles/mflux-profiles.json`](profiles/mflux-profiles.json). They are image
-  models, so they live in the image file, but they run through **`mlx-gen`**, not
-  mflux — each carries its own `invoke` and an explicit `"runner": "mlx-gen"`, and
-  neither takes `--base-model` or `--compute-precision`. **Not benchmarked yet**:
-  no timing or peak-memory row, and the tables leave them out rather than
-  guessing.
+- **`bonsai-image-ternary-2bit`, `ernie-image-turbo-q8` and `qwen-image-4bit`**
+  join [`profiles/mflux-profiles.json`](profiles/mflux-profiles.json). They are
+  image models, so they live in the image file, but they run through **`mlx-gen`**,
+  not mflux — each carries its own `invoke` and an explicit
+  `"runner": "mlx-gen"`, and none takes `--base-model` or `--compute-precision`.
+  **Not benchmarked yet**: no timing or peak-memory row, and the tables leave them
+  out rather than guessing.
+  - `qwen-image-4bit` is Qwen-Image in the MLX mixed q4/q8 saved-weight layout —
+    the transformer at 4-bit, the text encoder and VAE at 8-bit. A real run on
+    this machine produced a 512×512 image in **54 s** at 9 steps.
+  - `ernie-image-turbo-q8` was run end to end at **29 s** for 512×512 at 8 steps.
+  - **`bonsai-image-ternary-2bit` does not run** on `mlx-gen 0.38.0`: the Bonsai
+    model's own initializer never builds `compiled_predict_cache`, which the
+    `Flux2Klein` generation path it inherits then reads, so every run raises
+    `AttributeError` before the first step. The profile is correct — the fault is
+    upstream, reported as
+    [mlx-gen issue #22](https://github.com/lpalbou/mlx-gen/issues/22) — and the row
+    is kept as **known-broken** rather than removed, so the fix can be verified
+    against a real run when it lands.
 - **`wan22-ti2v-5b-q8` takes a first frame.** Its `invoke` gains
   `--image {image}` and the profile sets `"accepts_input_image": true`, so a caller
   with an image can animate a still; without one the flag resolves away and the run
