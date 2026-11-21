@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-12",
+  "date": "2026-11-21",
   "rows": [
     {
       "model": "mflux-community/flux2-klein-4b-mflux-q8",
@@ -10,9 +10,9 @@
         {
           "id": "photoreal-market",
           "category": "photoreal",
-          "seconds": 28.04,
+          "seconds": 22.65,
           "reported_seconds": null,
-          "s_per_step": 7.01,
+          "s_per_step": 5.66,
           "returncode": 0,
           "ok": true,
           "image": "evidence/images/klein-q8--photoreal-market.png",
@@ -22,7 +22,7 @@
           ],
           "bytes": 2023787,
           "sha256_16": "b4b64796a5e75e63",
-          "stderr_tail": "100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 4/4 [00:22<00:00,  5.18s/it]\n100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 4/4 [00:22<00:00,  5.72s/it]\nINFO: Image saved successfully at: evidence/images/klein-q8--photoreal-market.png\nINFO: Metadata embedded successfully at: evidence/images/klein-q8--photoreal-market.png",
+          "stderr_tail": "100%|██████████| 4/4 [00:18<00:00,  4.66s/it]\n100%|██████████| 4/4 [00:18<00:00,  4.73s/it]\nINFO: Image saved successfully at: evidence/images/klein-q8--photoreal-market_1.png\nINFO: Metadata embedded successfully at: evidence/images/klein-q8--photoreal-market_1.png",
           "argv": [
             "mflux-generate-flux2",
             "--model",
@@ -41,6 +41,8 @@
             "42",
             "--output",
             "evidence/images/klein-q8--photoreal-market.png",
+            "--guidance",
+            "1.0",
             "--compute-precision",
             "float16"
           ]
@@ -48,9 +50,9 @@
         {
           "id": "portrait-hands",
           "category": "portrait",
-          "seconds": 22.48,
+          "seconds": 23.06,
           "reported_seconds": null,
-          "s_per_step": 5.62,
+          "s_per_step": 5.76,
           "returncode": 0,
           "ok": true,
           "image": "evidence/images/klein-q8--portrait-hands.png",
@@ -60,7 +62,7 @@
           ],
           "bytes": 1811138,
           "sha256_16": "5ff5735da5b7bd45",
-          "stderr_tail": "100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 4/4 [00:18<00:00,  4.63s/it]\n100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 4/4 [00:18<00:00,  4.71s/it]\nINFO: Image saved successfully at: evidence/images/klein-q8--portrait-hands.png\nINFO: Metadata embedded successfully at: evidence/images/klein-q8--portrait-hands.png",
+          "stderr_tail": "100%|██████████| 4/4 [00:19<00:00,  4.82s/it]\n100%|██████████| 4/4 [00:19<00:00,  4.84s/it]\nINFO: Image saved successfully at: evidence/images/klein-q8--portrait-hands_1.png\nINFO: Metadata embedded successfully at: evidence/images/klein-q8--portrait-hands_1.png",
           "argv": [
             "mflux-generate-flux2",
             "--model",
@@ -79,6 +81,8 @@
             "42",
             "--output",
             "evidence/images/klein-q8--portrait-hands.png",
+            "--guidance",
+            "1.0",
             "--compute-precision",
             "float16"
           ]
@@ -86,9 +90,9 @@
         {
           "id": "text-poster",
           "category": "text",
-          "seconds": 22.42,
+          "seconds": 25.48,
           "reported_seconds": null,
-          "s_per_step": 5.61,
+          "s_per_step": 6.37,
           "returncode": 0,
           "ok": true,
           "image": "evidence/images/klein-q8--text-poster.png",
@@ -98,7 +102,7 @@
           ],
           "bytes": 322113,
           "sha256_16": "6830c46cf94454be",
-          "stderr_tail": "100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 4/4 [00:18<00:00,  4.63s/it]\n100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 4/4 [00:18<00:00,  4.70s/it]\nINFO: Image saved successfully at: evidence/images/klein-q8--text-poster.png\nINFO: Metadata embedded successfully at: evidence/images/klein-q8--text-poster.png",
+          "stderr_tail": "100%|██████████| 4/4 [00:21<00:00,  5.36s/it]\n100%|██████████| 4/4 [00:21<00:00,  5.45s/it]\nINFO: Image saved successfully at: evidence/images/klein-q8--text-poster_1.png\nINFO: Metadata embedded successfully at: evidence/images/klein-q8--text-poster_1.png",
           "argv": [
             "mflux-generate-flux2",
             "--model",
@@ -117,6 +121,8 @@
             "42",
             "--output",
             "evidence/images/klein-q8--text-poster.png",
+            "--guidance",
+            "1.0",
             "--compute-precision",
             "float16"
           ]
@@ -124,9 +130,9 @@
         {
           "id": "composition-stilllife",
           "category": "composition",
-          "seconds": 22.47,
+          "seconds": 25.65,
           "reported_seconds": null,
-          "s_per_step": 5.62,
+          "s_per_step": 6.41,
           "returncode": 0,
           "ok": true,
           "image": "evidence/images/klein-q8--composition-stilllife.png",
@@ -136,7 +142,7 @@
           ],
           "bytes": 1508910,
           "sha256_16": "29296c16e69fab82",
-          "stderr_tail": "100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 4/4 [00:18<00:00,  4.63s/it]\n100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 4/4 [00:18<00:00,  4.70s/it]\nINFO: Image saved successfully at: evidence/images/klein-q8--composition-stilllife.png\nINFO: Metadata embedded successfully at: evidence/images/klein-q8--composition-stilllife.png",
+          "stderr_tail": "100%|██████████| 4/4 [00:21<00:00,  5.36s/it]\n100%|██████████| 4/4 [00:21<00:00,  5.45s/it]\nINFO: Image saved successfully at: evidence/images/klein-q8--composition-stilllife_1.png\nINFO: Metadata embedded successfully at: evidence/images/klein-q8--composition-stilllife_1.png",
           "argv": [
             "mflux-generate-flux2",
             "--model",
@@ -144,7 +150,7 @@
             "--base-model",
             "flux2-klein-4b",
             "--prompt",
-            "Overhead still life on a dark oak table: exactly three objects \u2014 a white ceramic mug, a brass pocket watch, and a ripe pomegranate cut in half. Warm side light, soft shadows, each object distinct and fully in frame.",
+            "Overhead still life on a dark oak table: exactly three objects — a white ceramic mug, a brass pocket watch, and a ripe pomegranate cut in half. Warm side light, soft shadows, each object distinct and fully in frame.",
             "--width",
             "1024",
             "--height",
@@ -155,6 +161,8 @@
             "42",
             "--output",
             "evidence/images/klein-q8--composition-stilllife.png",
+            "--guidance",
+            "1.0",
             "--compute-precision",
             "float16"
           ]
@@ -162,9 +170,9 @@
         {
           "id": "stylised-risograph",
           "category": "stylised",
-          "seconds": 22.57,
+          "seconds": 23.35,
           "reported_seconds": null,
-          "s_per_step": 5.64,
+          "s_per_step": 5.84,
           "returncode": 0,
           "ok": true,
           "image": "evidence/images/klein-q8--stylised-risograph.png",
@@ -174,7 +182,7 @@
           ],
           "bytes": 2103510,
           "sha256_16": "9052367aad66198e",
-          "stderr_tail": "100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 4/4 [00:18<00:00,  4.66s/it]\n100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 4/4 [00:18<00:00,  4.73s/it]\nINFO: Image saved successfully at: evidence/images/klein-q8--stylised-risograph.png\nINFO: Metadata embedded successfully at: evidence/images/klein-q8--stylised-risograph.png",
+          "stderr_tail": "100%|██████████| 4/4 [00:19<00:00,  4.84s/it]\n100%|██████████| 4/4 [00:19<00:00,  4.89s/it]\nINFO: Image saved successfully at: evidence/images/klein-q8--stylised-risograph_1.png\nINFO: Metadata embedded successfully at: evidence/images/klein-q8--stylised-risograph_1.png",
           "argv": [
             "mflux-generate-flux2",
             "--model",
@@ -193,6 +201,8 @@
             "42",
             "--output",
             "evidence/images/klein-q8--stylised-risograph.png",
+            "--guidance",
+            "1.0",
             "--compute-precision",
             "float16"
           ]
@@ -200,9 +210,9 @@
         {
           "id": "product-headphones",
           "category": "product",
-          "seconds": 22.54,
+          "seconds": 25.5,
           "reported_seconds": null,
-          "s_per_step": 5.63,
+          "s_per_step": 6.37,
           "returncode": 0,
           "ok": true,
           "image": "evidence/images/klein-q8--product-headphones.png",
@@ -212,7 +222,7 @@
           ],
           "bytes": 1004156,
           "sha256_16": "2acc083df199191b",
-          "stderr_tail": "100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 4/4 [00:18<00:00,  4.63s/it]\n100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 4/4 [00:18<00:00,  4.70s/it]\nINFO: Image saved successfully at: evidence/images/klein-q8--product-headphones.png\nINFO: Metadata embedded successfully at: evidence/images/klein-q8--product-headphones.png",
+          "stderr_tail": "100%|██████████| 4/4 [00:21<00:00,  5.31s/it]\n100%|██████████| 4/4 [00:21<00:00,  5.39s/it]\nINFO: Image saved successfully at: evidence/images/klein-q8--product-headphones_1.png\nINFO: Metadata embedded successfully at: evidence/images/klein-q8--product-headphones_1.png",
           "argv": [
             "mflux-generate-flux2",
             "--model",
@@ -231,6 +241,8 @@
             "42",
             "--output",
             "evidence/images/klein-q8--product-headphones.png",
+            "--guidance",
+            "1.0",
             "--compute-precision",
             "float16"
           ]
@@ -238,9 +250,9 @@
         {
           "id": "photoreal-architecture",
           "category": "photoreal",
-          "seconds": 22.55,
+          "seconds": 22.54,
           "reported_seconds": null,
-          "s_per_step": 5.64,
+          "s_per_step": 5.63,
           "returncode": 0,
           "ok": true,
           "image": "evidence/images/klein-q8--photoreal-architecture.png",
@@ -250,7 +262,7 @@
           ],
           "bytes": 1847250,
           "sha256_16": "fee53f84a47c6cd7",
-          "stderr_tail": "100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 4/4 [00:18<00:00,  4.63s/it]\n100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 4/4 [00:18<00:00,  4.70s/it]\nINFO: Image saved successfully at: evidence/images/klein-q8--photoreal-architecture.png\nINFO: Metadata embedded successfully at: evidence/images/klein-q8--photoreal-architecture.png",
+          "stderr_tail": "100%|██████████| 4/4 [00:18<00:00,  4.63s/it]\n100%|██████████| 4/4 [00:18<00:00,  4.70s/it]\nINFO: Image saved successfully at: evidence/images/klein-q8--photoreal-architecture_1.png\nINFO: Metadata embedded successfully at: evidence/images/klein-q8--photoreal-architecture_1.png",
           "argv": [
             "mflux-generate-flux2",
             "--model",
@@ -269,6 +281,8 @@
             "42",
             "--output",
             "evidence/images/klein-q8--photoreal-architecture.png",
+            "--guidance",
+            "1.0",
             "--compute-precision",
             "float16"
           ]
@@ -276,9 +290,9 @@
         {
           "id": "text-signage",
           "category": "text",
-          "seconds": 22.46,
+          "seconds": 22.53,
           "reported_seconds": null,
-          "s_per_step": 5.62,
+          "s_per_step": 5.63,
           "returncode": 0,
           "ok": true,
           "image": "evidence/images/klein-q8--text-signage.png",
@@ -288,7 +302,7 @@
           ],
           "bytes": 1763263,
           "sha256_16": "2c82616e82f1a7c5",
-          "stderr_tail": "100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 4/4 [00:18<00:00,  4.63s/it]\n100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 4/4 [00:18<00:00,  4.70s/it]\nINFO: Image saved successfully at: evidence/images/klein-q8--text-signage.png\nINFO: Metadata embedded successfully at: evidence/images/klein-q8--text-signage.png",
+          "stderr_tail": "100%|██████████| 4/4 [00:18<00:00,  4.63s/it]\n100%|██████████| 4/4 [00:18<00:00,  4.70s/it]\nINFO: Image saved successfully at: evidence/images/klein-q8--text-signage_1.png\nINFO: Metadata embedded successfully at: evidence/images/klein-q8--text-signage_1.png",
           "argv": [
             "mflux-generate-flux2",
             "--model",
@@ -307,6 +321,8 @@
             "42",
             "--output",
             "evidence/images/klein-q8--text-signage.png",
+            "--guidance",
+            "1.0",
             "--compute-precision",
             "float16"
           ]

@@ -41,7 +41,11 @@ transformer and VAE, stored in the weights (no `--quantize` flag). The 4 steps a
 guidance 1.0 are the distilled-sampling values from the [FLUX.2 \[klein\] model
 card](https://huggingface.co/black-forest-labs/FLUX.2-klein-4B); width, height
 and seed are fixed so a run is reproducible. It inherits Apache-2.0 from the base
-model.
+model. It measured **24.0 s/img** over eight prompts, 22.5–25.7 s, run 2026-11-21
+(re-measured — the first run used mflux's default guidance 3.5 rather than the
+profile's 1.0); data in
+[`reference/image-benchmark.json`](../../reference/image-benchmark.json). Read it
+against `klein-q4` as a pair, not as a ranking.
 
 **`flux3-klein-q8`** — FLUX 3 Image Klein is a 5.6B transformer with a Qwen3-VL-4B
 text encoder; the distilled checkpoint runs **16 steps with no guidance**, and
@@ -63,12 +67,16 @@ rules it out. It measured **95.8 s/img** — between klein and FLUX 3.
 quantized one step further: `mlx-affine` 4-bit across the text encoder, transformer
 and VAE, stored in the checkpoint (no `--quantize` flag), on
 `Runpod/FLUX.2-klein-4B-mflux-4bit`. Apache-2.0. It is the smallest profile on
-disk (4.3 GB) and it measured **23.8 s/img** — **+1.3 s (+5.8 %)** *slower* than
-the 8-bit sibling, not faster. A smaller quantisation does not buy seconds here:
-the checkpoint ships its own 4-bit weights that are dequantised on the fly, so the
-saving is disk and memory, not compute. Because the weights carry the level, the
-profile needs no `--compute-precision` flag. Eight prompts, 22.8–25.2 s, run
-2026-11-17; data in
+disk (4.3 GB) and it measured **23.0 s/img**, against the 8-bit sibling's **24.0
+s** — but treat the two as a **tie**: on the previous run of the same pair the
+8-bit was 1.3 s ahead. A ~5 % gap between two quantisations of one 4B model on one
+machine is run-to-run noise, and the order changed between rounds. Choose on disk
+and memory, where the 4-bit does win: the checkpoint ships its own 4-bit weights
+that are dequantised on the fly, so the saving is storage, not compute. Because
+the weights carry the level, the
+profile needs no `--compute-precision` flag. Eight prompts, 22.6–24.4 s, run
+2026-11-21 (re-measured: the first run of this profile used mflux's default
+guidance 3.5 rather than the profile's 1.0); data in
 [`reference/image-benchmark-klein-q4.json`](../../reference/image-benchmark-klein-q4.json).
 
 **`anima-turbo-q8`** — Anima Turbo, a **4.0 GB** community Q8 conversion by

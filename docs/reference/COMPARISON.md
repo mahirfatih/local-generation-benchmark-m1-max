@@ -22,8 +22,8 @@ measured on the same M1 Max.
 
 | Task | Model | Tool | Licence | Time | Output |
 | :--- | :--- | :--- | :--- | ---: | :--- |
-| **Image** | `flux2-klein-4b` (q8) | mflux | Apache-2.0 | **22.5 s** | 1024×1024, 4 steps |
-| Image | `flux2-klein-4b` (q4) | mflux | Apache-2.0 | 23.8 s | 1024×1024, 4 steps |
+| **Image** | `flux2-klein-4b` (q4) | mflux | Apache-2.0 | **23.0 s** | 1024×1024, 4 steps |
+| Image | `flux2-klein-4b` (q8) | mflux | Apache-2.0 | 24.0 s | 1024×1024, 4 steps |
 | Image | `anima-turbo` (q8) | mflux | **Circlestone non-commercial** | 36.4 s | 1024×1024, 8 steps |
 | Image | `z-image-turbo` | mflux | Apache-2.0 | 95.8 s | 1024×1024, 9 steps |
 | Image | `flux2-klein-base-4b` (q8) | mflux | Apache-2.0 | 97.1 s | 1024×1024, **20 steps** |
@@ -51,8 +51,8 @@ written PNG checked.
 
 | Model | Licence | s/img | s/step | Steps | Size |
 | :--- | :--- | ---: | ---: | ---: | :--- |
-| `flux2-klein-4b-mflux-q8` | Apache-2.0 | **22.5** | 5.6 | 4 | 1024×1024 |
-| `FLUX.2-klein-4B-mflux-4bit` | Apache-2.0 | 23.8 | 5.9 | 4 | 1024×1024 |
+| `FLUX.2-klein-4B-mflux-4bit` | Apache-2.0 | **23.0** | 5.7 | 4 | 1024×1024 |
+| `flux2-klein-4b-mflux-q8` | Apache-2.0 | 24.0 | 6.0 | 4 | 1024×1024 |
 | `anima-turbo-mflux-q8` | **Circlestone non-commercial** | 36.4 | 4.6 | 8 | 1024×1024 |
 | `z-image-turbo-mflux-q4` | Apache-2.0 | 95.8 | 10.6 | 9 | 1024×1024 |
 | `flux-2-klein-base-4b-mflux-q8` | Apache-2.0 | 97.1 | 4.9 | **20** | 1024×1024 |
@@ -61,20 +61,23 @@ written PNG checked.
 | `flux-3-image-klein-base-mflux-q8` | FLUX Kommunity | 180.6 | 11.3 | 16 | 1024×1024 |
 
 All eight were run on eight prompts covering the surfaces that separate image
-models: photorealism, hands, legible text, composition, style. **klein-q8 wins
-by 8×** and is the one to use unless you need FLUX 3 specifically. The **4-bit
-klein** is the smallest on disk but not the fastest: at 23.8 s it is +1.3 s
-(+5.8 %) behind the 8-bit sibling, because the checkpoint ships its own 4-bit
-weights that are dequantised on the fly rather than narrowing the compute — the
-saving is disk and memory, not seconds. **Anima Turbo** is the smallest package
+models: photorealism, hands, legible text, composition, style. **The klein pair is
+~8× faster than FLUX 3** and is the one to use unless you need FLUX 3
+specifically. The **two klein quantisations are a tie** — the 4-bit is the
+smallest on disk (4.3 GB) and measured 23.0 s against the 8-bit's 24.0 s this
+round, but the previous round of the same pair put the 8-bit 1.3 s ahead, so a
+~5 % gap is run-to-run noise rather than a ranking. Choose between them on disk
+and memory, where the 4-bit wins: its weights are dequantised on the fly rather
+than narrowing the compute, so the saving is storage, not seconds.
+**Anima Turbo** is the smallest package
 on disk (4.0 GB) and the cheapest per step (**4.6 s**), but at 8 steps it still
 needs 36.4 s an image, so it is the *third* fastest, not the first — a small file
 is not a short wait. **`klein-base` is the distilled `klein`'s non-distilled
-twin at the same size**, and its 97.1 s against 22.5 s is mostly the schedule,
+twin at the same size**, and its 97.1 s against 24.0 s is mostly the schedule,
 not the architecture: 20 steps instead of 4. Its s/step is *lower* than the
-distilled sibling's (4.9 against 5.6), so the difference is step count — read the
+distilled sibling's (4.9 against 6.0), so the difference is step count — read the
 two rows together or the base model looks slow for the wrong reason. **Z-Image
-Turbo** is the middle option and the Apache-2.0 one: ~4.3× slower than klein,
+Turbo** is the middle option and the Apache-2.0 one: ~4× slower than klein,
 ~1.9× faster than FLUX 3. **ERNIE Image Turbo** sits just under **Qwen Image**,
 both through **mlx-gen** rather than mflux, and neither is a distilled few-step
 model: at 8 and 9 steps and 1024×1024 they land between Z-Image Turbo and FLUX 3,

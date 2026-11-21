@@ -12,9 +12,9 @@ what it cost in seconds on this machine.
 
 Two bands, because the two units are not comparable, and each band fastest first.
 Images: seconds per 1024×1024 image
-over mflux and mlx-gen — 22.5 s for FLUX.2 klein (q8), 23.8 s for its 4-bit sibling
-(smallest on disk
-but not the fastest), 36.4 s for Anima Turbo (the smallest package of all), 95.8 s for Z-Image Turbo,
+over mflux and mlx-gen — 23.0 s for FLUX.2 klein (q4, the smallest on disk) and
+24.0 s for its 8-bit sibling, a tie rather than a ranking: the two traded places
+between rounds, so a ~5 % gap is noise and disk decides, 36.4 s for Anima Turbo (the smallest package of all), 95.8 s for Z-Image Turbo,
 97.1 s for its non-distilled twin `klein-base`, 123.5 s for ERNIE Image Turbo,
 124.9 s for Qwen Image and 180.6 s
 for FLUX 3, an

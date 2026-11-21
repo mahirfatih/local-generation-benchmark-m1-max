@@ -20,8 +20,8 @@ here are the two layers oMLX cannot serve:
 
 | Layer | Tool | Model | Time | Output |
 | :--- | :--- | :--- | ---: | :--- |
-| **Image** | [mflux](https://github.com/filipstrand/mflux) | FLUX.2 klein 4B (q8) | **22.5 s** | 1024×1024 PNG |
-| Image | mflux | FLUX.2 klein 4B (q4) | 23.8 s | 1024×1024 PNG |
+| **Image** | [mflux](https://github.com/filipstrand/mflux) | FLUX.2 klein 4B (q4) | **23.0 s** | 1024×1024 PNG |
+| Image | mflux | FLUX.2 klein 4B (q8) | 24.0 s | 1024×1024 PNG |
 | Image | mflux | Anima Turbo (q8) | 36.4 s | 1024×1024 PNG |
 | Image | mflux | Z-Image Turbo (q4) | 95.8 s | 1024×1024 PNG |
 | Image | mflux | FLUX.2 klein 4B Base (q8) | 97.1 s | 1024×1024 PNG |
@@ -55,8 +55,8 @@ flowchart TD
     A[What do you need?] --> B{Image or video?}
     B -->|Image| C{Commercial use?}
     B -->|Video| D{Commercial use?}
-    C -->|Yes| E[klein-q8 · 22.5 s · Apache-2.0 · 8.0 GB]
-    C -->|Yes, tight disk or RAM| E4[klein-q4 · 23.8 s · Apache-2.0 · 4.3 GB]
+    C -->|Yes| E[klein-q4 · 23.0 s · Apache-2.0 · 4.3 GB]
+    C -->|Yes, room for 8-bit| E4[klein-q8 · 24.0 s · Apache-2.0 · 8.0 GB]
     C -->|No, quality first| F[flux3-klein-q8 · 180.6 s · FLUX Kommunity]
     D -->|Yes| G[Wan2.2 TI2V 5B · Apache-2.0 · 255.6 s/clip]
     D -->|No / research| H[cogvideox q4 · 247.7 s/clip · CogVideoX License]
@@ -214,8 +214,8 @@ written PNG verified.
 
 | Model (profile) | Licence | s/img | s/step | Steps | Size |
 | :--- | :--- | ---: | ---: | ---: | :--- |
-| [`flux2-klein-4b-mflux-q8`](https://huggingface.co/mflux-community/flux2-klein-4b-mflux-q8) (`klein-q8`) | Apache-2.0 | **22.5** | 5.6 | 4 | 1024×1024 |
-| [`FLUX.2-klein-4B-mflux-4bit`](https://huggingface.co/Runpod/FLUX.2-klein-4B-mflux-4bit) (`klein-q4`) | Apache-2.0 | 23.8 | 5.9 | 4 | 1024×1024 |
+| [`FLUX.2-klein-4B-mflux-4bit`](https://huggingface.co/Runpod/FLUX.2-klein-4B-mflux-4bit) (`klein-q4`) | Apache-2.0 | **23.0** | 5.7 | 4 | 1024×1024 |
+| [`flux2-klein-4b-mflux-q8`](https://huggingface.co/mflux-community/flux2-klein-4b-mflux-q8) (`klein-q8`) | Apache-2.0 | 24.0 | 6.0 | 4 | 1024×1024 |
 | [`z-image-turbo-mflux-q4`](https://huggingface.co/mflux-community/z-image-turbo-mflux-q4) (`z-image-turbo-q4`) | Apache-2.0 | 95.8 | 10.6 | 9 | 1024×1024 |
 | [`AbstractFramework/qwen-image-4bit`](https://huggingface.co/AbstractFramework/qwen-image-4bit) (`qwen-image-4bit`) | Apache-2.0 | 124.9 | **13.8** | 9 | 1024×1024 |
 | [`flux-3-image-klein-base-mflux-q8`](https://huggingface.co/mflux-community/flux-3-image-klein-base-mflux-q8) (`flux3-klein-q8`) | FLUX Kommunity | 180.6 | 11.3 | 16 | 1024×1024 |
@@ -234,20 +234,26 @@ xychart-beta
     title "Seconds per image (lower is better, model load included)"
     x-axis ["klein-q8", "klein-q4", "z-image-turbo-q4", "qwen-image", "flux3-klein-q8"]
     y-axis "seconds" 0 --> 200
-    bar [22.5, 23.8, 95.8, 124.9, 180.6]
+    bar [23.0, 24.0, 95.8, 124.9, 180.6]
 ```
 
-A 4-step distilled 4B model runs ~22.5 s per 1024×1024 image (the first is slower,
+A 4-step distilled 4B model runs ~24 s per 1024×1024 image (the first is slower,
 ~28 s, because the model loads); FLUX 3 at 16 steps and a 5.6B transformer takes
 ~180 s. Z-Image Turbo — a 9-step distilled 6B model, Apache-2.0 — sits between them
-at **95.8 s**, ~4.3× slower than klein and ~1.9× faster than FLUX 3. The **4-bit
-klein** (`klein-q4`) is the smallest on disk at 4.3 GB but *not* the fastest: at
-**23.8 s** it is +1.3 s (+5.8 %) behind the 8-bit sibling, because the checkpoint
-ships its own 4-bit weights that are dequantised on the fly — the saving is disk and
-memory, not seconds. All figures are
+at **95.8 s**, ~4× slower than klein and ~1.9× faster than FLUX 3. Both klein
+quantisations are within a second of each other and the order between them is
+**not stable**: the 4-bit (`klein-q4`, 4.3 GB, the smallest on disk) measured
+**23.0 s** against the 8-bit sibling's **24.0 s**, but on the previous run of the
+same pair the 8-bit was ahead by 1.3 s. A ~5 % gap on one machine is run-to-run
+noise, so read the two as a tie and choose on disk and memory, where the 4-bit
+does win — its saving is storage, not seconds. Earlier runs of this pair used
+mflux's default guidance 3.5 rather than the profiles' 1.0
+(`build_argv` dropped the field; see `CHANGELOG.md`), which is why the older
+figures are 22.5 / 23.8. All figures are
 the mean of the seven steady-state images, with the first — the one that includes
-model load — left out; that is the `s/img` column. **klein-q8 wins by 8×** and is the
-one to use unless you need FLUX 3 specifically. Legible text and correct hands — the
+model load — left out; that is the `s/img` column. **The klein pair is ~8× faster
+than FLUX 3** and is the one to use unless you need FLUX 3 specifically. Legible
+text and correct hands — the
 classic failure surfaces — come out clean on all. Z-Image Turbo is the Apache-2.0
 alternative when FLUX 3's commercial-output cap rules it out but klein's speed is
 not the priority.

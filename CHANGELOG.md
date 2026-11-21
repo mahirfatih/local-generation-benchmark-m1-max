@@ -6,6 +6,29 @@ date-based snapshots rather than semver releases.
 
 ## [Unreleased]
 
+### Fixed — the harness dropped `guidance_scale`, and the two klein figures were re-measured
+
+- **`build_argv` never passed `--guidance`.** It read steps, seed and precision
+  from the profile but not the guidance scale, so every mflux run used the tool's
+  own default (**3.5**) whatever the profile said. Two runs of `klein-q8` at seed
+  42 differing only in `--guidance 1.0` wrote different PNGs (`646ce7ff…` against
+  `8d6765ade…`), which is how it was found. The field now reaches the command
+  line, and `--selftest` names the two profiles added below.
+- **`klein-q8` and `klein-q4` were re-measured** because of it; they are the only
+  two rows affected (every other profile either carries no `guidance_scale` or
+  runs through an `invoke` template that already substituted `{guidance}`).
+  - `klein-q8`: **22.5 → 24.0 s/img** (5.6 → 6.0 s/step).
+  - `klein-q4`: **23.8 → 23.0 s/img** (5.9 → 5.7 s/step).
+  - **The order between them flipped**, and that is the honest reading: a ~5 % gap
+    on one machine is run-to-run noise, so the two quantisations are presented as
+    a **tie** and every table that ranked them was corrected. The decision they
+    support is unchanged — pick on disk and memory, where the 4-bit wins by
+    3.7 GB — but the "q8 is the fastest, q4 is slower" claim is gone from
+    `README.md`, `README.tr.md`, `COMPARISON.md`, `PROFILES.md`, the poster and
+    its README. The superseded figures are named where the change would otherwise
+    look like an erratum. Gate pins and both evidence pages were regenerated from
+    the new raw data.
+
 ### Added — two more mflux image profiles, measured
 
 - **`anima-turbo-q8` and `klein-base-q8`** join

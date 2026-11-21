@@ -22,8 +22,8 @@ durur; burada oMLX'in çalıştıramadığı iki katman var:
 
 | Katman | Araç | Model | Süre | Çıktı |
 | :--- | :--- | :--- | ---: | :--- |
-| **Görsel** | [mflux](https://github.com/filipstrand/mflux) | FLUX.2 klein 4B (q8) | **22.5 s** | 1024×1024 PNG |
-| Görsel | mflux | FLUX.2 klein 4B (q4) | 23.8 s | 1024×1024 PNG |
+| **Görsel** | [mflux](https://github.com/filipstrand/mflux) | FLUX.2 klein 4B (q4) | **23.0 s** | 1024×1024 PNG |
+| Görsel | mflux | FLUX.2 klein 4B (q8) | 24.0 s | 1024×1024 PNG |
 | Görsel | mflux | Anima Turbo (q8) | 36.4 s | 1024×1024 PNG |
 | Görsel | mflux | Z-Image Turbo (q4) | 95.8 s | 1024×1024 PNG |
 | Görsel | mflux | FLUX.2 klein 4B Base (q8) | 97.1 s | 1024×1024 PNG |
@@ -59,8 +59,8 @@ flowchart TD
     A[Ne yapmak istiyorsun?] --> B{Görsel mi, video mu?}
     B -->|Görsel| C{Ticari kullanım?}
     B -->|Video| D{Ticari kullanım?}
-    C -->|Evet| E[klein-q8 · 22.5 s · Apache-2.0 · 8.0 GB]
-    C -->|Evet, disk veya RAM dar| E4[klein-q4 · 23.8 s · Apache-2.0 · 4.3 GB]
+    C -->|Evet| E[klein-q4 · 23.0 s · Apache-2.0 · 4.3 GB]
+    C -->|Evet, 8-bit'e yer var| E4[klein-q8 · 24.0 s · Apache-2.0 · 8.0 GB]
     C -->|Hayır, kalite önce| F[flux3-klein-q8 · 180.6 s · FLUX Kommunity]
     D -->|Evet| G[Wan2.2 TI2V 5B · Apache-2.0 · 255.6 s/klip]
     D -->|Hayır / araştırma| H[cogvideox q4 · 247.7 s/klip · CogVideoX License]
@@ -190,8 +190,8 @@ Görsel, native-MLX bir difüzyon aracı olan
 
 | Model (profil) | Lisans | s/görsel | s/adım | Adım | Boyut |
 | :--- | :--- | ---: | ---: | ---: | :--- |
-| [`flux2-klein-4b-mflux-q8`](https://huggingface.co/mflux-community/flux2-klein-4b-mflux-q8) (`klein-q8`) | Apache-2.0 | **22.5** | 5.6 | 4 | 1024×1024 |
-| [`FLUX.2-klein-4B-mflux-4bit`](https://huggingface.co/Runpod/FLUX.2-klein-4B-mflux-4bit) (`klein-q4`) | Apache-2.0 | 23.8 | 5.9 | 4 | 1024×1024 |
+| [`FLUX.2-klein-4B-mflux-4bit`](https://huggingface.co/Runpod/FLUX.2-klein-4B-mflux-4bit) (`klein-q4`) | Apache-2.0 | **23.0** | 5.7 | 4 | 1024×1024 |
+| [`flux2-klein-4b-mflux-q8`](https://huggingface.co/mflux-community/flux2-klein-4b-mflux-q8) (`klein-q8`) | Apache-2.0 | 24.0 | 6.0 | 4 | 1024×1024 |
 | [`z-image-turbo-mflux-q4`](https://huggingface.co/mflux-community/z-image-turbo-mflux-q4) (`z-image-turbo-q4`) | Apache-2.0 | 95.8 | 10.6 | 9 | 1024×1024 |
 | [`qwen-image-4bit`](https://huggingface.co/AbstractFramework/qwen-image-4bit) (`qwen-image-4bit`) | Apache-2.0 | 124.9 | **13.8** | 9 | 1024×1024 |
 | [`flux-3-image-klein-base-mflux-q8`](https://huggingface.co/mflux-community/flux-3-image-klein-base-mflux-q8) (`flux3-klein-q8`) | FLUX Kommunity | 180.6 | 11.3 | 16 | 1024×1024 |
@@ -204,17 +204,22 @@ altındaki dört ölçülü satırın en pahalı adımıdır — görsel başın
 sayıları birlikte okuyun, çünkü görsel başına yayılım yükleme değil gerçektir:
 uzun yazı çizimi gerektiren promptlar ~131 s, geri kalanı ~117 s sürer.
 
-4 adımlı distile 4B model 1024×1024 görsel başına ~22.5 s koşar (ilki daha
+4 adımlı distile 4B model 1024×1024 görsel başına ~24 s koşar (ilki daha
 yavaş, ~28 s, çünkü model yüklenir); FLUX 3 ise 16 adımda ve 5.6B transformer ile
 ~180 s. Z-Image Turbo — 9 adımlı distile 6B model, Apache-2.0 — ikisinin arasında
-**95.8 s**'de durur: klein'den ~4.3×, FLUX 3'ten ~1.9× yavaş. **4-bit klein**
-(`klein-q4`) diskte en küçüğü (4.3 GB) ama en hızlısı *değil*: **23.8 s** ile 8-bit
-kardeşinden +1.3 s (+%5.8) geride, çünkü checkpoint kendi 4-bit ağırlıklarını taşır
-ve bunlar çalışma anında dekuantize edilir — kazanç disk ve bellekte, saniyede
-değil. Bütün sayılar ilk görsel
+**95.8 s**'de durur: klein'den ~4×, FLUX 3'ten ~1.9× yavaş. Klein'ın **iki
+kuantizasyonu bir saniye içinde** ve aralarındaki sıra **kararlı değil**: 4-bit
+(`klein-q4`, 4.3 GB, diskte en küçüğü) bu turda **23.0 s** ölçüldü, 8-bit kardeşi
+**24.0 s**; ama aynı ikilinin bir önceki turunda 8-bit 1.3 s öndeydi. Tek makinede
+~%5'lik fark tur-arası gürültüdür; ikisini berabere okuyun ve disk ile belleğe
+göre seçin — kazancın gerçek olduğu yer orası, saniyeler değil. Bu ikilinin eski
+koşuları profillerin 1.0 değeri yerine mflux'un varsayılan guidance 3.5'i ile
+koşmuştu (`build_argv` alanı geçirmiyordu; bkz. `CHANGELOG.md`), eski 22.5 / 23.8
+rakamları bu yüzden. Bütün sayılar ilk görsel
 hariç, durağan 7 görselin ortalamasıdır — model yüklemesini taşıyan ilk görsel
 dışarıda bırakılır; `s/görsel` kolonu budur.
-**klein-q8 8× kazanır** ve özel olarak FLUX 3 gerekmiyorsa kullanılacak olandır.
+**Klein ikilisi FLUX 3'ten ~8× hızlıdır** ve özel olarak FLUX 3 gerekmiyorsa
+kullanılacak olandır.
 Okunabilir metin ve doğru eller — klasik başarısızlık yüzeyleri — beşinde de
 temiz çıktı. FLUX 3'ün ticari-çıktı sınırı devreye girdiğinde ama klein'in hızı
 öncelik değilse, Apache-2.0 alternatifi Z-Image Turbo'dur.

@@ -184,9 +184,9 @@ def clip_mean(name):
     return statistics.mean(ts)
 
 checks = [
-    ("image-benchmark.json", image_mean, 22.5),
+    ("image-benchmark.json", image_mean, 24.0),
     ("image-benchmark-flux3.json", image_mean, 180.6),
-    ("image-benchmark-klein-q4.json", image_mean, 23.8),
+    ("image-benchmark-klein-q4.json", image_mean, 23.0),
     ("image-benchmark-qwen.json", image_mean, 124.9),
     ("image-benchmark-ernie.json", image_mean, 123.5),
     ("image-benchmark-anima.json", image_mean, 36.4),
