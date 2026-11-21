@@ -303,3 +303,75 @@ assert not missing, f"HF URLs missing from poster: {missing}"
 assert "<script src" not in html and "<link rel=\"stylesheet\"" not in html, "external resource found"
 print(f"model map OK · {len(urls)} HF links agree · PNG 2000 px")
 PY
+
+step "12. Every profile appears in every document that lists models"
+python3 - <<'PY'
+import json, pathlib, sys
+
+# A profile is added once and copied into many places: the two READMEs, the
+# comparison page, the model map. Fixing one copy and stopping has shipped a
+# model the page answering "which model" did not mention — Qwen Image was added
+# to the Models table but left out of the summary table of both READMEs and both
+# tables of the comparison page, and each gap was found separately.
+#
+# The check is a search, not a memory. A document names a model by whichever
+# handle reads best there: the profile key (`klein-q8`), the model id
+# (`mflux-community/flux2-klein-4b-mflux-q8`), or a human name (`FLUX.2 klein 4B`).
+# A profile counts as present when the document carries any of them, so this does
+# not force one spelling on every page — it fails only when a model is genuinely
+# absent.
+profiles = {}
+for source in ("profiles/mflux-profiles.json", "profiles/video-profiles.json"):
+    doc = json.loads(pathlib.Path(source).read_text())
+    for key, prof in doc["generation_profiles"].items():
+        profiles[key] = {h for h in (key, prof.get("model"), prof.get("base_model")) if h}
+
+# Documents whose job is to enumerate the models. Deliberately not every markdown
+# file: an evidence page is one run's record and names only what that run
+# measured, and profiles/README.md explains the file format without listing
+# models — neither is a gap.
+LISTING_DOCS = [
+    "README.md",
+    "README.tr.md",
+    "docs/reference/COMPARISON.md",
+    "docs/reference/PROFILES.md",
+    "docs/diagrams/model-map/model-map.html",
+]
+
+# A human name cannot be derived from the profile, so the ones a document uses are
+# declared here. The poster reads best with "Qwen Image", not "qwen-image-4bit";
+# without this the check would report it missing a model it plainly draws. A page
+# also drops the owner prefix and the quant suffix — `CogVideoX-Fun-V1.5-5b-InP`
+# for `dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8` — so each spelling a page actually
+# carries belongs on its line, or the check reports a model the page does list.
+DISPLAY_NAMES = {
+    "klein-q8": ["FLUX.2 klein 4B", "flux2-klein-4b"],
+    "klein-q4": ["FLUX.2 klein 4B", "FLUX.2-klein-4B"],
+    "z-image-turbo-q4": ["Z-Image Turbo", "z-image-turbo"],
+    "flux3-klein-q8": ["FLUX 3 Image Klein", "flux-3-image-klein-base"],
+    "qwen-image-4bit": ["Qwen Image", "qwen-image"],
+    "ernie-image-turbo-q8": ["ERNIE Image Turbo", "ernie-image-turbo"],
+    "bonsai-image-ternary-2bit": ["Bonsai Image 4B", "bonsai-image-ternary"],
+    "cogvideox-fun-1.5-5b-inp-q8": ["CogVideoX-Fun 5B", "CogVideoX-Fun-V1.5-5b-InP"],
+    "cogvideox-fun-1.5-5b-inp-q4": ["CogVideoX-Fun 5B", "CogVideoX-Fun-V1.5-5b-InP"],
+    "wan22-ti2v-5b-q8": ["Wan2.2 TI2V 5B", "Wan2.2-TI2V-5B"],
+}
+
+bad = []
+for name in LISTING_DOCS:
+    text = pathlib.Path(name).read_text()
+    missing = []
+    for key, handles in sorted(profiles.items()):
+        probe = set(handles) | set(DISPLAY_NAMES.get(key, []))
+        if not any(h in text for h in probe):
+            missing.append(key)
+    if missing:
+        bad.append(f"{name} does not name: {', '.join(missing)}")
+
+if bad:
+    print("\n".join(bad))
+    print("Add the model to the document, or add its human name to DISPLAY_NAMES")
+    print("above if that page names it differently.")
+    sys.exit(1)
+print(f"{len(profiles)} profiles named in all {len(LISTING_DOCS)} listing documents")
+PY

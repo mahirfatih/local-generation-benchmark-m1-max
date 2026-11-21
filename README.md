@@ -184,10 +184,11 @@ Which generation model for which job, at the seconds it actually cost, in one pi
 
 Both harnesses run offline against themselves before they touch a model:
 `python3 scripts/measure/<suite>.py --selftest`. `test/test.sh` runs the gate and
-proves the harnesses agree with their own fixtures. The gate is eleven steps —
+proves the harnesses agree with their own fixtures. The gate is twelve steps —
 syntax and naming, prompt sets, profiles, evidence links, licences, both
 selftests, the reference figures recomputed from the JSON, the Mermaid diagrams,
-and the model map's files, PNGs and Hugging Face links.
+the model map's files, PNGs and Hugging Face links, and that every profile is
+named in every document that lists models.
 
 The tools we measured **through**, without which there would be no column at all:
 [mflux](https://github.com/filipstrand/mflux),

@@ -46,6 +46,15 @@ The macOS app
 ships the models this repository measures. The split is deliberate and it has a
 direction:
 
+| Repository | Local path | GitHub |
+| :--- | :--- | :--- |
+| This benchmark | `~/Sites/local-generation-benchmark-m1-max` | [`mahirfatih/local-generation-benchmark-m1-max`](https://github.com/mahirfatih/local-generation-benchmark-m1-max) |
+| The app | `~/Sites/mlx-media-studio` | [`mahirfatih/mlx-media-studio`](https://github.com/mahirfatih/mlx-media-studio) |
+
+Both are checked out **side by side under `~/Sites/`**, and the app's exporter
+reads this checkout by default, so a model added here reaches the app by being
+here and the app re-running its exporter.
+
 **The measurement lives here. The app carries the result.**
 
 | Thing | Lives here | The app's copy |

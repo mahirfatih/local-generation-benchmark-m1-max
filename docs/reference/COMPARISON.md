@@ -68,6 +68,18 @@ finished image. The PNGs are committed in
 [`evidence/images/`](../../evidence/images/); legible text and correct hands came
 out clean on all of them.
 
+Two further mlx-gen image profiles exist but carry **no timing row**, so they are
+named here rather than given a number this table cannot support:
+**`ernie-image-turbo-q8`** was run end to end once (512×512 at 8 steps, 29 s — a
+smoke run, not a benchmark), and **`bonsai-image-ternary-2bit`** does not run at
+all on `mlx-gen 0.38.0`: its initializer never builds `compiled_predict_cache`,
+which the generation path it inherits then reads, so every run raises
+`AttributeError` before the first step. The profile is correct and the fault is
+upstream, reported as
+[mlx-gen issue #22](https://github.com/lpalbou/mlx-gen/issues/22). Their settings
+are in
+[`docs/reference/PROFILES.md`](PROFILES.md).
+
 The same prompt — a poster whose whole point is whether the two words render as
 words — on all four models. The cheap one did not need the others' help here:
 
