@@ -23,6 +23,7 @@ here are the two layers oMLX cannot serve:
 | **Image** | [mflux](https://github.com/filipstrand/mflux) | FLUX.2 klein 4B (q8) | **22.5 s** | 1024×1024 PNG |
 | Image | mflux | FLUX.2 klein 4B (q4) | 23.8 s | 1024×1024 PNG |
 | Image | mflux | Z-Image Turbo (q4) | 95.8 s | 1024×1024 PNG |
+| Image | [mlx-gen](https://github.com/lpalbou/mlx-gen) | ERNIE Image Turbo (q8) | 123.5 s | 1024×1024 PNG |
 | Image | [mlx-gen](https://github.com/lpalbou/mlx-gen) | Qwen Image (mixed q4/q8) | 124.9 s | 1024×1024 PNG |
 | Image | mflux | FLUX 3 Image Klein | 180.6 s | 1024×1024 PNG |
 | **Video** | [VideoX-Fun-mlx](https://github.com/dgrauet/VideoX-Fun-mlx) | CogVideoX-Fun V1.5 5B (int4) | **247.7 s** | 672×384, 5-frame GIF |
@@ -36,11 +37,11 @@ and then clips, fastest first — the two units are not comparable, so the video
 block restarts at the top of its own scale. The image figures are the mean **after
 the first image**, which is the one that pays the one-time model load; each video
 figure is that model's own mean over its six clips. **Every image row is now
-1024×1024**, so the image column compares like with like; `qwen-image-4bit` is the
-one image row that does not run through mflux — it runs through mlx-gen, and its
-per-image figure carries a real spread (the text-heavy prompts cost ~131 s against
-~117 s for the rest), which is why the table gives its s/step as well. The images
-and clips are in
+1024×1024**, so the image column compares like with like. Two image rows do not run
+through mflux — `ernie-image-turbo-q8` and `qwen-image-4bit` run through mlx-gen,
+and Qwen's per-image figure carries a real spread (the text-heavy prompts cost
+~131 s against ~117 s for the rest), while ERNIE sits within a second of 123.5 s on
+every prompt. The images and clips are in
 [`evidence/`](evidence/) so the claim can be checked by looking, not by trusting.
 
 **Pick by what you are doing.** The chart and the flowchart below settle most

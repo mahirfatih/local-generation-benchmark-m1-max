@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Yerel Üretim Haritam · 8 profil, mflux + mlx-gen + VideoX-Fun-mlx, M1 Max</title>
+<title>Yerel Üretim Haritam · 9 profil, mflux + mlx-gen + VideoX-Fun-mlx, M1 Max</title>
 <style>
   :root{
     --bg:#08080a; --panel:#0d0d0f; --ink:#f3f1ea; --muted:#8b8b8f;
@@ -182,7 +182,7 @@
   </div>
 
   <h1>Yerelde hangi üretim modeli?</h1>
-  <p class="sub">8 profil — 5 görsel, 3 video — ölçüldü.</p>
+  <p class="sub">9 profil — 6 görsel, 3 video — ölçüldü.</p>
   <p class="lede">Görsel <strong>mflux</strong>, video <strong>VideoX-Fun-mlx</strong> ve <strong>mlx-gen</strong>
     üzerinde, <strong>Apple MLX</strong> ile, bu makinede. Barlar saniyeyi gösterir, <em>düşük daha iyi</em>.
     Bu sayfada yalnızca üretim var; metin modelleri başka bir araçla çalıştığı için burada değil.</p>
@@ -245,6 +245,18 @@
 
       <div class="row">
         <div class="task">
+          <div class="k">Görsel · MLX-Gen, 8-bit</div>
+          <div class="d">ERNIE-Image-Turbo, MLX-Gen saved-weight düzeni. 1024×1024 üzerinde ölçüldü —
+            adım başına 15,4 s ve prompt seti boyunca neredeyse sabit (123,2–123,9 s).</div>
+        </div>
+        <div class="pick">
+          <div class="m">ERNIE Image Turbo <span class="tiny">· q8 · 8 adım · Apache-2.0</span> <a class="hf" href="https://huggingface.co/AbstractFramework/ernie-image-turbo-8bit">HF</a></div>
+          <div class="bar"><div class="track"><div class="fill" style="width:68%"></div></div><span class="val">123,5 s/img · 1024×1024</span></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="task">
           <div class="k">Görsel · MLX-Gen, mixed q4/q8</div>
           <div class="d">Qwen-Image, MLX-Gen saved-weight düzeni (transformer 4-bit, metin kodlayıcı ve VAE
             8-bit). 1024×1024 üzerinde ölçüldü — adım başına 13,8 s; yazı yoğun promptlar
@@ -266,17 +278,6 @@
         <div class="pick">
           <div class="m">FLUX 3 Image Klein <span class="tiny">· q8 · 16 adım · FLUX Kommunity</span> <a class="hf" href="https://huggingface.co/mflux-community/flux-3-image-klein-base-mflux-q8">HF</a></div>
           <div class="bar"><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">180,6 s/img</span></div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="task">
-          <div class="k">Görsel · ERNIE, 8-bit</div>
-          <div class="d">ERNIE-Image-Turbo, MLX-Gen saved-weight düzeni. <span class="warn">ölçülmedi</span> —
-            gerçek bir koşu 512×512, 8 adımda <b>29 s</b> sürdü.</div>
-        </div>
-        <div class="pick">
-          <div class="m">ERNIE Image Turbo <span class="tiny">· q8 · 8 adım · Apache-2.0</span> <a class="hf" href="https://huggingface.co/AbstractFramework/ernie-image-turbo-8bit">HF</a></div>
         </div>
       </div>
 
@@ -362,7 +363,7 @@
       </div>
       <div class="card">
         <div class="big">58</div>
-        <div class="lbl">çıktı dosyadan doğrulandı — 40 PNG + 18 klip</div>
+        <div class="lbl">çıktı dosyadan doğrulandı — 48 PNG + 18 klip</div>
       </div>
       <div class="card">
         <div class="big">68 GB</div>
@@ -387,7 +388,7 @@
   <footer>
     <div>
       <span class="name">Mahir F. ÜNAL</span><br>
-      <span style="opacity:.7">8 profil ölçüldü · 5 görsel + 3 video, hepsi bu sayfada</span>
+      <span style="opacity:.7">9 profil ölçüldü · 6 görsel + 3 video, hepsi bu sayfada</span>
     </div>
     <div style="display:flex;align-items:center;gap:14px">
       <button class="toggle" id="themeBtn" type="button">◐ tema</button>

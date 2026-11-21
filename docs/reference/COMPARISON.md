@@ -25,6 +25,7 @@ measured on the same M1 Max.
 | **Image** | `flux2-klein-4b` (q8) | mflux | Apache-2.0 | **22.5 s** | 1024×1024, 4 steps |
 | Image | `flux2-klein-4b` (q4) | mflux | Apache-2.0 | 23.8 s | 1024×1024, 4 steps |
 | Image | `z-image-turbo` | mflux | Apache-2.0 | 95.8 s | 1024×1024, 9 steps |
+| Image | `ernie-image-turbo-q8` | mlx-gen | Apache-2.0 | 123.5 s | 1024×1024, 8 steps |
 | Image | `qwen-image-4bit` | mlx-gen | Apache-2.0 | 124.9 s | 1024×1024, 9 steps |
 | Image | `flux-3-image-klein-base` | mflux | FLUX Kommunity | 180.6 s | 1024×1024, 16 steps |
 | **Video** | `CogVideoX-Fun-V1.5-5b-InP` (int4) | VideoX-Fun-mlx | **CogVideoX License** | **247.7 s** | 672×384, 5 frames, GIF |
@@ -73,15 +74,13 @@ within a few seconds of each other). Every image row here is 1024×1024, so the
 [`evidence/images/`](../../evidence/images/); legible text and correct hands came
 out clean on all of them.
 
-Two further mlx-gen image profiles exist but carry **no timing row**, so they are
+One further mlx-gen image profile exists but carries **no timing row**, so it is
 named here rather than given a number this table cannot support:
-**`ernie-image-turbo-q8`** was run end to end once (512×512 at 8 steps, 29 s — a
-smoke run, not a benchmark), and **`bonsai-image-ternary-2bit`** does not run at
-all on `mlx-gen 0.38.0`: its initializer never builds `compiled_predict_cache`,
-which the generation path it inherits then reads, so every run raises
-`AttributeError` before the first step. The profile is correct and the fault is
-upstream, reported as
-[mlx-gen issue #22](https://github.com/lpalbou/mlx-gen/issues/22). Their settings
+**`bonsai-image-ternary-2bit`** does not run at all on `mlx-gen 0.38.0`: its
+initializer never builds `compiled_predict_cache`, which the generation path it
+inherits then reads, so every run raises `AttributeError` before the first step.
+The profile is correct and the fault is upstream, reported as
+[mlx-gen issue #22](https://github.com/lpalbou/mlx-gen/issues/22). Its settings
 are in
 [`docs/reference/PROFILES.md`](PROFILES.md).
 

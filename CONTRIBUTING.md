@@ -49,9 +49,8 @@ model that is missing, not one that is merely out of order.
 
 **A number that was never measured must not look like one that was.** A profile
 setting is not a result: `bonsai-image-ternary-2bit` asks for 1024×1024 and has
-never produced a frame, while `ernie-image-turbo-q8` carries the size of its 29 s
-smoke run and has no benchmark row. Side by side in one column they read as two
-measurements. Say
+never produced a frame, so its row carries no `s/img` even though it names a size.
+Side by side in one column a measured row and an unmeasured one read alike, so say
 which is which **in the table itself**, not only in the prose around it — and when
 two rows were measured at different sizes, say why the sizes differ, or the reader
 cannot tell a cheap model from a cheap measurement.

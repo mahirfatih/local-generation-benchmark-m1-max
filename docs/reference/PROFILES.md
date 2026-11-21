@@ -87,8 +87,9 @@ groups *image* models, not mflux ones — but run through
 their own `invoke` argv. `qwen-image-4bit` is now **benchmarked** over the same 8
 prompts: **124.9 s/img** (13.8 s/step, 9 steps) at **1024×1024**, the same size the
 mflux rows render, so its image time is directly comparable to theirs — and it
-lands between Z-Image Turbo and FLUX 3. ERNIE and Bonsai stay unmeasured for
-now.
+lands between Z-Image Turbo and FLUX 3. `ernie-image-turbo-q8` is **benchmarked**
+too: **123.5 s/img** (15.4 s/step, 8 steps) at **1024×1024**, and it lands just
+above Z-Image Turbo. Bonsai stays unmeasured because it does not run.
 
 | Setting | `bonsai-image-ternary-2bit` | `ernie-image-turbo-q8` | `qwen-image-4bit` |
 | :--- | ---: | ---: | ---: |
@@ -96,7 +97,7 @@ now.
 | Base model | `prism-ml/bonsai-image-ternary-4B-unpacked` | `baidu/ERNIE-Image-Turbo` | `Qwen/Qwen-Image` |
 | CLI | `mlxgen` | `mlxgen` | `mlxgen` |
 | Quantization | ternary 1.58-bit g128 (transformer); 4-bit text encoder | MLX affine, 8-bit | MLX mixed q4/q8 |
-| Width × height | 1024 × 1024 (**never produced a frame**) | 512 × 512 | 1024 × 1024 |
+| Width × height | 1024 × 1024 (**never produced a frame**) | 1024 × 1024 | 1024 × 1024 |
 | Steps | 4 | 8 | 9 |
 | Guidance scale | 1.0 | 1.0 | 1.0 |
 | Seed | 42 | 42 | 42 |
@@ -108,7 +109,8 @@ A size in this table is a profile **setting**, and it is not a limit of the mode
 render — and `Qwen/Qwen-Image` itself is trained for far more: its own card's
 `aspect_ratios` puts the square at **1328×1328** (and `16:9` at 1664×928), so
 1024 here is a measurement setting rather than a ceiling.
-`ernie-image-turbo-q8` carries 512×512 from its smoke run and has no benchmark row.
+`ernie-image-turbo-q8` was benchmarked at **1024×1024** as well, so all three
+measured mlx-gen settings match the mflux rows.
 `bonsai-image-ternary-2bit` carries the size its profile asks for (1024×1024)
 rather than a measured one, because it has never produced a frame — a setting
 there, where the other two are results.
@@ -156,12 +158,16 @@ here is correct — the fault is upstream in mlx-gen, so this is a **known-broke
 row until that is fixed, not a misconfigured one. It is reported as
 [mlx-gen issue #22](https://github.com/lpalbou/mlx-gen/issues/22).
 
-`ernie-image-turbo-q8` and `qwen-image-4bit` were each run end to end on the same
-machine. ERNIE produced 512×512 in 29 s at 8 steps in a smoke run;
-`qwen-image-4bit` is benchmarked over the full 8-prompt set: **124.9 s/img** and
-**13.8 s/step** at **1024×1024**, 9 steps, all 8 images written and verified
-(`reference/image-benchmark-qwen.json`,
+`ernie-image-turbo-q8` and `qwen-image-4bit` were each benchmarked over the full
+8-prompt set on the same machine. ERNIE: **123.5 s/img** and **15.4 s/step** at
+**1024×1024**, 8 steps, all 8 images written and verified
+(`reference/image-benchmark-ernie.json`,
+[`evidence/image-benchmark-ernie.md`](../../evidence/image-benchmark-ernie.md)).
+Qwen: **124.9 s/img** and **13.8 s/step** at **1024×1024**, 9 steps, all 8 images
+written and verified (`reference/image-benchmark-qwen.json`,
 [`evidence/image-benchmark-qwen.md`](../../evidence/image-benchmark-qwen.md)).
+ERNIE's per-prompt spread is under a second (123.18–123.91 s), where Qwen's is
+wider (116.51–131.69 s).
 
 ## Video profiles
 

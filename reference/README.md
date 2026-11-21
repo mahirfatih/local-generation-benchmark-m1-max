@@ -10,7 +10,8 @@ figures from these files to prove it does.
 | [`image-benchmark-flux3.json`](image-benchmark-flux3.json) | `scripts/measure/image-benchmark.py --profile flux3-klein-q8` | The same, for FLUX 3 |
 | [`image-benchmark-zimage.json`](image-benchmark-zimage.json) | `scripts/measure/image-benchmark.py --profile z-image-turbo-q4` | The same, for Z-Image Turbo |
 | [`image-benchmark-klein-q4.json`](image-benchmark-klein-q4.json) | `scripts/measure/image-benchmark.py --profile klein-q4` | The same, for the 4-bit klein |
-| [`image-benchmark-qwen.json`](image-benchmark-qwen.json) | `scripts/measure/image-benchmark.py --profile qwen-image-4bit` | The same, for Qwen Image — the one mlx-gen profile with a benchmark row, run at **1024×1024**, the same size as the mflux rows |
+| [`image-benchmark-qwen.json`](image-benchmark-qwen.json) | `scripts/measure/image-benchmark.py --profile qwen-image-4bit` | The same, for Qwen Image, run at **1024×1024** |
+| [`image-benchmark-ernie.json`](image-benchmark-ernie.json) | `scripts/measure/image-benchmark.py --profile ernie-image-turbo-q8` | The same, for ERNIE Image Turbo, run at **1024×1024** |
 | [`video-benchmark.json`](video-benchmark.json) | `scripts/measure/video-benchmark.py --all-profiles` | 3 profiles × 6 clips: seconds, `ffprobe` output, bytes, sha256 |
 
 ## What each record carries

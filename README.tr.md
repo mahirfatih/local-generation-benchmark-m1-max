@@ -25,6 +25,7 @@ durur; burada oMLX'in çalıştıramadığı iki katman var:
 | **Görsel** | [mflux](https://github.com/filipstrand/mflux) | FLUX.2 klein 4B (q8) | **22.5 s** | 1024×1024 PNG |
 | Görsel | mflux | FLUX.2 klein 4B (q4) | 23.8 s | 1024×1024 PNG |
 | Görsel | mflux | Z-Image Turbo (q4) | 95.8 s | 1024×1024 PNG |
+| Görsel | [mlx-gen](https://github.com/lpalbou/mlx-gen) | ERNIE Image Turbo (q8) | 123.5 s | 1024×1024 PNG |
 | Görsel | [mlx-gen](https://github.com/lpalbou/mlx-gen) | Qwen Image (mixed q4/q8) | 124.9 s | 1024×1024 PNG |
 | Görsel | mflux | FLUX 3 Image Klein | 180.6 s | 1024×1024 PNG |
 | **Video** | [VideoX-Fun-mlx](https://github.com/dgrauet/VideoX-Fun-mlx) | CogVideoX-Fun V1.5 5B (int4) | **247.7 s** | 672×384, 5 kare GIF |
@@ -39,10 +40,11 @@ karşılaştırılabilir değil, bu yüzden video bloğu kendi ölçeğinde yeni
 Görsel figürleri ilk görselden **sonraki** ortalamadır — ilk görsel tek seferlik
 model yüklemesini ödeyen görseldir; her video figürü o modelin altı klibinin kendi
 ortalamasıdır. **Bütün görsel satırları artık 1024×1024**, yani görsel kolonu
-benzeri benzeriyle karşılaştırır; `qwen-image-4bit` mflux'tan geçmeyen tek görsel
-satırıdır — mlx-gen'den geçer ve görsel başına figürü gerçek bir yayılım taşır
-(yazı yoğun promptlar ~131 s, geri kalanı ~117 s), bu yüzden tablo s/adım değerini
-de verir. Görseller ve klipler
+benzeri benzeriyle karşılaştırır. İki görsel satırı mflux'tan geçmez —
+`ernie-image-turbo-q8` ve `qwen-image-4bit` mlx-gen'den geçer; Qwen'in görsel
+başına figürü gerçek bir yayılım taşır (yazı yoğun promptlar ~131 s, geri kalanı
+~117 s), ERNIE ise her promptta 123.5 s'nin bir saniyesi içinde kalır. Görseller ve
+klipler
 [`evidence/`](evidence/) altında, yani iddia güvenmekle değil **bakarak**
 kontrol edilebilir.
 

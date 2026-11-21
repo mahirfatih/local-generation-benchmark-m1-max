@@ -20,8 +20,11 @@ date-based snapshots rather than semver releases.
     8 images written and verified —
     [`reference/image-benchmark-qwen.json`](reference/image-benchmark-qwen.json) and
     [`evidence/image-benchmark-qwen.md`](evidence/image-benchmark-qwen.md).
-  - `ernie-image-turbo-q8` was run end to end at **29 s** for 512×512 at 8 steps
-    (a smoke run, not a benchmark row).
+  - `ernie-image-turbo-q8` is ERNIE-Image-Turbo in the MLX 8-bit saved-weight
+    layout. **Benchmarked** over the full 8-prompt set at **1024×1024**: **123.5
+    s/img**, 15.4 s/step, 8 steps, all 8 images written and verified —
+    [`reference/image-benchmark-ernie.json`](reference/image-benchmark-ernie.json)
+    and [`evidence/image-benchmark-ernie.md`](evidence/image-benchmark-ernie.md).
   - **`bonsai-image-ternary-2bit` does not run** on `mlx-gen 0.38.0`: the Bonsai
     model's own initializer never builds `compiled_predict_cache`, which the
     `Flux2Klein` generation path it inherits then reads, so every run raises
