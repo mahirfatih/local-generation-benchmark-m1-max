@@ -6,6 +6,34 @@ date-based snapshots rather than semver releases.
 
 ## [Unreleased]
 
+### Added — two more mflux image profiles, measured
+
+- **`anima-turbo-q8` and `klein-base-q8`** join
+  [`profiles/mflux-profiles.json`](profiles/mflux-profiles.json), and the harness
+  now passes a profile's `guidance_scale` on the command line.
+  - `anima-turbo-q8` is **Anima Turbo**, a 4.0 GB community Q8 conversion by
+    MFlux-Community (upstream `circlestone-labs/Anima`, **non-commercial
+    licence**). **Benchmarked** over the same 8 prompts at **1024×1024**: **36.4
+    s/img**, 4.6 s/step, 8 steps —
+    [`reference/image-benchmark-anima.json`](reference/image-benchmark-anima.json)
+    and [`evidence/image-benchmark-anima.md`](evidence/image-benchmark-anima.md).
+    The smallest package in the set and the cheapest step, but third-fastest
+    image, not first.
+  - `klein-base-q8` is the distilled `klein-q8`'s **non-distilled twin**
+    (`black-forest-labs/FLUX.2-klein-base-4B`, Apache-2.0, same 4B, same MLX
+    8-bit layout). It runs **20 steps against the distilled model's 4** and
+    measured **97.1 s/img**, 4.9 s/step —
+    [`reference/image-benchmark-klein-base.json`](reference/image-benchmark-klein-base.json)
+    and [`evidence/image-benchmark-klein-base.md`](evidence/image-benchmark-klein-base.md).
+    Its per-step cost is *lower* than its sibling's (4.9 s against 5.6 s), so the
+    4.3× per-image gap is the schedule, not the architecture.
+- **The image harness now passes `--guidance`.** `build_argv` read steps, seed
+  and precision from the profile but dropped `guidance_scale`, so every mflux run
+  used the tool default (3.5) whatever the profile said. Two runs of `klein-q8` at
+  seed 42 differing only in `--guidance 1.0` wrote different PNGs
+  (`646ce7ff…` against `8d6765ade…`), which is how it was found. The flag now
+  reaches the command line, and `--selftest` names the two new profiles.
+
 ### Added — three mlx-gen image profiles, and a source image for Wan
 
 - **`bonsai-image-ternary-2bit`, `ernie-image-turbo-q8` and `qwen-image-4bit`**

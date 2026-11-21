@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Yerel Üretim Haritam · 9 profil, mflux + mlx-gen + VideoX-Fun-mlx, M1 Max</title>
+<title>Yerel Üretim Haritam · 11 profil, mflux + mlx-gen + VideoX-Fun-mlx, M1 Max</title>
 <style>
   :root{
     --bg:#08080a; --panel:#0d0d0f; --ink:#f3f1ea; --muted:#8b8b8f;
@@ -182,7 +182,7 @@
   </div>
 
   <h1>Yerelde hangi üretim modeli?</h1>
-  <p class="sub">9 profil — 6 görsel, 3 video — ölçüldü.</p>
+  <p class="sub">11 profil — 8 görsel, 3 video — ölçüldü.</p>
   <p class="lede">Görsel <strong>mflux</strong>, video <strong>VideoX-Fun-mlx</strong> ve <strong>mlx-gen</strong>
     üzerinde, <strong>Apple MLX</strong> ile, bu makinede. Barlar saniyeyi gösterir, <em>düşük daha iyi</em>.
     Bu sayfada yalnızca üretim var; metin modelleri başka bir araçla çalıştığı için burada değil.</p>
@@ -233,6 +233,20 @@
 
       <div class="row">
         <div class="task">
+          <div class="k">Görsel · en küçük paket</div>
+          <div class="d">Anima Turbo, MFlux-Community'nin Q8 dönüşümü. Diskte <b>4,0 GB</b> — en
+            küçüğü — ve adım başına <b>4,6 s</b> en ucuzu, ama 8 adımda görsel başına 36,4 s:
+            <b>üçüncü</b> en hızlı, birinci değil. Küçük dosya kısa bekleme demek değil.
+            Lisansı <span class="warn">ticari kullanıma kapalı</span> (circlestone-labs).</div>
+        </div>
+        <div class="pick">
+          <div class="m">Anima Turbo <span class="tiny">· q8 · 8 adım · non-commercial</span> <a class="hf" href="https://huggingface.co/mflux-community/anima-turbo-mflux-q8">HF</a></div>
+          <div class="bar"><div class="track"><div class="fill" style="width:20%"></div></div><span class="val">36,4 s/img · 1024×1024</span></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="task">
           <div class="k">Görsel · Apache-2.0, hızlı</div>
           <div class="d">9 adımlı distile 6B DiT. Görsel başına <b>~1,5 dakika</b> — klein'in ~4×,
             FLUX 3'ün ~2× altı, ve ticari kullanım serbest. 1024×1024, aynı 8 prompt.</div>
@@ -240,6 +254,20 @@
         <div class="pick">
           <div class="m">Z-Image Turbo <span class="tiny">· q4 · 9 adım · Apache-2.0</span> <a class="hf" href="https://huggingface.co/mflux-community/z-image-turbo-mflux-q4">HF</a></div>
           <div class="bar"><div class="track"><div class="fill" style="width:53%"></div></div><span class="val">95,8 s/img</span></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="task">
+          <div class="k">Görsel · distile olmayan kardeş</div>
+          <div class="d">Aynı klein 4B'nin <b>base</b> sürümü — aynı boyut, aynı lisans, tek fark
+            <b>20 adım</b> (distile kardeşi 4). Görsel başına 97,1 s çıkıyor ama adım başına
+            <b>4,9 s</b>, yani distile kardeşinin 5,6 s'sinden <b>daha hızlı</b>: fark mimaride
+            değil, programda. İki satırı birlikte okuyun.</div>
+        </div>
+        <div class="pick">
+          <div class="m">FLUX.2 klein 4B Base <span class="tiny">· q8 · 20 adım · Apache-2.0</span> <a class="hf" href="https://huggingface.co/mflux-community/flux-2-klein-base-4b-mflux-q8">HF</a></div>
+          <div class="bar"><div class="track"><div class="fill" style="width:54%"></div></div><span class="val">97,1 s/img · 1024×1024</span></div>
         </div>
       </div>
 
@@ -363,7 +391,7 @@
       </div>
       <div class="card">
         <div class="big">58</div>
-        <div class="lbl">çıktı dosyadan doğrulandı — 48 PNG + 18 klip</div>
+        <div class="lbl">çıktı dosyadan doğrulandı — 64 PNG + 18 klip</div>
       </div>
       <div class="card">
         <div class="big">68 GB</div>
@@ -388,7 +416,7 @@
   <footer>
     <div>
       <span class="name">Mahir F. ÜNAL</span><br>
-      <span style="opacity:.7">9 profil ölçüldü · 6 görsel + 3 video, hepsi bu sayfada</span>
+      <span style="opacity:.7">11 profil ölçüldü · 8 görsel + 3 video, hepsi bu sayfada</span>
     </div>
     <div style="display:flex;align-items:center;gap:14px">
       <button class="toggle" id="themeBtn" type="button">◐ tema</button>

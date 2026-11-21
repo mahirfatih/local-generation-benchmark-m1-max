@@ -141,6 +141,15 @@ def build_argv(profile, prompt, out_path, model=None, seed=None, steps=None):
         "--seed", str(seed if seed is not None else s["seed"]),
         "--output", str(out_path),
     ]
+    # A guidance scale in the profile has to reach the command line, or mflux
+    # silently uses its own default (3.5 for most tools) and the profile's value
+    # is a comment. That is not hypothetical: it is what the earlier runs did.
+    # Two runs of klein-q8 at seed 42, one with `--guidance 1.0` and one without,
+    # wrote different PNGs (sha256 646ce7ff… against 8d6765ade…), so the flag
+    # changes the image and a profile that carries a guidance must pass it.
+    guidance = s.get("guidance_scale", s.get("guidance"))
+    if guidance is not None:
+        argv += ["--guidance", str(guidance)]
     if s.get("compute_precision"):
         argv += ["--compute-precision", s["compute_precision"]]
     return argv
@@ -215,7 +224,8 @@ def selftest():
     # classified deliberately rather than silently joining the run.
     known_unrunnable = {"bonsai-image-ternary-2bit"}  # mlx-gen bug, issue #22
     expected = {"klein-q8", "klein-q4", "flux3-klein-q8", "z-image-turbo-q4",
-                "ernie-image-turbo-q8", "qwen-image-4bit"} | known_unrunnable
+                "ernie-image-turbo-q8", "qwen-image-4bit",
+                "anima-turbo-q8", "klein-base-q8"} | known_unrunnable
     if set(gens) != expected:
         ok = False
         print("FAIL: unexpected profiles:", sorted(set(gens) ^ expected))

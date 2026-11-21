@@ -22,7 +22,9 @@ here are the two layers oMLX cannot serve:
 | :--- | :--- | :--- | ---: | :--- |
 | **Image** | [mflux](https://github.com/filipstrand/mflux) | FLUX.2 klein 4B (q8) | **22.5 s** | 1024×1024 PNG |
 | Image | mflux | FLUX.2 klein 4B (q4) | 23.8 s | 1024×1024 PNG |
+| Image | mflux | Anima Turbo (q8) | 36.4 s | 1024×1024 PNG |
 | Image | mflux | Z-Image Turbo (q4) | 95.8 s | 1024×1024 PNG |
+| Image | mflux | FLUX.2 klein 4B Base (q8) | 97.1 s | 1024×1024 PNG |
 | Image | [mlx-gen](https://github.com/lpalbou/mlx-gen) | ERNIE Image Turbo (q8) | 123.5 s | 1024×1024 PNG |
 | Image | [mlx-gen](https://github.com/lpalbou/mlx-gen) | Qwen Image (mixed q4/q8) | 124.9 s | 1024×1024 PNG |
 | Image | mflux | FLUX 3 Image Klein | 180.6 s | 1024×1024 PNG |

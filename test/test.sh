@@ -189,6 +189,8 @@ checks = [
     ("image-benchmark-klein-q4.json", image_mean, 23.8),
     ("image-benchmark-qwen.json", image_mean, 124.9),
     ("image-benchmark-ernie.json", image_mean, 123.5),
+    ("image-benchmark-anima.json", image_mean, 36.4),
+    ("image-benchmark-klein-base.json", image_mean, 97.1),
     ("video-benchmark.json", clip_mean, 255.6),
 ]
 for name, fn, claimed in checks:
@@ -352,6 +354,8 @@ DISPLAY_NAMES = {
     "flux3-klein-q8": ["FLUX 3 Image Klein", "flux-3-image-klein-base"],
     "qwen-image-4bit": ["Qwen Image", "qwen-image"],
     "ernie-image-turbo-q8": ["ERNIE Image Turbo", "ernie-image-turbo"],
+    "anima-turbo-q8": ["Anima Turbo", "anima-turbo"],
+    "klein-base-q8": ["FLUX.2 klein 4B Base", "FLUX.2-klein-base-4B", "flux2-klein-base-4b", "flux-2-klein-base-4b"],
     "bonsai-image-ternary-2bit": ["Bonsai Image 4B", "bonsai-image-ternary"],
     "cogvideox-fun-1.5-5b-inp-q8": ["CogVideoX-Fun 5B", "CogVideoX-Fun-V1.5-5b-InP"],
     "cogvideox-fun-1.5-5b-inp-q4": ["CogVideoX-Fun 5B", "CogVideoX-Fun-V1.5-5b-InP"],

@@ -52,8 +52,11 @@ setting is not a result: `bonsai-image-ternary-2bit` asks for 1024×1024 and has
 never produced a frame, so its row carries no `s/img` even though it names a size.
 Side by side in one column a measured row and an unmeasured one read alike, so say
 which is which **in the table itself**, not only in the prose around it — and when
-two rows were measured at different sizes, say why the sizes differ, or the reader
-cannot tell a cheap model from a cheap measurement.
+two rows were measured at different sizes **or step counts**, say why they differ,
+or the reader cannot tell a cheap model from a cheap measurement. `klein-base-q8`
+is measured at **20 steps** against its distilled sibling's 4, so its `s/img` is
+4.3× the sibling's while its `s/step` is *lower*; a table that shows only the two
+per-image figures makes the base model look slow for the wrong reason.
 
 ## Which layer does my change belong to?
 

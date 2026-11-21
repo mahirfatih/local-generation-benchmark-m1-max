@@ -14,7 +14,8 @@ Two bands, because the two units are not comparable, and each band fastest first
 Images: seconds per 1024×1024 image
 over mflux and mlx-gen — 22.5 s for FLUX.2 klein (q8), 23.8 s for its 4-bit sibling
 (smallest on disk
-but not the fastest), 95.8 s for Z-Image Turbo, 123.5 s for ERNIE Image Turbo,
+but not the fastest), 36.4 s for Anima Turbo (the smallest package of all), 95.8 s for Z-Image Turbo,
+97.1 s for its non-distilled twin `klein-base`, 123.5 s for ERNIE Image Turbo,
 124.9 s for Qwen Image and 180.6 s
 for FLUX 3, an
 8× spread. Video:
@@ -22,10 +23,14 @@ seconds per clip over VideoX-Fun-mlx and mlx-gen — 247.7 / 255.6 / 262.1 s, wh
 a tie until you count frames: 5 frames against 25, so 49.5–52.4 s per frame against 10.2 s.
 
 Every image row is 1024×1024, so the image band compares like with like. Bonsai is
-drawn without a bar: it has never produced a frame.
+drawn without a bar: it has never produced a frame. `klein-base-q8` is the one row
+whose bar can mislead on its own — its figure is 4.3× its distilled sibling's
+because it runs 20 steps against 4, and its **per-step** cost is lower (4.9 s
+against 5.6 s), which the poster's note says beside the bar.
 
 Licence differences are on the poster, not in a footnote: FLUX 3 carries a US$5M commercial
-output cap, the CogVideoX quant says Apache-2.0 while the base model does not, and Wan2.2 is
+output cap, Anima Turbo is non-commercial outright, the CogVideoX quant says Apache-2.0 while the
+base model does not, and Wan2.2 is
 the only video profile that is Apache-2.0 outright.
 
 Every number comes from the tables in this repository; none of it is new measurement.

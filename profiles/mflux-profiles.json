@@ -323,6 +323,79 @@
         "https://huggingface.co/Qwen/Qwen-Image",
         "https://github.com/lpalbou/mlx-gen"
       ]
+    },
+    "anima-turbo-q8": {
+      "name": "anima-turbo-q8",
+      "display_name": "anima-turbo-q8",
+      "description": "Anima Turbo, MLX 8-bit. circlestone-labs non-commercial licence.",
+      "task": "text-to-image",
+      "cli": "mflux-generate-anima",
+      "model": "mflux-community/anima-turbo-mflux-q8",
+      "mflux_base_model": "anima-turbo",
+      "base_model": "circlestone-labs/Anima",
+      "license": "circlestone-labs-non-commercial-license",
+      "license_note": "NOT Apache-2.0. The upstream Anima model is released under the circlestone-labs non-commercial licence; see https://huggingface.co/circlestone-labs/Anima/blob/main/LICENSE.md. The MLX pack is a community conversion by MFlux-Community and inherits that licence unchanged.",
+      "local_path": "~/models/mflux-community/anima-turbo-mflux-q8",
+      "on_disk_gb": 4.0,
+      "quantization": {
+        "scheme": "mlx-affine",
+        "bits": 8,
+        "applies_to": [
+          "text_encoder",
+          "transformer",
+          "vae"
+        ],
+        "note": "The level is stored in the weights, so no --quantize flag is needed."
+      },
+      "settings": {
+        "width": 1024,
+        "height": 1024,
+        "steps": 8,
+        "guidance_scale": 1.0,
+        "seed": 42,
+        "compute_precision": null
+      },
+      "sources": [
+        "https://huggingface.co/mflux-community/anima-turbo-mflux-q8",
+        "https://huggingface.co/circlestone-labs/Anima"
+      ]
+    },
+    "klein-base-q8": {
+      "name": "klein-base-q8",
+      "display_name": "klein-base-q8",
+      "description": "FLUX.2 [klein] 4B Base (non-distilled), MLX 8-bit. Apache-2.0.",
+      "task": "text-to-image",
+      "cli": "mflux-generate-flux2",
+      "model": "mflux-community/flux-2-klein-base-4b-mflux-q8",
+      "mflux_base_model": "flux2-klein-base-4b",
+      "base_model": "black-forest-labs/FLUX.2-klein-base-4B",
+      "license": "apache-2.0",
+      "license_note": "Apache-2.0. No output restrictions beyond the licence's own terms.",
+      "local_path": "~/models/mflux-community/flux-2-klein-base-4b-mflux-q8",
+      "on_disk_gb": 8.6,
+      "quantization": {
+        "scheme": "mlx-affine",
+        "bits": 8,
+        "applies_to": [
+          "text_encoder",
+          "transformer",
+          "vae"
+        ],
+        "note": "The level is stored in the weights, so no --quantize flag is needed."
+      },
+      "settings": {
+        "width": 1024,
+        "height": 1024,
+        "steps": 20,
+        "guidance_scale": 1.0,
+        "seed": 42,
+        "compute_precision": "float16"
+      },
+      "compute_precision_note": "Same as klein-q8: the flag is for Apple M1-family GPUs, where MLX kernels are fastest in float16.",
+      "sources": [
+        "https://huggingface.co/mflux-community/flux-2-klein-base-4b-mflux-q8",
+        "https://huggingface.co/black-forest-labs/FLUX.2-klein-base-4B"
+      ]
     }
   },
   "model_to_profile": {
@@ -332,6 +405,8 @@
     "mflux-community/z-image-turbo-mflux-q4": "z-image-turbo-q4",
     "prism-ml/bonsai-image-ternary-4B-mlx-2bit": "bonsai-image-ternary-2bit",
     "AbstractFramework/ernie-image-turbo-8bit": "ernie-image-turbo-q8",
-    "AbstractFramework/qwen-image-4bit": "qwen-image-4bit"
+    "AbstractFramework/qwen-image-4bit": "qwen-image-4bit",
+    "mflux-community/anima-turbo-mflux-q8": "anima-turbo-q8",
+    "mflux-community/flux-2-klein-base-4b-mflux-q8": "klein-base-q8"
   }
 }

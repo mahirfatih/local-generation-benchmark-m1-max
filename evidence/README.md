@@ -11,11 +11,13 @@ a number.
 | [`image-benchmark-klein-q4-2026-11-17.md`](image-benchmark-klein-q4-2026-11-17.md) | mflux / klein-q4 | The same, for the fourth model |
 | [`image-benchmark-qwen.md`](image-benchmark-qwen.md) | mlx-gen / qwen-image-4bit | 8 images at **1024×1024**, each with its prompt and its seconds |
 | [`image-benchmark-ernie.md`](image-benchmark-ernie.md) | mlx-gen / ernie-image-turbo-q8 | The same, for ERNIE Image Turbo |
+| [`image-benchmark-anima.md`](image-benchmark-anima.md) | mflux / anima-turbo-q8 | The same, for Anima Turbo — measured at **1024×1024** |
+| [`image-benchmark-klein-base.md`](image-benchmark-klein-base.md) | mflux / klein-base-q8 | The same, for the non-distilled `klein` — **20 steps** against its sibling's 4 |
 | [`video-benchmark-2026-11-12.md`](video-benchmark-2026-11-12.md) | VideoX-Fun-mlx / mlx-gen | 18 clips over 3 models and 6 prompts, each with its prompt, its seconds and its `ffprobe` reading |
 
 The outputs themselves sit beside the pages:
 
-- [`images/`](images/) — 48 PNGs, named `<profile>--<prompt-id>.png`
+- [`images/`](images/) — 64 PNGs, named `<profile>--<prompt-id>.png`
 - [`videos/`](videos/) — 18 clips (4 GIF batches and 2 MP4 batches) named
   `<profile>--<prompt-id>`: six CogVideoX int8 and six int4 GIFs, and six Wan2.2
   MP4s

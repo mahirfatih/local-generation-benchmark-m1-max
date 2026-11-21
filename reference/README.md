@@ -12,6 +12,8 @@ figures from these files to prove it does.
 | [`image-benchmark-klein-q4.json`](image-benchmark-klein-q4.json) | `scripts/measure/image-benchmark.py --profile klein-q4` | The same, for the 4-bit klein |
 | [`image-benchmark-qwen.json`](image-benchmark-qwen.json) | `scripts/measure/image-benchmark.py --profile qwen-image-4bit` | The same, for Qwen Image, run at **1024×1024** |
 | [`image-benchmark-ernie.json`](image-benchmark-ernie.json) | `scripts/measure/image-benchmark.py --profile ernie-image-turbo-q8` | The same, for ERNIE Image Turbo, run at **1024×1024** |
+| [`image-benchmark-anima.json`](image-benchmark-anima.json) | `scripts/measure/image-benchmark.py --profile anima-turbo-q8` | The same, for Anima Turbo, run at **1024×1024** |
+| [`image-benchmark-klein-base.json`](image-benchmark-klein-base.json) | `scripts/measure/image-benchmark.py --profile klein-base-q8` | The same, for the non-distilled `klein`, run at **1024×1024** with **20 steps** |
 | [`video-benchmark.json`](video-benchmark.json) | `scripts/measure/video-benchmark.py --all-profiles` | 3 profiles × 6 clips: seconds, `ffprobe` output, bytes, sha256 |
 
 ## What each record carries

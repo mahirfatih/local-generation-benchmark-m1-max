@@ -22,18 +22,19 @@ The image model is **not** served by oMLX: it is run by
 settings live in a separate file,
 [`profiles/mflux-profiles.json`](../../profiles/mflux-profiles.json).
 
-| Setting | `klein-q8` | `z-image-turbo-q4` | `flux3-klein-q8` |
-| :--- | ---: | ---: | ---: |
-| Model | `mflux-community/flux2-klein-4b-mflux-q8` | `mflux-community/z-image-turbo-mflux-q4` | `mflux-community/flux-3-image-klein-base-mflux-q8` |
-| Base model | `black-forest-labs/FLUX.2-klein-4B` | `Tongyi-MAI/Z-Image-Turbo` | `black-forest-labs/flux-3-image-klein-base` |
-| CLI | `mflux-generate-flux2` | `mflux-generate-z-image-turbo` | `mflux-generate-flux3` |
-| Quantization | MLX affine, 8-bit | MLX affine, 4-bit | MLX affine, 8-bit (modified) |
-| Width × height | 1024 × 1024 | 1024 × 1024 | 1024 × 1024 |
-| Steps | 4 | 9 | 16 |
-| Guidance scale | 1.0 | — (tool default) | — (none; distilled) |
-| Seed | 42 | 42 | 42 |
-| Compute precision | `float16` | — (flag absent in mflux 0.38.0) | `float16` |
-| Licence | Apache-2.0 | Apache-2.0 | **FLUX Kommunity License** |
+| Setting | `klein-q8` | `anima-turbo-q8` | `klein-base-q8` | `z-image-turbo-q4` | `flux3-klein-q8` |
+| :--- | ---: | ---: | ---: | ---: | ---: |
+| Model | `mflux-community/flux2-klein-4b-mflux-q8` | `mflux-community/anima-turbo-mflux-q8` | `mflux-community/flux-2-klein-base-4b-mflux-q8` | `mflux-community/z-image-turbo-mflux-q4` | `mflux-community/flux-3-image-klein-base-mflux-q8` |
+| Base model | `black-forest-labs/FLUX.2-klein-4B` | `circlestone-labs/Anima` | `black-forest-labs/FLUX.2-klein-base-4B` | `Tongyi-MAI/Z-Image-Turbo` | `black-forest-labs/flux-3-image-klein-base` |
+| CLI | `mflux-generate-flux2` | `mflux-generate-anima` | `mflux-generate-flux2` | `mflux-generate-z-image-turbo` | `mflux-generate-flux3` |
+| Quantization | MLX affine, 8-bit | MLX affine, 8-bit | MLX affine, 8-bit | MLX affine, 4-bit | MLX affine, 8-bit (modified) |
+| Width × height | 1024 × 1024 | 1024 × 1024 | 1024 × 1024 | 1024 × 1024 | 1024 × 1024 |
+| Steps | 4 | 8 | **20** | 9 | 16 |
+| Guidance scale | 1.0 | 1.0 | 1.0 | — (tool default) | — (none; distilled) |
+| Seed | 42 | 42 | 42 | 42 | 42 |
+| Compute precision | `float16` | — (not set) | `float16` | — (flag absent in mflux 0.38.0) | `float16` |
+| On disk | 8.0 GB | **4.0 GB** | 8.6 GB | 5.5 GB | 9.2 GB |
+| Licence | Apache-2.0 | **Circlestone non-commercial** | Apache-2.0 | Apache-2.0 | **FLUX Kommunity License** |
 
 **`klein-q8`** — the quantization is 8-bit MLX affine across the text encoder,
 transformer and VAE, stored in the weights (no `--quantize` flag). The 4 steps and
@@ -69,6 +70,27 @@ saving is disk and memory, not compute. Because the weights carry the level, the
 profile needs no `--compute-precision` flag. Eight prompts, 22.8–25.2 s, run
 2026-11-17; data in
 [`reference/image-benchmark-klein-q4.json`](../../reference/image-benchmark-klein-q4.json).
+
+**`anima-turbo-q8`** — Anima Turbo, a **4.0 GB** community Q8 conversion by
+MFlux-Community of [circlestone-labs/Anima](https://huggingface.co/circlestone-labs/Anima).
+It is the smallest package in the image set and the cheapest per step (**4.6
+s/step**), but at **8 steps** it still measured **36.4 s/img** — third fastest,
+not first, because a small file is not the same as a short wait. Its licence is
+the **circlestone-labs non-commercial licence**, *not* Apache-2.0: check
+[`LICENSES.md`](LICENSES.md) before using an output commercially. Eight prompts,
+35.9–37.5 s, run 2026-11-21; data in
+[`reference/image-benchmark-anima.json`](../../reference/image-benchmark-anima.json).
+
+**`klein-base-q8`** — the distilled `klein-q8`'s non-distilled twin:
+`black-forest-labs/FLUX.2-klein-base-4B` rather than `FLUX.2-klein-4B`, same 4B
+size, same Apache-2.0, same MLX 8-bit layout. The profile differs in one place
+that decides its figure: **20 steps against the distilled model's 4**. It measured
+**97.1 s/img** — 4.3× the distilled sibling — but its **s/step is *lower*, 4.9
+against 5.6**, so the gap is the schedule and not a slower architecture. Read the
+two rows together; the base model looks slow for the wrong reason otherwise.
+Width, height, guidance and seed match `klein-q8` so the comparison holds. Eight
+prompts, 94.96–107.76 s, run 2026-11-21; data in
+[`reference/image-benchmark-klein-base.json`](../../reference/image-benchmark-klein-base.json).
 
 Both FLUX profiles run **float16 compute** (`--compute-precision float16`): the
 Apple M1 family has no native bfloat16, and MLX's matmul and attention kernels are
