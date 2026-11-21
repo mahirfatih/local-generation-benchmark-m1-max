@@ -9,11 +9,12 @@ a number.
 | [`image-benchmark-flux3-2026-11-12.md`](image-benchmark-flux3-2026-11-12.md) | mflux / FLUX 3 | The same, for the second model |
 | [`image-benchmark-zimage-2026-11-14.md`](image-benchmark-zimage-2026-11-14.md) | mflux / Z-Image Turbo | The same, for the third model |
 | [`image-benchmark-klein-q4-2026-11-17.md`](image-benchmark-klein-q4-2026-11-17.md) | mflux / klein-q4 | The same, for the fourth model |
+| [`image-benchmark-qwen.md`](image-benchmark-qwen.md) | mlx-gen / qwen-image-4bit | 8 images at **512×512**, each with its prompt and its seconds — the first mlx-gen profile with a benchmark row |
 | [`video-benchmark-2026-11-12.md`](video-benchmark-2026-11-12.md) | VideoX-Fun-mlx / mlx-gen | 18 clips over 3 models and 6 prompts, each with its prompt, its seconds and its `ffprobe` reading |
 
 The outputs themselves sit beside the pages:
 
-- [`images/`](images/) — 32 PNGs, named `<profile>--<prompt-id>.png`
+- [`images/`](images/) — 40 PNGs, named `<profile>--<prompt-id>.png`
 - [`videos/`](videos/) — 18 clips (4 GIF batches and 2 MP4 batches) named
   `<profile>--<prompt-id>`: six CogVideoX int8 and six int4 GIFs, and six Wan2.2
   MP4s

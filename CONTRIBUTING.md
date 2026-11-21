@@ -39,6 +39,29 @@ arrive with the file it timed.
   Nothing text-related belongs in this repository: oMLX cannot generate an image
   or a clip, which is why the two were split apart.
 
+## This repository is the source; the app is a consumer
+
+The macOS app
+[`mahirfatih/mlx-media-studio`](https://github.com/mahirfatih/mlx-media-studio)
+ships the models this repository measures. The split is deliberate and it has a
+direction:
+
+**The measurement lives here. The app carries the result.**
+
+| Thing | Lives here | The app's copy |
+| :--- | :--- | :--- |
+| `profiles/mflux-profiles.json`, `profiles/video-profiles.json` — argv, steps, seed, size, licence | **yes** | generated into `model-catalog.json` |
+| `data/image-prompts.json`, `data/video-prompts.json` — the prompt sets | **yes** | none |
+| `reference/image-benchmark.json` and its siblings — the raw seconds | **yes** | none; the app reads the figure its exporter derives |
+| `evidence/` — the pages and the output images | **yes** | none |
+
+So: **do not add app-side artifacts here, and do not let a copy of these files
+live in the app.** A second copy is a copy that drifts — one did, and it fell to
+3 of 7 image profiles, so a wrong path in the app's exporter quietly wrote a
+catalog missing four models. The app now fails loudly instead of falling back.
+If a change of yours needs to reach the app, it reaches it by being here and the
+app re-running its exporter; never by hand-editing `model-catalog.json` there.
+
 ## Code style
 
 - Python scripts should stay dependency-free (standard library only). The

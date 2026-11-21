@@ -139,11 +139,14 @@ yaşıyorsa harness başlamayı reddeder — ikisi 64 GB birleşik belleğe sı�
 | `FLUX.2-klein-4B-mflux-4bit` | 4.3 GB | int4 | Apache-2.0 | [HF](https://huggingface.co/Runpod/FLUX.2-klein-4B-mflux-4bit) |
 | `flux-3-image-klein-base-mflux-q8` | 9.2 GB | int8 | FLUX Kommunity | [HF](https://huggingface.co/mflux-community/flux-3-image-klein-base-mflux-q8) |
 | `z-image-turbo-mflux-q4` | 5.5 GB | int4 | Apache-2.0 | [HF](https://huggingface.co/mflux-community/z-image-turbo-mflux-q4) |
+| `bonsai-image-ternary-4B-mlx-2bit` | 3.6 GB | ternary 1.58-bit | Apache-2.0 | [HF](https://huggingface.co/prism-ml/bonsai-image-ternary-4B-mlx-2bit) |
+| `ernie-image-turbo-8bit` | 11.5 GB | int8 | Apache-2.0 | [HF](https://huggingface.co/AbstractFramework/ernie-image-turbo-8bit) |
+| `qwen-image-4bit` | 16.2 GB | mixed q4/q8 | Apache-2.0 | [HF](https://huggingface.co/AbstractFramework/qwen-image-4bit) |
 | `CogVideoX-Fun-V1.5-5b-InP-mlx-q8` | 15 GB | int8 | CogVideoX License | [HF](https://huggingface.co/dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8) |
 | `CogVideoX-Fun-V1.5-5b-InP-mlx-q4` | 13 GB | int4 | CogVideoX License | [HF](https://huggingface.co/dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4) |
 | `wan2.2-ti2v-5b-diffusers-8bit` | 17 GB | int8 | Apache-2.0 | [HF](https://huggingface.co/AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit) |
 
-**Diskte toplam:** ~68 GB · **Çalışma belleği:** 64 GB birleşik bellekte model başına ~30 GB'a kadar. Her model diskteki ağırlıklardan çalışır — API yok, hesap yok.
+**Diskte toplam:** ~88 GB · **Çalışma belleği:** 64 GB birleşik bellekte model başına ~30 GB'a kadar. Her model diskteki ağırlıklardan çalışır — API yok, hesap yok.
 
 ## Model haritası
 
@@ -177,6 +180,12 @@ Görsel, native-MLX bir difüzyon aracı olan
 | [`FLUX.2-klein-4B-mflux-4bit`](https://huggingface.co/Runpod/FLUX.2-klein-4B-mflux-4bit) (`klein-q4`) | Apache-2.0 | 23.8 | 5.9 | 4 | 1024×1024 |
 | [`z-image-turbo-mflux-q4`](https://huggingface.co/mflux-community/z-image-turbo-mflux-q4) (`z-image-turbo-q4`) | Apache-2.0 | 95.8 | 10.6 | 9 | 1024×1024 |
 | [`flux-3-image-klein-base-mflux-q8`](https://huggingface.co/mflux-community/flux-3-image-klein-base-mflux-q8) (`flux3-klein-q8`) | FLUX Kommunity | 180.6 | 11.3 | 16 | 1024×1024 |
+
+`qwen-image-4bit` de ölçülmüştür, ama yukarıdaki tablo **1024×1024**, o ise
+**512×512**'de koştuğu için tabloda yer almaz: `AbstractFramework/qwen-image-4bit`
+**mlx-gen** üzerinden çalışır (mflux değil) ve **30.5 s/görsel** (3.4 s/adım,
+9 adım) değeri, mflux satırlarının ürettiği piksellerin **çeyreğini** satın alır.
+Onu `z-image-turbo-q4` ile görsel başına değil, **adım başına** karşılaştırın.
 
 4 adımlı distile 4B model 1024×1024 görsel başına ~22.5 s koşar (ilki daha
 yavaş, ~28 s, çünkü model yüklenir); FLUX 3 ise 16 adımda ve 5.6B transformer ile
