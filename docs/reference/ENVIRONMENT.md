@@ -14,9 +14,11 @@ the software half: the stack, the install, and the four things people get wrong.
                      spawns one engine process per prompt, times it end to end,
                      verifies the output (PNG IHDR / ffprobe)
 4. CLI surface       mflux-generate-flux2 · mflux-generate-flux3 ·
-                     mflux-generate-z-image-turbo · mflux-generate
+                     mflux-generate-anima · mflux-generate-z-image-turbo ·
+                     mflux-generate
                      mlxgen generate · scripts/quick_infer.py
-3. inference engine  mflux (FLUX · Z-Image) · mlx-gen (Wan2.2) · VideoX-Fun-mlx (CogVideoX-Fun)
+3. inference engine  mflux (FLUX · Z-Image · Anima) · mlx-gen (Wan2.2 · ERNIE ·
+                     Qwen · Bonsai) · VideoX-Fun-mlx (CogVideoX-Fun)
                      model graph, sampler, VAE, tokenizer — Python
 2. MLX 0.32.4        tensors, ops, Metal kernels, unified memory
 1. Metal             Apple GPU driver
@@ -58,11 +60,17 @@ ffprobe -version | head -1
 | Profile | Command | Engine |
 | :--- | :--- | :--- |
 | `klein-q8` | `mflux-generate-flux2` | mflux |
+| `klein-q4` | `mflux-generate-flux2` | mflux |
+| `klein-base-q8` | `mflux-generate-flux2` | mflux |
+| `anima-turbo-q8` | `mflux-generate-anima` | mflux |
 | `z-image-turbo-q4` | `mflux-generate-z-image-turbo` | mflux |
 | `flux3-klein-q8` | `mflux-generate-flux3` | mflux |
+| `ernie-image-turbo-q8` | `mlxgen generate` | mlx-gen |
+| `qwen-image-4bit` | `mlxgen generate` | mlx-gen |
+| `bonsai-image-ternary-2bit` | `mlxgen generate` | mlx-gen (does not run — see [PROFILES](PROFILES.md)) |
+| `wan22-ti2v-5b-q8` | `mlxgen generate --family wan` | mlx-gen |
 | `cogvideox-fun-1.5-5b-inp-q8` | `python3 scripts/quick_infer.py` | VideoX-Fun-mlx |
 | `cogvideox-fun-1.5-5b-inp-q4` | `python3 scripts/quick_infer.py` | VideoX-Fun-mlx |
-| `wan22-ti2v-5b-q8` | `mlxgen generate --family wan` | mlx-gen |
 
 `mlxgen` resolves `--model` from an alias, a Hugging Face repo id, **or a local
 directory** — the local-directory form needs the family hint
@@ -86,14 +94,20 @@ and `mlxgen capabilities` confirms the routing before a run costs you 20 minutes
 
 ## Models
 
-Weights are read from disk, never from an API. Roughly 68 GB for everything
+Weights are read from disk, never from an API. Roughly 116 GB for everything
 measured here — the same total the [README](../../README.md) states.
 
 | Model | Local size |
 | :--- | ---: |
 | `mflux-community/flux2-klein-4b-mflux-q8` | 8.0 GB |
+| `Runpod/FLUX.2-klein-4B-mflux-4bit` | 4.3 GB |
+| `mflux-community/flux-2-klein-base-4b-mflux-q8` | 8.6 GB |
+| `mflux-community/anima-turbo-mflux-q8` | 4.0 GB |
 | `mflux-community/z-image-turbo-mflux-q4` | 5.5 GB |
 | `mflux-community/flux-3-image-klein-base-mflux-q8` | 9.2 GB |
+| `AbstractFramework/ernie-image-turbo-8bit` | 11.5 GB |
+| `AbstractFramework/qwen-image-4bit` | 16.2 GB |
+| `prism-ml/bonsai-image-ternary-4B-mlx-2bit` | 3.6 GB |
 | `dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8` | 15 GB |
 | `dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4` | 13 GB |
 | `AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit` | 17 GB |

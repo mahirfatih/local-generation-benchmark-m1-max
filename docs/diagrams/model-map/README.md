@@ -26,7 +26,7 @@ Every image row is 1024×1024, so the image band compares like with like. Bonsai
 drawn without a bar: it has never produced a frame. `klein-base-q8` is the one row
 whose bar can mislead on its own — its figure is 4.3× its distilled sibling's
 because it runs 20 steps against 4, and its **per-step** cost is lower (4.9 s
-against 5.6 s), which the poster's note says beside the bar.
+against 6.0 s), which the poster's note says beside the bar.
 
 Licence differences are on the poster, not in a footnote: FLUX 3 carries a US$5M commercial
 output cap, Anima Turbo is non-commercial outright, the CogVideoX quant says Apache-2.0 while the
