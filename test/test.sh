@@ -127,11 +127,34 @@ PY
 
 step "6. Licences — downloadable is not the same as usable"
 python3 - <<'PY'
-import pathlib
+import json, pathlib
 text = pathlib.Path("docs/reference/LICENSES.md").read_text()
 for needle in ("FLUX Kommunity License", "CogVideoX", "Apache-2.0"):
     assert needle in text, f"licences doc no longer mentions: {needle}"
-print("licences documented; the conditional ones are flagged")
+
+# Every profile needs a row here, not just the gated ones. The table was written
+# when five models were measured and stayed at five while seven more were added:
+# `anima-turbo-q8` is non-commercial outright, with no revenue threshold and no
+# registration path, and it appeared in no licence table at all. A reader who
+# opened only this page could have shipped it, so the check is coverage, not
+# keywords.
+#
+# It reads the first cell of each table row, not the file: the model id also
+# appears in the source list at the bottom, so a plain substring test passes on a
+# document whose table has lost the row — which is how the first version of this
+# check failed to notice the row it was written for.
+rows = {
+    line.split("|")[1].strip().strip("`")
+    for line in text.splitlines()
+    if line.startswith("|")
+}
+checked = 0
+for path in ("profiles/mflux-profiles.json", "profiles/video-profiles.json"):
+    for key, prof in json.loads(pathlib.Path(path).read_text())["generation_profiles"].items():
+        model = prof["model"]
+        assert model in rows, f"{key}: no licence row for {model} in LICENSES.md"
+        checked += 1
+print(f"licences documented; all {checked} profiles have a row, the conditional ones are flagged")
 PY
 
 step "7. Image harness — the mflux command and the PNG reader agree"
@@ -441,4 +464,50 @@ if bad:
     print("above if that page names it differently.")
     sys.exit(1)
 print(f"{len(profiles)} profiles named in all {len(LISTING_DOCS)} listing documents")
+PY
+
+step "13. Model inventory — the disk total claims add up"
+python3 - <<'PY'
+import pathlib, re, sys
+
+# A model table and the sentence under it are two statements of one total, and
+# they drift apart: both READMEs said ~96 GB while their own twelve rows summed
+# to 115.9, and ENVIRONMENT.md said 68 GB and called it "the same total the
+# README states". Two wrong numbers agreeing looked like a source; only du
+# settled it. So the sum of each table is now checked against the number the
+# document claims, and the documents against each other.
+ROW = re.compile(r"^\| `[^`]+` \| (\d+(?:\.\d+)?) GB \|")
+
+DOCS = [
+    ("README.md", r"\*\*Total on disk:\*\* ~(\d+) GB"),
+    ("README.tr.md", r"\*\*Diskte toplam:\*\* ~(\d+) GB"),
+    ("docs/reference/ENVIRONMENT.md", r"Roughly (\d+) GB"),
+]
+
+bad, claimed = [], {}
+for name, pattern in DOCS:
+    text = pathlib.Path(name).read_text()
+    rows = [float(m.group(1)) for line in text.splitlines() if (m := ROW.match(line))]
+    total = re.search(pattern, text)
+    if not rows:
+        bad.append(f"{name}: no model rows matched the table shape")
+        continue
+    if not total:
+        bad.append(f"{name}: no total sentence matched")
+        continue
+    stated = int(total.group(1))
+    claimed[name] = stated
+    if abs(sum(rows) - stated) > 1:
+        bad.append(f"{name}: {len(rows)} rows sum to {sum(rows):.1f} GB, the text says ~{stated} GB")
+
+# The three documents describe one inventory. If they disagree with each other,
+# one of them is describing a repository that no longer exists.
+if len(set(claimed.values())) > 1:
+    detail = ", ".join(f"{k} ~{v} GB" for k, v in claimed.items())
+    bad.append(f"the documents disagree on the total: {detail}")
+
+if bad:
+    print("\n".join(bad))
+    sys.exit(1)
+print(f"three totals agree at ~{list(claimed.values())[0]} GB and match their tables")
 PY

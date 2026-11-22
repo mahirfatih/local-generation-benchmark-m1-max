@@ -6,6 +6,24 @@ date-based snapshots rather than semver releases.
 
 ## [Unreleased]
 
+### Added — the gate checks licence coverage and that the disk totals add up
+
+- **Step 6 is now coverage, not keywords.** It asserted that `LICENSES.md` still
+  contained three licence names; it did, while the table listed 5 of 12 profiles.
+  `anima-turbo-q8` is non-commercial outright — no revenue threshold, no
+  registration path — and had no row at all, so a reader who opened only that page
+  could have shipped it. Every profile's model id must now appear as a table row,
+  read from the first cell rather than the file body: a substring test passes on
+  the source list at the bottom, which is how the first version of this check
+  missed the row it was written for.
+- **Step 13 sums every model table and compares it with the total beneath it.**
+  Both READMEs claimed `~96 GB` while their twelve rows summed to 115.9 GB, and
+  `ENVIRONMENT.md` claimed 68 GB and called it "the same total the README states".
+  Two documents agreeing made the wrong number look sourced; only `du` settled it
+  at 115.8 GB. The step also fails when the three documents disagree with each
+  other, so one of them cannot drift into describing a repository that no longer
+  exists.
+
 ### Added — the gate catches a stale figure written in prose, not only in a table
 
 - **Step 9 now reads the sentences and the headings, not just the table rows.** A
