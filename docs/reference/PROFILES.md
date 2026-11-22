@@ -222,6 +222,10 @@ CogVideoX-Fun.
 | Output | `.mp4` | animated `.gif` |
 | Licence | Apache-2.0 | **The CogVideoX License** |
 
+`cogvideox-fun-1.5-5b-inp-q4` is not a third column because it runs **the same
+settings as the q8**: 672×384, 5 frames, 50 steps, guidance 6.0, seed 42. Only the
+weight file differs (13 GB against 15 GB, 247.7 s/clip against 262.1 s).
+
 **`wan22-ti2v-5b-q8`** — Wan2.2 TI2V-5B is a 5B MoE video model with a Wan2.2-VAE
 (16×16×4 compression), supporting text- and image-to-video up to 720P@24fps. The
 canvas, frame count and step count here are a **conservative baseline for a 64 GB

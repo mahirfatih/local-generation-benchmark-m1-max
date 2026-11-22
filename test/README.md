@@ -20,7 +20,7 @@ model, no download and no network.
 | 6 | [`../docs/reference/LICENSES.md`](../docs/reference/LICENSES.md) | the licence warning being dropped, so a gated model looks open |
 | 7 | [`image-benchmark.py --selftest`](../scripts/measure/image-benchmark.py) | a command the harness builds that the PNG reader disagrees with |
 | 8 | [`video-benchmark.py --selftest`](../scripts/measure/video-benchmark.py) | a command the harness builds that the `ffprobe` reader disagrees with |
-| 9 | [`../reference/`](../reference/) | an absolute path in a committed result, or a headline figure the data does not support |
+| 9 | [`../reference/`](../reference/) | an absolute path in a committed result, or a figure in a sentence, a table heading or a code comment that the data does not support |
 | 10 | every mermaid block, and `mmdc` when a renderer is present | an unclosed diagram, or one that does not render |
 | 11 | [`../docs/diagrams/model-map/`](../docs/diagrams/model-map/) | a poster whose PNG is the wrong width, or that is missing a Hugging Face link the tables publish |
 | 12 | every document that lists models | a profile that was added to the JSON and forgotten in a README, a translation, or the comparison page |
