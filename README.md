@@ -238,7 +238,7 @@ is real rather than load: the prompts that need a long text render run ~131 s, t
 rest ~117 s, where ERNIE sits within a second of 123.5 s on every prompt.
 
 ```mermaid
-xychart-beta
+xychart-beta horizontal
     title "Seconds per image (lower is better, model load included)"
     x-axis ["klein-q4", "klein-q8", "anima-turbo", "z-image-turbo-q4", "klein-base-q8", "ernie-image", "qwen-image", "flux3-klein-q8"]
     y-axis "seconds" 0 --> 200
@@ -295,7 +295,7 @@ clip verified with `ffprobe` — the file, not the runner's log line.
 | [`dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8`](https://huggingface.co/dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q8) (`cogvideox-fun-1.5-5b-inp-q8`) | **The CogVideoX License** | **262.1** | 672×384, 1.6 s, GIF | 5 | ✅ 6/6 |
 
 ```mermaid
-xychart-beta
+xychart-beta horizontal
     title "Seconds per clip (lower is better, model load included)"
     x-axis ["cogvideox q4", "wan2.2", "cogvideox q8"]
     y-axis "seconds" 0 --> 350
