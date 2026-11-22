@@ -249,8 +249,9 @@ ve [`evidence/image-benchmark-klein-base.md`](evidence/image-benchmark-klein-bas
 
 ## Video üretimi
 
-Video, CogVideoX-Fun V1.5 5B (int8) süren
-[VideoX-Fun-mlx](https://github.com/dgrauet/VideoX-Fun-mlx) üzerinden çalışır.
+Video, CogVideoX-Fun V1.5 5B'yi süren
+[VideoX-Fun-mlx](https://github.com/dgrauet/VideoX-Fun-mlx) ve Wan2.2 TI2V 5B'yi
+süren [mlx-gen](https://github.com/lpalbou/mlx-gen) üzerinden çalışır.
 Prompt başına bir runner süreci, baştan sona zamanlanır ve her klip `ffprobe` ile
 doğrulanır — runner'ın log satırıyla değil, dosyayla.
 

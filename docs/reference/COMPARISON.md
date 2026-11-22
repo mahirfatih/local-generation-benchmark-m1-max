@@ -121,7 +121,8 @@ and
 
 ## Video generation — a separate layer
 
-Run through [VideoX-Fun-mlx](https://github.com/dgrauet/VideoX-Fun-mlx), measured
+Run through [VideoX-Fun-mlx](https://github.com/dgrauet/VideoX-Fun-mlx) (CogVideoX)
+and [mlx-gen](https://github.com/lpalbou/mlx-gen) (Wan2.2), measured
 with `ffprobe`. Seconds per clip, model load included.
 
 | Model | Licence | Runner | s/clip | Output | Status |

@@ -283,8 +283,9 @@ and [`evidence/image-benchmark-klein-base.md`](evidence/image-benchmark-klein-ba
 ## Video generation
 
 Video runs through [VideoX-Fun-mlx](https://github.com/dgrauet/VideoX-Fun-mlx)
-driving CogVideoX-Fun V1.5 5B (int8). One runner process per prompt, timed end to
-end, and every clip verified with `ffprobe` — the file, not the runner's log line.
+driving CogVideoX-Fun V1.5 5B and [mlx-gen](https://github.com/lpalbou/mlx-gen)
+driving Wan2.2 TI2V 5B. One runner process per prompt, timed end to end, and every
+clip verified with `ffprobe` — the file, not the runner's log line.
 
 | Model (profile) | Licence | s/clip | Output | Frames | OK |
 | :--- | :--- | ---: | :--- | ---: | :---: |
