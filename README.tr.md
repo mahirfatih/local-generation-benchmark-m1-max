@@ -6,7 +6,7 @@
 [![Platform](https://img.shields.io/badge/platform-Apple%20Silicon%20(arm64)-000?logo=apple&logoColor=white)](#donanım--yazılım)
 [![mflux](https://img.shields.io/badge/image-mflux-blue)](https://github.com/filipstrand/mflux)
 [![VideoX-Fun-mlx](https://img.shields.io/badge/video-VideoX--Fun--mlx-blue)](https://github.com/dgrauet/VideoX-Fun-mlx)
-[![Outputs](https://img.shields.io/badge/outputs-32%20PNG%20%2B%204%20GIF-purple)](evidence/)
+[![Outputs](https://img.shields.io/badge/outputs-64%20PNG%20%2B%2018%20clips-purple)](evidence/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
 **Türkçe** · [English](README.md)
@@ -152,6 +152,8 @@ yaşıyorsa harness başlamayı reddeder — ikisi 64 GB birleşik belleğe sı�
 | `flux2-klein-4b-mflux-q8` | 8.0 GB | int8 | Apache-2.0 | [HF](https://huggingface.co/mflux-community/flux2-klein-4b-mflux-q8) |
 | `FLUX.2-klein-4B-mflux-4bit` | 4.3 GB | int4 | Apache-2.0 | [HF](https://huggingface.co/Runpod/FLUX.2-klein-4B-mflux-4bit) |
 | `flux-3-image-klein-base-mflux-q8` | 9.2 GB | int8 | FLUX Kommunity | [HF](https://huggingface.co/mflux-community/flux-3-image-klein-base-mflux-q8) |
+| `anima-turbo-mflux-q8` | 4.0 GB | int8 | Circlestone non-commercial | [HF](https://huggingface.co/mflux-community/anima-turbo-mflux-q8) |
+| `flux-2-klein-base-4b-mflux-q8` | 8.6 GB | int8 | Apache-2.0 | [HF](https://huggingface.co/mflux-community/flux-2-klein-base-4b-mflux-q8) |
 | `z-image-turbo-mflux-q4` | 5.5 GB | int4 | Apache-2.0 | [HF](https://huggingface.co/mflux-community/z-image-turbo-mflux-q4) |
 | `bonsai-image-ternary-4B-mlx-2bit` | 3.6 GB | ternary 1.58-bit | Apache-2.0 | [HF](https://huggingface.co/prism-ml/bonsai-image-ternary-4B-mlx-2bit) |
 | `ernie-image-turbo-8bit` | 11.5 GB | int8 | Apache-2.0 | [HF](https://huggingface.co/AbstractFramework/ernie-image-turbo-8bit) |
@@ -160,7 +162,7 @@ yaşıyorsa harness başlamayı reddeder — ikisi 64 GB birleşik belleğe sı�
 | `CogVideoX-Fun-V1.5-5b-InP-mlx-q4` | 13 GB | int4 | CogVideoX License | [HF](https://huggingface.co/dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4) |
 | `wan2.2-ti2v-5b-diffusers-8bit` | 17 GB | int8 | Apache-2.0 | [HF](https://huggingface.co/AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit) |
 
-**Diskte toplam:** ~88 GB · **Çalışma belleği:** 64 GB birleşik bellekte model başına ~30 GB'a kadar. Her model diskteki ağırlıklardan çalışır — API yok, hesap yok.
+**Diskte toplam:** ~96 GB · **Çalışma belleği:** 64 GB birleşik bellekte model başına ~30 GB'a kadar. Her model diskteki ağırlıklardan çalışır — API yok, hesap yok.
 
 ## Model haritası
 
@@ -192,45 +194,58 @@ Görsel, native-MLX bir difüzyon aracı olan
 | :--- | :--- | ---: | ---: | ---: | :--- |
 | [`FLUX.2-klein-4B-mflux-4bit`](https://huggingface.co/Runpod/FLUX.2-klein-4B-mflux-4bit) (`klein-q4`) | Apache-2.0 | **23.0** | 5.7 | 4 | 1024×1024 |
 | [`flux2-klein-4b-mflux-q8`](https://huggingface.co/mflux-community/flux2-klein-4b-mflux-q8) (`klein-q8`) | Apache-2.0 | 24.0 | 6.0 | 4 | 1024×1024 |
+| [`anima-turbo-mflux-q8`](https://huggingface.co/mflux-community/anima-turbo-mflux-q8) (`anima-turbo-q8`) | **Circlestone non-commercial** | 36.4 | 4.6 | 8 | 1024×1024 |
 | [`z-image-turbo-mflux-q4`](https://huggingface.co/mflux-community/z-image-turbo-mflux-q4) (`z-image-turbo-q4`) | Apache-2.0 | 95.8 | 10.6 | 9 | 1024×1024 |
-| [`qwen-image-4bit`](https://huggingface.co/AbstractFramework/qwen-image-4bit) (`qwen-image-4bit`) | Apache-2.0 | 124.9 | **13.8** | 9 | 1024×1024 |
+| [`flux-2-klein-base-4b-mflux-q8`](https://huggingface.co/mflux-community/flux-2-klein-base-4b-mflux-q8) (`klein-base-q8`) | Apache-2.0 | 97.1 | 4.9 | **20** | 1024×1024 |
+| [`ernie-image-turbo-8bit`](https://huggingface.co/AbstractFramework/ernie-image-turbo-8bit) (`ernie-image-turbo-q8`) | Apache-2.0 | 123.5 | 15.4 | 8 | 1024×1024 |
+| [`qwen-image-4bit`](https://huggingface.co/AbstractFramework/qwen-image-4bit) (`qwen-image-4bit`) | Apache-2.0 | 124.9 | 13.8 | 9 | 1024×1024 |
 | [`flux-3-image-klein-base-mflux-q8`](https://huggingface.co/mflux-community/flux-3-image-klein-base-mflux-q8) (`flux3-klein-q8`) | FLUX Kommunity | 180.6 | 11.3 | 16 | 1024×1024 |
 
 Satırlar `s/görsel`'e göre, en hızlısı başta. Buradaki her satır **1024×1024**, yani
-kolon benzeri benzeriyle karşılaştırır. `qwen-image-4bit` **mlx-gen** üzerinden
-çalışır (mflux değil) ve tek mflux-dışı görsel satırıdır: 9 adımda ve 1024×1024'te
-`z-image-turbo-q4` ile FLUX 3 arasına oturur ve **13.8 s/adım** ile FLUX 3'ün
-altındaki dört ölçülü satırın en pahalı adımıdır — görsel başına ve adım başına
-sayıları birlikte okuyun, çünkü görsel başına yayılım yükleme değil gerçektir:
-uzun yazı çizimi gerektiren promptlar ~131 s, geri kalanı ~117 s sürer.
+kolon benzeri benzeriyle karşılaştırır. `ernie-image-turbo-q8` ile `qwen-image-4bit`
+**mlx-gen** üzerinden çalışır (mflux değil) ve ikisi de distile az-adımlı model
+değildir: 8 ve 9 adımda ve 1024×1024'te `z-image-turbo-q4` ile FLUX 3 arasına
+otururlar ve **15.4 ve 13.8 s/adım** ile FLUX 3'ün altındaki ölçülü satırların en
+pahalı adımlarını taşırlar — görsel başına ve adım başına sayıları birlikte okuyun,
+çünkü Qwen'in görsel başına yayılımı yükleme değil gerçektir: uzun yazı çizimi
+gerektiren promptlar ~131 s, geri kalanı ~117 s sürer; ERNIE ise her promptta
+123.5 s'nin bir saniye içindedir.
 
 4 adımlı distile 4B model 1024×1024 görsel başına ~24 s koşar (ilki daha
 yavaş, ~28 s, çünkü model yüklenir); FLUX 3 ise 16 adımda ve 5.6B transformer ile
-~180 s. Z-Image Turbo — 9 adımlı distile 6B model, Apache-2.0 — ikisinin arasında
-**95.8 s**'de durur: klein'den ~4×, FLUX 3'ten ~1.9× yavaş. Klein'ın **iki
-kuantizasyonu bir saniye içinde** ve aralarındaki sıra **kararlı değil**: 4-bit
-(`klein-q4`, 4.3 GB, diskte en küçüğü) bu turda **23.0 s** ölçüldü, 8-bit kardeşi
-**24.0 s**; ama aynı ikilinin bir önceki turunda 8-bit 1.3 s öndeydi. Tek makinede
-~%5'lik fark tur-arası gürültüdür; ikisini berabere okuyun ve disk ile belleğe
-göre seçin — kazancın gerçek olduğu yer orası, saniyeler değil. Bu ikilinin eski
-koşuları profillerin 1.0 değeri yerine mflux'un varsayılan guidance 3.5'i ile
-koşmuştu (`build_argv` alanı geçirmiyordu; bkz. `CHANGELOG.md`), eski 22.5 / 23.8
-rakamları bu yüzden. Bütün sayılar ilk görsel
+~180 s. **Anima Turbo** diskteki en küçük pakettir (4.0 GB) ve adım başına en
+ucuzudur (**4.6 s**), ama 8 adımda yine de görsel başına 36.4 s ister — *üçüncü*
+en hızlı, birinci değil; küçük dosya kısa bekleme demek değildir. **`klein-base`**
+distile `klein`'in aynı boyuttaki distile olmayan eşidir; 97.1 s'nin 24.0 s'ye
+karşı farkı mimari değil çizelgedir — 4 yerine 20 adım — ve adım başına maliyeti
+distile kardeşinden *düşüktür* (6.0'a karşı 4.9). Z-Image Turbo — 9 adımlı distile
+6B model, Apache-2.0 — ikisinin arasında **95.8 s**'de durur: klein'den ~4×,
+FLUX 3'ten ~1.9× yavaş. Klein'ın **iki kuantizasyonu bir saniye içinde** ve
+aralarındaki sıra **kararlı değil**: 4-bit (`klein-q4`, 4.3 GB, diskte en küçüğü)
+bu turda **23.0 s** ölçüldü, 8-bit kardeşi **24.0 s**; ama aynı ikilinin bir önceki
+turunda 8-bit 1.3 s öndeydi. Tek makinede ~%5'lik fark tur-arası gürültüdür; ikisini
+berabere okuyun ve disk ile belleğe göre seçin — kazancın gerçek olduğu yer orası,
+saniyeler değil. Bu ikilinin eski koşuları profillerin 1.0 değeri yerine mflux'un
+varsayılan guidance 3.5'i ile koşmuştu (`build_argv` alanı geçirmiyordu; bkz.
+`CHANGELOG.md`), eski 22.5 / 23.8 rakamları bu yüzden. Bütün sayılar ilk görsel
 hariç, durağan 7 görselin ortalamasıdır — model yüklemesini taşıyan ilk görsel
 dışarıda bırakılır; `s/görsel` kolonu budur.
 **Klein ikilisi FLUX 3'ten ~8× hızlıdır** ve özel olarak FLUX 3 gerekmiyorsa
 kullanılacak olandır.
-Okunabilir metin ve doğru eller — klasik başarısızlık yüzeyleri — beşinde de
+Okunabilir metin ve doğru eller — klasik başarısızlık yüzeyleri — sekizinde de
 temiz çıktı. FLUX 3'ün ticari-çıktı sınırı devreye girdiğinde ama klein'in hızı
 öncelik değilse, Apache-2.0 alternatifi Z-Image Turbo'dur.
 
-Kırk görsel, her biri kendisini üreten prompt ile:
+Altmış dört görsel, her biri kendisini üreten prompt ile:
 
 [`evidence/image-benchmark-2026-11-12.md`](evidence/image-benchmark-2026-11-12.md),
 [`evidence/image-benchmark-flux3-2026-11-12.md`](evidence/image-benchmark-flux3-2026-11-12.md),
 [`evidence/image-benchmark-zimage-2026-11-14.md`](evidence/image-benchmark-zimage-2026-11-14.md),
-[`evidence/image-benchmark-klein-q4-2026-11-17.md`](evidence/image-benchmark-klein-q4-2026-11-17.md)
-ve [`evidence/image-benchmark-qwen.md`](evidence/image-benchmark-qwen.md).
+[`evidence/image-benchmark-klein-q4-2026-11-17.md`](evidence/image-benchmark-klein-q4-2026-11-17.md),
+[`evidence/image-benchmark-qwen.md`](evidence/image-benchmark-qwen.md),
+[`evidence/image-benchmark-ernie.md`](evidence/image-benchmark-ernie.md),
+[`evidence/image-benchmark-anima.md`](evidence/image-benchmark-anima.md)
+ve [`evidence/image-benchmark-klein-base.md`](evidence/image-benchmark-klein-base.md).
 
 ## Video üretimi
 
@@ -260,7 +275,7 @@ promptta 233.7–299.8 s), CogVideoX'in 17 s'nin altındaki yayılımına karş�
 [`evidence/video-benchmark-2026-11-12.md`](evidence/video-benchmark-2026-11-12.md)
 içinde.
 
-Dört klip, her biri kendisini üreten prompt ile:
+On sekiz klip, her biri kendisini üreten prompt ile:
 [`evidence/video-benchmark-2026-11-12.md`](evidence/video-benchmark-2026-11-12.md).
 
 ## Profiller

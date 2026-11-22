@@ -17,7 +17,7 @@ a number.
 
 The outputs themselves sit beside the pages:
 
-- [`images/`](images/) — 64 PNGs, named `<profile>--<prompt-id>.png`
+- [`images/`](images/) — 64 PNGs (the current eight models × eight prompts), named `<profile>--<prompt-id>.png`; the sixteen superseded `klein-q4`/`klein-q8` runs from the guidance fix sit beside them as `*_1.png`
 - [`videos/`](videos/) — 18 clips (4 GIF batches and 2 MP4 batches) named
   `<profile>--<prompt-id>`: six CogVideoX int8 and six int4 GIFs, and six Wan2.2
   MP4s

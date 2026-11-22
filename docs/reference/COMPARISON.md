@@ -108,13 +108,16 @@ words — on all four models. The cheap one did not need the others' help here:
 | :---: | :---: | :---: | :---: |
 | ![LOCAL FIRST poster, klein-q8](../../evidence/images/klein-q8--text-poster.png) | ![LOCAL FIRST poster, klein-q4](../../evidence/images/klein-q4--text-poster.png) | ![LOCAL FIRST poster, z-image-turbo-q4](../../evidence/images/z-image-turbo-q4--text-poster.png) | ![LOCAL FIRST poster, flux-3-klein q8](../../evidence/images/flux3-klein-q8--text-poster.png) |
 
-Every one of the forty images, with the prompt that produced it, is in
+Every one of the sixty-four images, with the prompt that produced it, is in
 [`evidence/image-benchmark-2026-11-12.md`](../../evidence/image-benchmark-2026-11-12.md),
 [`evidence/image-benchmark-flux3-2026-11-12.md`](../../evidence/image-benchmark-flux3-2026-11-12.md),
 [`evidence/image-benchmark-zimage-2026-11-14.md`](../../evidence/image-benchmark-zimage-2026-11-14.md),
-[`evidence/image-benchmark-klein-q4-2026-11-17.md`](../../evidence/image-benchmark-klein-q4-2026-11-17.md)
+[`evidence/image-benchmark-klein-q4-2026-11-17.md`](../../evidence/image-benchmark-klein-q4-2026-11-17.md),
+[`evidence/image-benchmark-qwen.md`](../../evidence/image-benchmark-qwen.md),
+[`evidence/image-benchmark-ernie.md`](../../evidence/image-benchmark-ernie.md),
+[`evidence/image-benchmark-anima.md`](../../evidence/image-benchmark-anima.md)
 and
-[`evidence/image-benchmark-qwen.md`](../../evidence/image-benchmark-qwen.md).
+[`evidence/image-benchmark-klein-base.md`](../../evidence/image-benchmark-klein-base.md).
 
 ## Video generation — a separate layer
 
