@@ -189,8 +189,8 @@ Which generation model for which job, at the seconds it actually cost, in one pi
 
 | Suite | Origin | What it measures |
 | :--- | :--- | :--- |
-| Image | ours, over **mflux** | Seconds per image, PNG verified |
-| Video | ours, over **VideoX-Fun-mlx** | Seconds per clip, `ffprobe` verified |
+| Image | ours, over **mflux** and **mlx-gen** | Seconds per image, PNG verified |
+| Video | ours, over **VideoX-Fun-mlx** and **mlx-gen** | Seconds per clip, `ffprobe` verified |
 | Licences | ours, from the HF cards | "Downloadable" vs "commercially usable" |
 
 Both harnesses run offline against themselves before they touch a model:

@@ -177,8 +177,8 @@ Hangi üretim modelinin hangi iş için, ve gerçekten ne kadara mal olduğunu, 
 
 | Paket | Kaynak | Neyi ölçer |
 | :--- | :--- | :--- |
-| Görsel | bizim, **mflux** üzerinden | Görsel başına saniye, PNG doğrulanır |
-| Video | bizim, **VideoX-Fun-mlx** üzerinden | Klip başına saniye, `ffprobe` doğrulanır |
+| Görsel | bizim, **mflux** ve **mlx-gen** üzerinden | Görsel başına saniye, PNG doğrulanır |
+| Video | bizim, **VideoX-Fun-mlx** ve **mlx-gen** üzerinden | Klip başına saniye, `ffprobe` doğrulanır |
 | Lisanslar | bizim, HF kartlarından | "İndirilebilir" mi, "ticari kullanılabilir" mi |
 
 İki harness de modele dokunmadan önce kendini çevrimdışı doğrular:

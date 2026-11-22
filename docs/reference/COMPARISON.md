@@ -170,7 +170,7 @@ gate and proves the harnesses agree with their own fixtures.
 | :--- | :--- |
 | [@filipstrand/mflux](https://github.com/filipstrand/mflux) | Image generation. `image-benchmark.py` drives its CLI and times it. |
 | [@dgrauet/VideoX-Fun-mlx](https://github.com/dgrauet/VideoX-Fun-mlx) | The CogVideoX-Fun layer. `video-benchmark.py` drives its `quick_infer.py`. |
-| [@lpalbou/mlx-gen](https://github.com/lpalbou/mlx-gen) | Text/image-to-video, the Wan2.2 layer. Named for the pending profile. |
+| [@lpalbou/mlx-gen](https://github.com/lpalbou/mlx-gen) | The Wan2.2 layer and three image profiles (ERNIE, Qwen, Bonsai). It also ships the `mflux-generate*` console scripts the harness calls. |
 | [@ml-explore/mlx](https://github.com/ml-explore/mlx) | The framework under everything here. |
 
 **What is ours and only ours:** the image and video harnesses, the prompt sets,

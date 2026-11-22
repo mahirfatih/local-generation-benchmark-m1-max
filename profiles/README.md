@@ -34,5 +34,6 @@ command.
 
 Copy the nearest existing one, change the model and the settings, and state why
 each value was chosen — the doc's "why" column is not decoration. A profile with
-no committed run behind it cannot appear in the comparison tables; mark it
-`pending` in the docs until it has one, as the Wan2.2 profile is now.
+no committed run behind it cannot appear in the comparison tables; say so on its
+row instead of inventing a figure, as `bonsai-image-ternary-2bit` does while the
+upstream bug stands.

@@ -5,7 +5,7 @@ end, and measures the file it wrote.
 
 | Script | Measures | Needs a model |
 | :--- | :--- | :---: |
-| [`image-benchmark.py`](image-benchmark.py) | Seconds per image through [`mflux`](https://github.com/filipstrand/mflux), from `profiles/mflux-profiles.json`; the PNG is checked via its IHDR header. Refuses to run while another GPU job is active. `--selftest` is offline. | yes |
+| [`image-benchmark.py`](image-benchmark.py) | Seconds per image through [`mflux`](https://github.com/filipstrand/mflux) or [`mlx-gen`](https://github.com/lpalbou/mlx-gen) for the profiles that carry their own `invoke`, from `profiles/mflux-profiles.json`; the PNG is checked via its IHDR header. Refuses to run while another GPU job is active. `--selftest` is offline. | yes |
 | [`video-benchmark.py`](video-benchmark.py) | Seconds per clip through [`VideoX-Fun-mlx`](https://github.com/dgrauet/VideoX-Fun-mlx) or [`mlx-gen`](https://github.com/lpalbou/mlx-gen), from `profiles/video-profiles.json`; the written clip is measured with **ffprobe**. Refuses to run while another GPU job is active. `--selftest` is offline. | yes |
 
 Neither is part of oMLX: oMLX serves text, and the two generation layers are
