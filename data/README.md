@@ -7,7 +7,7 @@ in the harnesses so a prompt can be read, quoted and reproduced without opening 
 | File | Layer | Prompts |
 | :--- | :--- | ---: |
 | [`image-prompts.json`](image-prompts.json) | mflux (image) | 8 |
-| [`video-prompts.json`](video-prompts.json) | VideoX-Fun-mlx (video) | 4 |
+| [`video-prompts.json`](video-prompts.json) | VideoX-Fun-mlx / mlx-gen (video) | 6 |
 
 ## Shape
 
