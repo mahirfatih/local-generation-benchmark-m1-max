@@ -77,6 +77,7 @@ flowchart TD
 - [Profiles](#profiles)
 - [Reproducing](#reproducing)
 - [Repository structure](#repository-structure)
+- [Links](#links)
 - [Contributing](#contributing)
 - [Notes & disclaimer](#notes--disclaimer)
 - [License](#license)
@@ -403,6 +404,20 @@ Local Image and Video Generation on an Apple M1 Max 64GB/
 ├── test/test.sh                # offline gate
 └── .github/workflows/ci.yml    # the gate and the lint run, on demand
 ```
+
+## Links
+
+The tools behind the numbers, and the text half of the benchmark:
+
+- [oMLX](https://omlx.ai) — the local text server. The
+  [text benchmark](https://github.com/mahirfatih/omlx-m1-max-benchmark) lives in
+  its own repository because oMLX cannot generate an image or a clip.
+- [mflux](https://github.com/filipstrand/mflux) — the native-MLX diffusion CLI
+  behind the FLUX, Z-Image, Anima and klein image profiles.
+- [VideoX-Fun-mlx](https://github.com/dgrauet/VideoX-Fun-mlx) — the CogVideoX-Fun
+  port behind the video profiles.
+- [mlx-gen](https://github.com/lpalbou/mlx-gen) — ships the `mflux-generate*`
+  commands, runs Wan2.2, and drives the ERNIE and Qwen Image profiles.
 
 ## Contributing
 

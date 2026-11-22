@@ -80,6 +80,7 @@ flowchart TD
 - [Profiller](#profiller)
 - [Çoğaltma](#çoğaltma)
 - [Depo yapısı](#depo-yapısı)
+- [Bağlantılar](#bağlantılar)
 - [Notlar ve sorumluluk reddi](#notlar-ve-sorumluluk-reddi)
 - [Lisans](#lisans)
 
@@ -364,6 +365,20 @@ Local Image and Video Generation on an Apple M1 Max 64GB/
 │   └── lint.sh
 └── test/test.sh                # çevrimdışı kapı
 ```
+
+## Bağlantılar
+
+Sayıların arkasındaki araçlar ve benchmark'ın metin yarısı:
+
+- [oMLX](https://omlx.ai) — yerel metin sunucusu;
+  [metin benchmark'ı](https://github.com/mahirfatih/omlx-m1-max-benchmark) kendi
+  deposunda duruyor çünkü oMLX görsel veya klip üretemiyor.
+- [mflux](https://github.com/filipstrand/mflux) — FLUX, Z-Image, Anima ve klein
+  görsel profillerinin arkasındaki native-MLX difüzyon CLI'ı.
+- [VideoX-Fun-mlx](https://github.com/dgrauet/VideoX-Fun-mlx) — video profillerinin
+  arkasındaki CogVideoX-Fun portu.
+- [mlx-gen](https://github.com/lpalbou/mlx-gen) — `mflux-generate*` komutlarını
+  getirir, Wan2.2'yi çalıştırır ve ERNIE ile Qwen Image profillerini sürer.
 
 ## Notlar ve sorumluluk reddi
 
