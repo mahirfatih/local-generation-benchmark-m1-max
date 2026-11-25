@@ -212,6 +212,15 @@ pahalı adımlarını taşırlar — görsel başına ve adım başına sayılar
 gerektiren promptlar ~131 s, geri kalanı ~117 s sürer; ERNIE ise her promptta
 123.5 s'nin bir saniye içindedir.
 
+`bonsai-image-ternary-2bit`, satırı olmayan tek mlx-gen görsel profilidir: stok
+`mlx-gen 0.38.0` sürümünde kendi initializer'ı `compiled_predict_cache` alanını
+kurmaz, devraldığı üretim yolu ise o alanı okur; çalıştırma ilk adımdan önce
+`AttributeError` ile durur. Alanı kuran yerel bir yama ile görsel üretildi,
+ancak düzeltme kaynak projede (upstream) ve henüz yayınlanmış bir sürümde
+olmadığı için profil burada ölçülmemiş kalıyor. Tanılama, yama ve doğrulama
+[mlx-gen issue #22](https://github.com/lpalbou/mlx-gen/issues/22) adresinde,
+ayarlar [`PROFILES.md`](docs/reference/PROFILES.md) dosyasında.
+
 4 adımlı distile 4B model 1024×1024 görsel başına ~24 s koşar (ilki daha
 yavaş, ~28 s, çünkü model yüklenir); FLUX 3 ise 16 adımda ve 5.6B transformer ile
 ~180 s. **Anima Turbo** diskteki en küçük pakettir (4.0 GB) ve adım başına en

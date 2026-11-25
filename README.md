@@ -242,6 +242,14 @@ read the per-image and per-step figures together, because Qwen's per-image sprea
 is real rather than load: the prompts that need a long text render run ~131 s, the
 rest ~117 s, where ERNIE sits within a second of 123.5 s on every prompt.
 
+`bonsai-image-ternary-2bit` is the one mlx-gen image profile with **no row**: on
+stock `mlx-gen 0.38.0` its initializer omits `compiled_predict_cache`, which the
+inherited generation path reads, so runs fail before the first step. A local
+patch that builds that field produced images; the fix is upstream and not in a
+released wheel yet, so the profile stays unmeasured here. The diagnosis, patch
+and verified run are in [mlx-gen issue #22](https://github.com/lpalbou/mlx-gen/issues/22),
+with settings in [`PROFILES.md`](docs/reference/PROFILES.md).
+
 ```mermaid
 xychart-beta horizontal
     title "Seconds per image (lower is better, model load included)"

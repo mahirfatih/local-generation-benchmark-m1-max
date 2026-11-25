@@ -6,6 +6,21 @@ date-based snapshots rather than semver releases.
 
 ## [Unreleased]
 
+### Fixed — Bonsai Image's missing cache field identified and verified locally
+
+- **`bonsai-image-ternary-2bit` failure traced to one missing field.** On stock
+  `mlx-gen 0.38.0`, `BonsaiImage` used its own initializer, so
+  `compiled_predict_cache` was never built while the inherited generation path
+  read it, raising `AttributeError` before the first step. Calling
+  `super().__init__()` would load standard FLUX.2 Klein components instead of
+  Bonsai's packed transformer; constructing `CompiledPredictCache()` in
+  `BonsaiImageInitializer._init_config` fixed it. A local patch produced 8/8
+  images at 1024×1024, and the diagnosis and run are in
+  [mlx-gen issue #22](https://github.com/lpalbou/mlx-gen/issues/22). No timing
+  or evidence row changed here: the fix is upstream and not yet in a released
+  wheel, so the profile stays **known-broken** until it can be measured on the
+  stock stack.
+
 ### Added — the gate checks licence coverage and that the disk totals add up
 
 - **Step 6 is now coverage, not keywords.** It asserted that `LICENSES.md` still

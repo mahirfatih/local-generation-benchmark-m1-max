@@ -174,19 +174,50 @@ None of the three accepts `--base-model` or `--compute-precision`: the `mlxgen`
 CLI has neither flag, which is why each carries an explicit `invoke` template
 instead of falling back to the generic mflux argv.
 
-**`bonsai-image-ternary-2bit` does not currently run.** On `mlx-gen 0.38.0`
-(the newest on PyPI) a generation fails before the first step:
+**`bonsai-image-ternary-2bit` does not run on a stock `mlx-gen 0.38.0`.** A
+generation fails before the first step:
 
 ```text
 AttributeError: 'BonsaiImage' object has no attribute 'compiled_predict_cache'
 ```
 
-`BonsaiImage(Flux2Klein)` calls `nn.Module.__init__` and its own initializer, not
-`Flux2Klein.__init__`; the field is built only by `Flux2Initializer.init`, which
-Bonsai's path never reaches, and `Flux2Klein.generate_image` reads it. The profile
-here is correct — the fault is upstream in mlx-gen, so this is a **known-broken**
-row until that is fixed, not a misconfigured one. It is reported as
+**Why it fails.** `BonsaiImage(Flux2Klein)` calls `nn.Module.__init__` and its own
+`BonsaiImageInitializer`, not `Flux2Klein.__init__`. The
+`compiled_predict_cache` field is created only by `Flux2Initializer.init`, which
+that path never reaches, while the inherited `Flux2Klein.generate_image` reads
+it. The other four fields that `Flux2Initializer._init_config` sets
+(`prompt_cache`, `model_config`, `callbacks`, `tiling_config`) are already set by
+`BonsaiImageInitializer`, so one field is missing, not a whole initializer. The
+profile here is correct and the fault is upstream, reported as
 [mlx-gen issue #22](https://github.com/lpalbou/mlx-gen/issues/22).
+
+**Why `super().__init__()` is not the fix.** `Flux2Klein.__init__` would run
+`Flux2Initializer.init`, loading standard FLUX.2 Klein weights and a standard
+`Flux2Transformer`. Bonsai needs its own packed `Flux2KleinFastTransformer`,
+4-bit Qwen3 text encoder and VAE definition. The minimal, targeted fix is to
+build the one missing field in Bonsai's initializer:
+
+```python
+# src/mflux/models/bonsai_image/bonsai_image_initializer.py
+from mflux.utils.compiled_predict_cache import CompiledPredictCache
+
+    @staticmethod
+    def _init_config(model, model_config: ModelConfig) -> None:
+        model.prompt_cache = {}
+        model.compiled_predict_cache = CompiledPredictCache()
+        model.model_config = model_config
+        model.callbacks = CallbackRegistry()
+        model.tiling_config = None
+```
+
+**Verification.** With that local patch on `mlx-gen 0.38.0`, a smoke run wrote a
+valid 1024×1024 PNG and a full 8-prompt set wrote 8/8 images with distinct
+hashes, with no `AttributeError`. The run details are in the issue. The Bonsai
+row stays **known-broken** and carries no timing in this repository: the fix is
+not in a released wheel, and no patched run has been committed as evidence here,
+so copying the issue's timings into our tables would mix a local patch with the
+measured stock stack. The row is kept so the fix can be verified against a real
+run when it lands upstream.
 
 `ernie-image-turbo-q8` and `qwen-image-4bit` were each benchmarked over the full
 8-prompt set on the same machine. ERNIE: **123.5 s/img** and **15.4 s/step** at

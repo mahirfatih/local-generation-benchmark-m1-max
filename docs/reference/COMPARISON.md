@@ -93,12 +93,17 @@ out clean on all of them.
 
 One further mlx-gen image profile exists but carries **no timing row**, so it is
 named here rather than given a number this table cannot support:
-**`bonsai-image-ternary-2bit`** does not run at all on `mlx-gen 0.38.0`: its
+**`bonsai-image-ternary-2bit`** fails on stock `mlx-gen 0.38.0` because its
 initializer never builds `compiled_predict_cache`, which the generation path it
 inherits then reads, so every run raises `AttributeError` before the first step.
-The profile is correct and the fault is upstream, reported as
+The fix is not to call the parent initializer, since that would load standard
+FLUX.2 Klein components instead of Bonsai's packed transformer, but to create
+that one field in Bonsai's own initializer. A local patch produced 8/8 images;
+the row still has no timing here because the fix is not in a released wheel and
+no patched run is committed as evidence. The profile is correct and the fault is
+upstream, reported with the verified patch in
 [mlx-gen issue #22](https://github.com/lpalbou/mlx-gen/issues/22). Its settings
-are in
+and the patch are in
 [`docs/reference/PROFILES.md`](PROFILES.md).
 
 The same prompt — a poster whose whole point is whether the two words render as

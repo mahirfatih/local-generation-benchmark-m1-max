@@ -67,7 +67,7 @@ ffprobe -version | head -1
 | `flux3-klein-q8` | `mflux-generate-flux3` | mflux |
 | `ernie-image-turbo-q8` | `mlxgen generate` | mlx-gen |
 | `qwen-image-4bit` | `mlxgen generate` | mlx-gen |
-| `bonsai-image-ternary-2bit` | `mlxgen generate` | mlx-gen (does not run — see [PROFILES](PROFILES.md)) |
+| `bonsai-image-ternary-2bit` | `mlxgen generate` | mlx-gen (stock fails, patched local run works; see [PROFILES](PROFILES.md)) |
 | `wan22-ti2v-5b-q8` | `mlxgen generate --family wan` | mlx-gen |
 | `cogvideox-fun-1.5-5b-inp-q8` | `python3 scripts/quick_infer.py` | VideoX-Fun-mlx |
 | `cogvideox-fun-1.5-5b-inp-q4` | `python3 scripts/quick_infer.py` | VideoX-Fun-mlx |
