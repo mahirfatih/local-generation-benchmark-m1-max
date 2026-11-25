@@ -1,17 +1,61 @@
 # Local Image and Video Generation on an Apple M1 Max 64GB
 
-**Local image and video generation on an Apple M1 Max — measured, and the output
-committed so you can look at it.**
-
 [![Platform](https://img.shields.io/badge/platform-Apple%20Silicon%20(arm64)-000?logo=apple&logoColor=white)](#hardware--software)
 [![mflux](https://img.shields.io/badge/image-mflux-blue)](https://github.com/filipstrand/mflux)
 [![VideoX-Fun-mlx](https://img.shields.io/badge/video-VideoX--Fun--mlx-blue)](https://github.com/dgrauet/VideoX-Fun-mlx)
 [![Outputs](https://img.shields.io/badge/outputs-64%20PNG%20%2B%2018%20clips-purple)](evidence/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
+| 🎯 Purpose | 🧩 Engines | 📊 Evidence | ⚖️ License |
+| :---: | :---: | :---: | :---: |
+| Measured local image/video generation on M1 Max | mflux · mlx-gen · VideoX-Fun-mlx | 64 PNG + 18 clips | MIT |
+
+> **New here?** [Overview](#overview) · [What was measured](#what-was-measured) · [Images](#image-generation) · [Videos](#video-generation) · [Profiles](#profiles)
+
 [English](README.md) · [Türkçe](README.tr.md)
 
 ---
+
+<a id="contents"></a>
+
+## 🧭 Contents
+
+| # | Section | What it answers |
+| :---: | :--- | :--- |
+| 01 | [📖 Overview](#overview) | What this repo measures, and why |
+| 02 | [💻 Hardware & Software](#hardware--software) | The exact machine, toolchain and versions |
+| 03 | [🧩 Models](#models) | Weights, quantisation and licence on disk |
+| 04 | [🗺️ Model map](#model-map) | Which model for which job, at a glance |
+| 05 | [📊 What was measured](#what-was-measured) | Harnesses, gates and provenance |
+| 06 | [🖼️ Image generation](#image-generation) | Every 1024×1024 image row |
+| 07 | [🎬 Video generation](#video-generation) | Every clip row |
+| 08 | [⚙️ Profiles](#profiles) | Settings behind each row |
+| 09 | [🔁 Reproducing](#reproducing) | Commands to rerun a measurement |
+| 10 | [📂 Repository structure](#repository-structure) | Where each file lives |
+| 11 | [🔗 Links](#links) | Companion repo, tools and papers |
+| 12 | [🤝 Contributing](#contributing) | How to add a profile |
+| 13 | [⚠️ Notes & disclaimer](#notes--disclaimer) | What the numbers do and do not say |
+| 14 | [📄 License](#license) | Distribution terms |
+
+<details>
+<summary>🔎 <b>Jump into the measurements</b></summary>
+
+- [🧪 The environment](#the-environment)
+- [🖼️ Image table](#image-generation)
+- [🎬 Video table](#video-generation)
+- [🧩 Model inventory](#models)
+- [🗺️ Model map](#model-map)
+
+</details>
+
+---
+
+<a id="overview"></a>
+
+## 📖 Overview
+
+**Local image and video generation on an Apple M1 Max — measured, and the output
+committed so you can look at it.**
 
 This is the generation half of a local-MLX benchmark. Text runs on
 [oMLX](https://omlx.ai) and lives in the companion repository
@@ -67,22 +111,11 @@ flowchart TD
     H --> L[4% faster than q8, both prompt/seed-sensitive]
 ```
 
-## Table of Contents
+---
 
-- [Hardware & Software](#hardware--software)
-- [The environment](#the-environment)
-- [What was measured](#what-was-measured)
-- [Image generation](#image-generation)
-- [Video generation](#video-generation)
-- [Profiles](#profiles)
-- [Reproducing](#reproducing)
-- [Repository structure](#repository-structure)
-- [Links](#links)
-- [Contributing](#contributing)
-- [Notes & disclaimer](#notes--disclaimer)
-- [License](#license)
+<a id="hardware--software"></a>
 
-## Hardware & Software
+## 💻 Hardware & Software
 
 | Item | Value |
 |---|---|
@@ -101,7 +134,9 @@ and 400 GB/s of memory bandwidth are what the timings below are against:
 - EveryMac's breakdown of this exact configuration:
   [MacBook Pro M1 Max 10-core CPU, 32-core GPU (16-inch, 2021)](https://everymac.com/systems/apple/macbook_pro/specs/macbook-pro-m1-max-10-core-cpu-32-core-gpu-16-2021-specs.html)
 
-### The environment
+<a id="the-environment"></a>
+
+### 🧪 The environment
 
 Hardware is half the story; the other half is what the weights are executed by.
 Nothing in this repository calls `llama.cpp`, `ollama`, or a GGUF runtime — text
@@ -158,7 +193,9 @@ flowchart TB
 
 **No API, no account, no per-call bill.** Every model runs from weights on disk.
 
-## Models
+<a id="models"></a>
+
+## 🧩 Models
 
 | Model | Disk | Quant | Licence | Source |
 |---|---:|---|---|---|
@@ -177,7 +214,9 @@ flowchart TB
 
 **Total on disk:** ~116 GB · **Runtime memory:** up to ~30 GB per loaded model on 64 GB unified memory. Every model runs from weights on disk — no API, no account.
 
-## Model map
+<a id="model-map"></a>
+
+## 🗺️ Model map
 
 ![Model map (light)](docs/diagrams/model-map/model-map-light.png)
 
@@ -185,7 +224,9 @@ flowchart TB
 
 Which generation model for which job, at the seconds it actually cost, in one picture.
 
-## What was measured
+<a id="what-was-measured"></a>
+
+## 📊 What was measured
 
 | Suite | Origin | What it measures |
 | :--- | :--- | :--- |
@@ -216,7 +257,9 @@ The tools we measured **through**, without which there would be no column at all
 ours and what is borrowed — is in
 [`docs/reference/COMPARISON.md`](docs/reference/COMPARISON.md).
 
-## Image generation
+<a id="image-generation"></a>
+
+## 🖼️ Image generation
 
 Image runs through [mflux](https://github.com/filipstrand/mflux), a native-MLX
 diffusion tool. One `mflux-generate-*` process per prompt, timed end to end, the
@@ -294,7 +337,9 @@ Sixty-four images, each with the prompt that produced it:
 [`evidence/image-benchmark-anima.md`](evidence/image-benchmark-anima.md)
 and [`evidence/image-benchmark-klein-base.md`](evidence/image-benchmark-klein-base.md).
 
-## Video generation
+<a id="video-generation"></a>
+
+## 🎬 Video generation
 
 Video runs through [VideoX-Fun-mlx](https://github.com/dgrauet/VideoX-Fun-mlx)
 driving CogVideoX-Fun V1.5 5B and [mlx-gen](https://github.com/lpalbou/mlx-gen)
@@ -332,7 +377,9 @@ All three rows are in
 The eighteen clips, each with the prompt that produced it, are in
 [`evidence/video-benchmark-2026-11-12.md`](evidence/video-benchmark-2026-11-12.md).
 
-## Profiles
+<a id="profiles"></a>
+
+## ⚙️ Profiles
 
 Each layer has its own profile file — **no image or video setting is an oMLX
 profile**, because oMLX cannot run either:
@@ -349,7 +396,9 @@ profile**, because oMLX cannot run either:
 Full settings, why each value was chosen, and the exact commands to reproduce a
 run are in [`docs/reference/PROFILES.md`](docs/reference/PROFILES.md).
 
-## Reproducing
+<a id="reproducing"></a>
+
+## 🔁 Reproducing
 
 1. Build the environment once — Python 3.15, one virtualenv, two installs:
 
@@ -386,7 +435,9 @@ The offline gate needs no model and no network:
 ./test/test.sh
 ```
 
-## Repository structure
+<a id="repository-structure"></a>
+
+## 📂 Repository structure
 
 ```text
 Local Image and Video Generation on an Apple M1 Max 64GB/
@@ -418,7 +469,9 @@ Local Image and Video Generation on an Apple M1 Max 64GB/
 └── .github/workflows/ci.yml    # the gate and the lint run, on demand
 ```
 
-## Links
+<a id="links"></a>
+
+## 🔗 Links
 
 The tools behind the numbers, and the text half of the benchmark:
 
@@ -432,14 +485,18 @@ The tools behind the numbers, and the text half of the benchmark:
 - [mlx-gen](https://github.com/lpalbou/mlx-gen) — ships the `mflux-generate*`
   commands, runs Wan2.2, and drives the ERNIE and Qwen Image profiles.
 
-## Contributing
+<a id="contributing"></a>
+
+## 🤝 Contributing
 
 Corrections and additional data points are welcome — see
 [`CONTRIBUTING.md`](CONTRIBUTING.md). A timing must arrive with the output it
 timed. Run `./test/test.sh` before you push; [`scripts/lint.sh`](scripts/lint.sh)
 runs every linter at once.
 
-## Notes & disclaimer
+<a id="notes--disclaimer"></a>
+
+## ⚠️ Notes & disclaimer
 
 - **Timings are for this machine only.** A different M1/M2/M3/M4 changes them.
 - **Sample sizes are small.** Eight image prompts, six video prompts. A gap of a
@@ -453,7 +510,9 @@ runs every linter at once.
 - This repository redistributes **no model weights** — only measurements and the
   outputs those models produced.
 
-## License
+<a id="license"></a>
+
+## 📄 License
 
 The code and documents here are **MIT** (see [`LICENSE`](LICENSE)). That covers
 this repository, not the models it measures: the model licences are the property

@@ -1,19 +1,57 @@
 # Local Image and Video Generation on an Apple M1 Max 64GB
 
-> Apple **M1 Max (64 GB)** üzerinde **yerel görsel ve video üretimi** — ölçülmüş,
-> ve çıktılar depoya konmuş ki bakarak doğrulayabilesin.
-
 [![Platform](https://img.shields.io/badge/platform-Apple%20Silicon%20(arm64)-000?logo=apple&logoColor=white)](#donanım--yazılım)
 [![mflux](https://img.shields.io/badge/image-mflux-blue)](https://github.com/filipstrand/mflux)
 [![VideoX-Fun-mlx](https://img.shields.io/badge/video-VideoX--Fun--mlx-blue)](https://github.com/dgrauet/VideoX-Fun-mlx)
 [![Outputs](https://img.shields.io/badge/outputs-64%20PNG%20%2B%2018%20clips-purple)](evidence/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
+| 🎯 Amaç | 🧩 Motorlar | 📊 Kanıt | ⚖️ Lisans |
+| :---: | :---: | :---: | :---: |
+| M1 Max'te ölçülmüş yerel görsel/video üretimi | mflux · mlx-gen · VideoX-Fun-mlx | 64 PNG + 18 klip | MIT |
+
+> **Yeni misin?** [Genel bakış](#genel-bakış) · [Ne ölçüldü](#ne-ölçüldü) · [Görseller](#görsel-üretimi) · [Videolar](#video-üretimi) · [Profiller](#profiller)
+
 **Türkçe** · [English](README.md)
 
 ---
 
-## Genel bakış
+<a id="contents"></a>
+
+## 🧭 İçindekiler
+
+| # | Bölüm | Neyi cevaplar |
+| :---: | :--- | :--- |
+| 01 | [📖 Genel bakış](#genel-bakış) | Bu depo neyi ölçer, neden |
+| 02 | [💻 Donanım & Yazılım](#donanım--yazılım) | Makine, araç zinciri ve sürümler |
+| 03 | [🧩 Modeller](#modeller) | Diskteki ağırlıklar, quant ve lisans |
+| 04 | [🗺️ Model haritası](#model-haritası) | Hangi iş için hangi model |
+| 05 | [📊 Ne ölçüldü](#ne-ölçüldü) | Harness'lar, kapılar ve kaynak |
+| 06 | [🖼️ Görsel üretimi](#görsel-üretimi) | 1024×1024 görsel satırları |
+| 07 | [🎬 Video üretimi](#video-üretimi) | Klip satırları |
+| 08 | [⚙️ Profiller](#profiller) | Her satırın ayarları |
+| 09 | [🔁 Çoğaltma](#çoğaltma) | Ölçümü yeniden çalıştırma |
+| 10 | [📂 Depo yapısı](#depo-yapısı) | Dosyalar nerede |
+| 11 | [🔗 Bağlantılar](#bağlantılar) | Yardımcı depo, araçlar, kaynaklar |
+| 12 | [⚠️ Notlar ve sorumluluk reddi](#notlar-ve-sorumluluk-reddi) | Sayıların neyi söyleyip neyi söylemediği |
+| 13 | [📄 Lisans](#lisans) | Dağıtım koşulları |
+
+<details>
+<summary>🔎 <b>Ölçümlere atla</b></summary>
+
+- [🧪 Ortam](#ortam)
+- [🖼️ Görsel tablosu](#görsel-üretimi)
+- [🎬 Video tablosu](#video-üretimi)
+- [🧩 Model envanteri](#modeller)
+- [🗺️ Model haritası](#model-haritası)
+
+</details>
+
+---
+
+<a id="genel-bakış"></a>
+
+## 📖 Genel bakış
 
 Yerel-MLX benchmark'ının **üretim yarısı**. Metin [oMLX](https://omlx.ai) üzerinde
 çalışır ve
@@ -71,20 +109,11 @@ flowchart TD
     H --> L[q8'den %4 hızlı, ikisi de prompt/seed'e duyarlı]
 ```
 
-## İçindekiler
+---
 
-- [Donanım & Yazılım](#donanım--yazılım)
-- [Ne ölçüldü](#ne-ölçüldü)
-- [Görsel üretimi](#görsel-üretimi)
-- [Video üretimi](#video-üretimi)
-- [Profiller](#profiller)
-- [Çoğaltma](#çoğaltma)
-- [Depo yapısı](#depo-yapısı)
-- [Bağlantılar](#bağlantılar)
-- [Notlar ve sorumluluk reddi](#notlar-ve-sorumluluk-reddi)
-- [Lisans](#lisans)
+<a id="donanım--yazılım"></a>
 
-## Donanım & Yazılım
+## 💻 Donanım & Yazılım
 
 | Öğe | Değer |
 |---|---|
@@ -103,7 +132,9 @@ süreler 32 çekirdekli GPU'ya ve 400 GB/s bellek bant genişliğine karşıdır
 - EveryMac'in bu tam konfigürasyonu:
   [MacBook Pro M1 Max 10-core CPU, 32-core GPU (16-inch, 2021)](https://everymac.com/systems/apple/macbook_pro/specs/macbook-pro-m1-max-10-core-cpu-32-core-gpu-16-2021-specs.html)
 
-### Ortam
+<a id="ortam"></a>
+
+### 🧪 Ortam
 
 Donanım işin yarısı; diğer yarısı ağırlıkları neyin çalıştırdığı. Bu depoda
 `llama.cpp`, `ollama` ya da GGUF çalıştıran tek bir satır yok — metin modelleri
@@ -146,7 +177,9 @@ yaşıyorsa harness başlamayı reddeder — ikisi 64 GB birleşik belleğe sı�
 
 **API yok, hesap yok, çağrı başına fatura yok.** Her model diskten yüklenir.
 
-## Modeller
+<a id="modeller"></a>
+
+## 🧩 Modeller
 
 | Model | Disk | Quant | Lisans | Kaynak |
 |---|---:|---|---|---|
@@ -165,7 +198,9 @@ yaşıyorsa harness başlamayı reddeder — ikisi 64 GB birleşik belleğe sı�
 
 **Diskte toplam:** ~116 GB · **Çalışma belleği:** 64 GB birleşik bellekte model başına ~30 GB'a kadar. Her model diskteki ağırlıklardan çalışır — API yok, hesap yok.
 
-## Model haritası
+<a id="model-haritası"></a>
+
+## 🗺️ Model haritası
 
 ![Model haritası (açık)](docs/diagrams/model-map/model-map-light.png)
 
@@ -173,7 +208,9 @@ yaşıyorsa harness başlamayı reddeder — ikisi 64 GB birleşik belleğe sı�
 
 Hangi üretim modelinin hangi iş için, ve gerçekten ne kadara mal olduğunu, tek sayfada.
 
-## Ne ölçüldü
+<a id="ne-ölçüldü"></a>
+
+## 📊 Ne ölçüldü
 
 | Paket | Kaynak | Neyi ölçer |
 | :--- | :--- | :--- |
@@ -185,7 +222,9 @@ Hangi üretim modelinin hangi iş için, ve gerçekten ne kadara mal olduğunu, 
 `python3 scripts/measure/<paket>.py --selftest`. `test/test.sh` çevrimdışı kapıyı
 çalıştırır ve harness'ların kendi fixture'larıyla anlaştığını kanıtlar.
 
-## Görsel üretimi
+<a id="görsel-üretimi"></a>
+
+## 🖼️ Görsel üretimi
 
 Görsel, native-MLX bir difüzyon aracı olan
 [mflux](https://github.com/filipstrand/mflux) üzerinden çalışır. Prompt başına bir
@@ -257,7 +296,9 @@ Altmış dört görsel, her biri kendisini üreten prompt ile:
 [`evidence/image-benchmark-anima.md`](evidence/image-benchmark-anima.md)
 ve [`evidence/image-benchmark-klein-base.md`](evidence/image-benchmark-klein-base.md).
 
-## Video üretimi
+<a id="video-üretimi"></a>
+
+## 🎬 Video üretimi
 
 Video, CogVideoX-Fun V1.5 5B'yi süren
 [VideoX-Fun-mlx](https://github.com/dgrauet/VideoX-Fun-mlx) ve Wan2.2 TI2V 5B'yi
@@ -289,7 +330,9 @@ içinde.
 On sekiz klip, her biri kendisini üreten prompt ile:
 [`evidence/video-benchmark-2026-11-12.md`](evidence/video-benchmark-2026-11-12.md).
 
-## Profiller
+<a id="profiller"></a>
+
+## ⚙️ Profiller
 
 Her katmanın kendi profil dosyası var — **hiçbir görsel veya video ayarı bir oMLX
 profili değil**, çünkü oMLX ikisini de çalıştıramaz:
@@ -306,7 +349,9 @@ profili değil**, çünkü oMLX ikisini de çalıştıramaz:
 Tam ayarlar, her değerin neden seçildiği ve bir koşuyu çoğaltmak için gereken
 tam komutlar [`docs/reference/PROFILES.md`](docs/reference/PROFILES.md) içinde.
 
-## Çoğaltma
+<a id="çoğaltma"></a>
+
+## 🔁 Çoğaltma
 
 1. Ortamı bir kez kur — Python 3.15, tek sanal ortam, iki kurulum:
 
@@ -344,7 +389,9 @@ python3 scripts/measure/video-benchmark.py \
 ./test/test.sh
 ```
 
-## Depo yapısı
+<a id="depo-yapısı"></a>
+
+## 📂 Depo yapısı
 
 ```text
 Local Image and Video Generation on an Apple M1 Max 64GB/
@@ -375,7 +422,9 @@ Local Image and Video Generation on an Apple M1 Max 64GB/
 └── test/test.sh                # çevrimdışı kapı
 ```
 
-## Bağlantılar
+<a id="bağlantılar"></a>
+
+## 🔗 Bağlantılar
 
 Sayıların arkasındaki araçlar ve benchmark'ın metin yarısı:
 
@@ -389,7 +438,9 @@ Sayıların arkasındaki araçlar ve benchmark'ın metin yarısı:
 - [mlx-gen](https://github.com/lpalbou/mlx-gen) — `mflux-generate*` komutlarını
   getirir, Wan2.2'yi çalıştırır ve ERNIE ile Qwen Image profillerini sürer.
 
-## Notlar ve sorumluluk reddi
+<a id="notlar-ve-sorumluluk-reddi"></a>
+
+## ⚠️ Notlar ve sorumluluk reddi
 
 - **Süreler yalnızca bu makine için.** Farklı bir M1/M2/M3/M4 bunları değiştirir.
 - **Örneklem küçük.** Sekiz görsel promptu, altı video promptu. Bir iki saniyelik
@@ -402,7 +453,9 @@ Sayıların arkasındaki araçlar ve benchmark'ın metin yarısı:
 - Bu depo **hiçbir model ağırlığını yeniden dağıtmaz** — yalnızca ölçümleri ve o
   modellerin ürettiği çıktıları.
 
-## Lisans
+<a id="lisans"></a>
+
+## 📄 Lisans
 
 Buradaki kod ve belgeler **MIT**'tir (bkz. [`LICENSE`](LICENSE)). Bu, bu depoyu
 kapsar, ölçtüğü modelleri değil: model lisansları yazarlarının malıdır ve
