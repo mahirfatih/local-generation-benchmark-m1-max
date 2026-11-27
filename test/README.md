@@ -13,9 +13,12 @@ model, no download and no network.
 | Step | Checks | Catches |
 | :--- | :--- | :--- |
 | 1 | `py_compile` / `ast.parse` over `scripts/` | a syntax error |
+| 1b | [`../scripts/checks/check-naming.py`](../scripts/checks/check-naming.py) | a source or data file that is not kebab-case |
 | 2 | [`../data/image-prompts.json`](../data/image-prompts.json) | a duplicate id, an empty prompt, an undeclared category |
 | 3 | [`../data/video-prompts.json`](../data/video-prompts.json) | the same, for video |
 | 4 | [`../profiles/`](../profiles/) | a profile with no licence, no settings or no command |
+| 4b | a profile's `sources` link to its own model | a quant row pointing at the sibling precision instead of the weights it measured |
+| 4c | a Hugging Face page for every `base_model` | a licence claim whose base weights have no page behind them |
 | 5 | every `![...](...)` in [`../evidence/`](../evidence/) | a page pointing at an image or clip that is not there |
 | 6 | [`../docs/reference/LICENSES.md`](../docs/reference/LICENSES.md) | the licence warning being dropped, so a gated model looks open — or a profile with no licence row at all |
 | 7 | [`image-benchmark.py --selftest`](../scripts/measure/image-benchmark.py) | a command the harness builds that the PNG reader disagrees with |

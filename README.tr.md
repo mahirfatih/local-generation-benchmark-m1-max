@@ -3,7 +3,7 @@
 [![Platform](https://img.shields.io/badge/platform-Apple%20Silicon%20(arm64)-000?logo=apple&logoColor=white)](#donanım--yazılım)
 [![mflux](https://img.shields.io/badge/image-mflux-blue)](https://github.com/filipstrand/mflux)
 [![VideoX-Fun-mlx](https://img.shields.io/badge/video-VideoX--Fun--mlx-blue)](https://github.com/dgrauet/VideoX-Fun-mlx)
-[![Outputs](https://img.shields.io/badge/outputs-64%20PNG%20%2B%2018%20clips-purple)](evidence/)
+[![Outputs](https://img.shields.io/badge/outputs-80%20PNG%20%2B%2018%20clips-purple)](evidence/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
 | 🎯 Amaç | 🧩 Motorlar | 📊 Kanıt | ⚖️ Lisans |
@@ -224,7 +224,10 @@ Hangi üretim modelinin hangi iş için, ve gerçekten ne kadara mal olduğunu, 
 
 İki harness de modele dokunmadan önce kendini çevrimdışı doğrular:
 `python3 scripts/measure/<paket>.py --selftest`. `test/test.sh` çevrimdışı kapıyı
-çalıştırır ve harness'ların kendi fixture'larıyla anlaştığını kanıtlar.
+çalıştırır ve harness'ların kendi fixture'larıyla anlaştığını kanıtlar. Kapı **16
+isimli kontrol**ten oluşur: 13 numaralı adım ve `1b`, `4b`, `4c` alt adımları;
+adımların neyi doğruladığı [`test/README.md`](test/README.md) içinde tek tek
+yazılıdır.
 
 <a id="görsel-üretimi"></a>
 
@@ -424,7 +427,7 @@ Local Image and Video Generation on an Apple M1 Max 64GB/
 ├── evidence/                   # koşular: sayfalar ve görseller/klipler
 │   ├── image-benchmark-*.md
 │   ├── video-benchmark-*.md
-│   ├── images/                 # 40 PNG
+│   ├── images/                 # 80 PNG
 │   └── videos/                 # 18 klip
 ├── reference/                  # her sayının makine-okunur kopyası
 ├── docs/

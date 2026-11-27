@@ -410,6 +410,33 @@ mflux-generate-z-image-turbo \
   --output headphones.png
 ```
 
+```bash
+# iris-turbo-q8 — the 24.1 s/image profile. Pixel-space, 4-step distilled: no VAE, no guidance.
+mflux-generate-iris \
+  --model mflux-community/iris-3b-turbo-mflux-q8 \
+  --base-model iris-3b \
+  --prompt "Minimalist swiss-style poster with the exact headline \"LOCAL FIRST\"" \
+  --width 1024 --height 1024 --steps 4 --seed 42 \
+  --output poster.png
+```
+
+On this checkpoint `--guidance`, `--steps` and `--negative-prompt` are ignored
+(the CLI warns), and `--compute-precision` does not exist on `mflux-generate-iris`.
+
+```bash
+# boogu-turbo-q8 — the 160.8 s/image profile. 10B, DMD-distilled, 8 steps at 1024×1024.
+mflux-generate-boogu \
+  --model mflux-community/boogu-image-turbo-mflux-q8 \
+  --base-model boogu-image-turbo \
+  --prompt "Photorealistic rainy-night street market in Istanbul, wet cobblestones" \
+  --width 1024 --height 1024 --steps 8 --seed 42 \
+  --output market.png
+```
+
+The eight steps belong to the resolution: the port notes four is enough up to
+about 768 px. Guidance is distilled in, so `--guidance` and `--negative-prompt`
+are accepted and ignored; this CLI has no `--compute-precision` either.
+
 To run the whole eight-prompt suite instead of one prompt:
 
 ```bash

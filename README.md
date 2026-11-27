@@ -3,7 +3,7 @@
 [![Platform](https://img.shields.io/badge/platform-Apple%20Silicon%20(arm64)-000?logo=apple&logoColor=white)](#hardware--software)
 [![mflux](https://img.shields.io/badge/image-mflux-blue)](https://github.com/filipstrand/mflux)
 [![VideoX-Fun-mlx](https://img.shields.io/badge/video-VideoX--Fun--mlx-blue)](https://github.com/dgrauet/VideoX-Fun-mlx)
-[![Outputs](https://img.shields.io/badge/outputs-64%20PNG%20%2B%2018%20clips-purple)](evidence/)
+[![Outputs](https://img.shields.io/badge/outputs-80%20PNG%20%2B%2018%20clips-purple)](evidence/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
 | 🎯 Purpose | 🧩 Engines | 📊 Evidence | ⚖️ License |
@@ -238,11 +238,12 @@ Which generation model for which job, at the seconds it actually cost, in one pi
 
 Both harnesses run offline against themselves before they touch a model:
 `python3 scripts/measure/<suite>.py --selftest`. `test/test.sh` runs the gate and
-proves the harnesses agree with their own fixtures. The gate is fourteen steps —
-syntax and naming, prompt sets, profiles, evidence links, licences, both
-selftests, the reference figures recomputed from the JSON, the Mermaid diagrams,
-the model map's files, PNGs and Hugging Face links, that every profile is
-named in every document that lists models, and that the disk totals add up.
+proves the harnesses agree with their own fixtures. The gate runs **sixteen named
+checks** — the thirteen numbered steps plus `1b`, `4b` and `4c` — covering syntax
+and naming, prompt sets, profiles, evidence links, licences, both selftests, the
+reference figures recomputed from the JSON, the Mermaid diagrams, the model map's
+files, PNGs and Hugging Face links, that every profile is named in every document
+that lists models, and that the disk totals add up.
 Step 6 is coverage rather than keywords: every profile needs a licence row, so a
 non-commercial model cannot be measured and left undocumented. Step 9 reads the
 prose as well as the tables: a figure carrying a unit, or the image headline
@@ -469,7 +470,7 @@ Local Image and Video Generation on an Apple M1 Max 64GB/
 ├── evidence/                   # the runs: pages, and the images/clips themselves
 │   ├── image-benchmark-*.md
 │   ├── video-benchmark-*.md
-│   ├── images/                 # 40 PNGs
+│   ├── images/                 # 80 PNGs
 │   └── videos/                 # 18 clips
 ├── reference/                  # machine-readable copies of every number
 ├── docs/

@@ -33,6 +33,21 @@ date-based snapshots rather than semver releases.
   runner's GitHub), and the step is offline — resolution of the URLs is checked
   by hand at release time.
 
+### Fixed — stale output counts and the gate's step list
+
+- **The output badge, the directory tree and the model-map card still said 64
+  PNGs** after Iris and Boogu brought the current set to 80 (ten models × eight
+  prompts, plus 18 clips). All three now say 80; the card's total goes from 82 to
+  98. The sixteen superseded `*_1.png` files are not counted, matching the
+  convention the card used before. Both poster PNGs were re-rendered.
+- **`test/README.md` listed thirteen steps while the gate runs sixteen named
+  checks.** Added the `1b`, `4b` and `4c` rows — `4c` being the new base-model
+  link check — and made both READMEs state the count explicitly instead of
+  calling it "fourteen steps".
+- **`PROFILES.md` gained copy-paste commands for the two new profiles**, with
+  the missing guidance and precision flags called out rather than silently
+  omitted.
+
 ### Fixed — Bonsai Image's missing cache field identified and verified locally
 
 - **`bonsai-image-ternary-2bit` failure traced to one missing field.** On stock
