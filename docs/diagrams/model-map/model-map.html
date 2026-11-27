@@ -195,7 +195,7 @@
     <span class="chip"><span class="dot"></span><b>mlx-gen</b> · video</span>
     <span class="chip"><span class="dot"></span>Apple <b>MLX</b> · Metal</span>
     <span class="chip"><span class="dot"></span><b>MacBookPro18,2</b> · M1 Max</span>
-    <span class="chip"><span class="dot"></span><b>116 GB</b> diskte</span>
+    <span class="chip"><span class="dot"></span><b>144 GB</b> diskte</span>
     <span class="chip"><span class="dot"></span>API yok, hesap yok</span>
   </div>
 
@@ -230,6 +230,19 @@
         <div class="pick">
           <div class="m">FLUX.2 klein 4B <span class="tiny">· q8 · 4 adım · Apache-2.0</span> <a class="hf" href="https://huggingface.co/mflux-community/flux2-klein-4b-mflux-q8">HF</a><span class="flag">kullanılıyor</span></div>
           <div class="bar"><div class="track"><div class="fill" style="width:13%"></div></div><span class="val">24,0 s/img</span></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="task">
+          <div class="k">Görsel · pixel-space</div>
+          <div class="d">Iris-3B Turbo, 3B ve <b>VAE'siz</b>: latent yok, transformer doğrudan RGB
+            üretir. 4 adımda <b>24,1 s</b> — klein ikilisinin gürültü aralığında, farklı bir
+            mimariden. Apache-2.0, 8,0 GB.</div>
+        </div>
+        <div class="pick">
+          <div class="m">Iris 3B Turbo <span class="tiny">· q8 · 4 adım · Apache-2.0</span> <a class="hf" href="https://huggingface.co/mflux-community/iris-3b-turbo-mflux-q8">HF</a></div>
+          <div class="bar"><div class="track"><div class="fill" style="width:13%"></div></div><span class="val">24,1 s/img</span></div>
         </div>
       </div>
 
@@ -295,6 +308,19 @@
         <div class="pick">
           <div class="m">Qwen Image <span class="tiny">· mixed q4/q8 · 9 adım · Apache-2.0</span> <a class="hf" href="https://huggingface.co/AbstractFramework/qwen-image-4bit">HF</a></div>
           <div class="bar"><div class="track"><div class="fill" style="width:69%"></div></div><span class="val">124,9 s/img · 1024×1024</span></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="task">
+          <div class="k">Görsel · en büyük paket</div>
+          <div class="d">Boogu Image 0.1 Turbo, <b>10B</b> ve diskte <b>20,3 GB</b> — en büyük görsel
+            paketi. Fotoğraf görünümü ve İngilizce/Çince yazı güçlü, ama 1024×1024'te 8 adım ve
+            <b>160,8 s</b>: FLUX 3'ün hemen önünde. Adım başına 20,1 s, çizelgenin değil boyutun bedeli.</div>
+        </div>
+        <div class="pick">
+          <div class="m">Boogu Image Turbo <span class="tiny">· q8 · 8 adım · Apache-2.0</span> <a class="hf" href="https://huggingface.co/mflux-community/boogu-image-turbo-mflux-q8">HF</a></div>
+          <div class="bar"><div class="track"><div class="fill" style="width:89%"></div></div><span class="val">160,8 s/img · 1024×1024</span></div>
         </div>
       </div>
 
@@ -392,12 +418,12 @@
         <div class="lbl">kare — profillerin değeri (CogVideoX'te 13'e kadar çıkar)</div>
       </div>
       <div class="card">
-        <div class="big">82</div>
-        <div class="lbl">çıktı dosyadan doğrulandı — 64 PNG + 18 klip</div>
+        <div class="big">114</div>
+        <div class="lbl">çıktı dosyadan doğrulandı — 96 PNG + 18 klip</div>
       </div>
       <div class="card">
-        <div class="big">116 GB</div>
-        <div class="lbl">on iki modelin diskte kapladığı alan</div>
+        <div class="big">144 GB</div>
+        <div class="lbl">on dört modelin diskte kapladığı alan</div>
       </div>
       <div class="card">
         <div class="big">0</div>

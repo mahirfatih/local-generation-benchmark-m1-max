@@ -8,7 +8,7 @@
 
 | 🎯 Amaç | 🧩 Motorlar | 📊 Kanıt | ⚖️ Lisans |
 | :---: | :---: | :---: | :---: |
-| M1 Max'te ölçülmüş yerel görsel/video üretimi | mflux · mlx-gen · VideoX-Fun-mlx | 64 PNG + 18 klip | MIT |
+| M1 Max'te ölçülmüş yerel görsel/video üretimi | mflux · mlx-gen · VideoX-Fun-mlx | 80 PNG + 18 klip | MIT |
 
 > **Yeni misin?** [Genel bakış](#genel-bakış) · [Ne ölçüldü](#ne-ölçüldü) · [Görseller](#görsel-üretimi) · [Videolar](#video-üretimi) · [Profiller](#profiller)
 
@@ -62,11 +62,13 @@ durur; burada oMLX'in çalıştıramadığı iki katman var:
 | :--- | :--- | :--- | ---: | :--- |
 | **Görsel** | [mflux](https://github.com/filipstrand/mflux) | FLUX.2 klein 4B (q4) | **23.0 s** | 1024×1024 PNG |
 | Görsel | mflux | FLUX.2 klein 4B (q8) | 24.0 s | 1024×1024 PNG |
+| Görsel | mflux | Iris-3B Turbo (q8) | 24.1 s | 1024×1024 PNG |
 | Görsel | mflux | Anima Turbo (q8) | 36.4 s | 1024×1024 PNG |
 | Görsel | mflux | Z-Image Turbo (q4) | 95.8 s | 1024×1024 PNG |
 | Görsel | mflux | FLUX.2 klein 4B Base (q8) | 97.1 s | 1024×1024 PNG |
 | Görsel | [mlx-gen](https://github.com/lpalbou/mlx-gen) | ERNIE Image Turbo (q8) | 123.5 s | 1024×1024 PNG |
 | Görsel | [mlx-gen](https://github.com/lpalbou/mlx-gen) | Qwen Image (mixed q4/q8) | 124.9 s | 1024×1024 PNG |
+| Görsel | mflux | Boogu Image Turbo (q8) | 160.8 s | 1024×1024 PNG |
 | Görsel | mflux | FLUX 3 Image Klein | 180.6 s | 1024×1024 PNG |
 | **Video** | [VideoX-Fun-mlx](https://github.com/dgrauet/VideoX-Fun-mlx) | CogVideoX-Fun V1.5 5B (int4) | **247.7 s** | 672×384, 5 kare GIF |
 | Video | [mlx-gen](https://github.com/lpalbou/mlx-gen) | Wan2.2 TI2V 5B (int8) | 255.6 s | 480×832, 25 kare MP4 |
@@ -189,6 +191,8 @@ yaşıyorsa harness başlamayı reddeder — ikisi 64 GB birleşik belleğe sı�
 | `anima-turbo-mflux-q8` | 4.0 GB | int8 | Circlestone non-commercial | [HF](https://huggingface.co/mflux-community/anima-turbo-mflux-q8) |
 | `flux-2-klein-base-4b-mflux-q8` | 8.6 GB | int8 | Apache-2.0 | [HF](https://huggingface.co/mflux-community/flux-2-klein-base-4b-mflux-q8) |
 | `z-image-turbo-mflux-q4` | 5.5 GB | int4 | Apache-2.0 | [HF](https://huggingface.co/mflux-community/z-image-turbo-mflux-q4) |
+| `iris-3b-turbo-mflux-q8` | 8.0 GB | int8 | Apache-2.0 | [HF](https://huggingface.co/mflux-community/iris-3b-turbo-mflux-q8) |
+| `boogu-image-turbo-mflux-q8` | 20.3 GB | int8 | Apache-2.0 | [HF](https://huggingface.co/mflux-community/boogu-image-turbo-mflux-q8) |
 | `bonsai-image-ternary-4B-mlx-2bit` | 3.6 GB | ternary 1.58-bit | Apache-2.0 | [HF](https://huggingface.co/prism-ml/bonsai-image-ternary-4B-mlx-2bit) |
 | `ernie-image-turbo-8bit` | 11.5 GB | int8 | Apache-2.0 | [HF](https://huggingface.co/AbstractFramework/ernie-image-turbo-8bit) |
 | `qwen-image-4bit` | 16.2 GB | mixed q4/q8 | Apache-2.0 | [HF](https://huggingface.co/AbstractFramework/qwen-image-4bit) |
@@ -196,7 +200,7 @@ yaşıyorsa harness başlamayı reddeder — ikisi 64 GB birleşik belleğe sı�
 | `CogVideoX-Fun-V1.5-5b-InP-mlx-q4` | 13 GB | int4 | CogVideoX License | [HF](https://huggingface.co/dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4) |
 | `wan2.2-ti2v-5b-diffusers-8bit` | 17 GB | int8 | Apache-2.0 | [HF](https://huggingface.co/AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit) |
 
-**Diskte toplam:** ~116 GB · **Çalışma belleği:** 64 GB birleşik bellekte model başına ~30 GB'a kadar. Her model diskteki ağırlıklardan çalışır — API yok, hesap yok.
+**Diskte toplam:** ~144 GB · **Çalışma belleği:** 64 GB birleşik bellekte model başına ~30 GB'a kadar. Her model diskteki ağırlıklardan çalışır — API yok, hesap yok.
 
 <a id="model-haritası"></a>
 
@@ -234,11 +238,13 @@ Görsel, native-MLX bir difüzyon aracı olan
 | :--- | :--- | ---: | ---: | ---: | :--- |
 | [`FLUX.2-klein-4B-mflux-4bit`](https://huggingface.co/Runpod/FLUX.2-klein-4B-mflux-4bit) (`klein-q4`) | Apache-2.0 | **23.0** | 5.7 | 4 | 1024×1024 |
 | [`flux2-klein-4b-mflux-q8`](https://huggingface.co/mflux-community/flux2-klein-4b-mflux-q8) (`klein-q8`) | Apache-2.0 | 24.0 | 6.0 | 4 | 1024×1024 |
+| [`iris-3b-turbo-mflux-q8`](https://huggingface.co/mflux-community/iris-3b-turbo-mflux-q8) (`iris-turbo-q8`) | Apache-2.0 | 24.1 | 6.0 | 4 | 1024×1024 |
 | [`anima-turbo-mflux-q8`](https://huggingface.co/mflux-community/anima-turbo-mflux-q8) (`anima-turbo-q8`) | **Circlestone non-commercial** | 36.4 | 4.6 | 8 | 1024×1024 |
 | [`z-image-turbo-mflux-q4`](https://huggingface.co/mflux-community/z-image-turbo-mflux-q4) (`z-image-turbo-q4`) | Apache-2.0 | 95.8 | 10.6 | 9 | 1024×1024 |
 | [`flux-2-klein-base-4b-mflux-q8`](https://huggingface.co/mflux-community/flux-2-klein-base-4b-mflux-q8) (`klein-base-q8`) | Apache-2.0 | 97.1 | 4.9 | **20** | 1024×1024 |
 | [`ernie-image-turbo-8bit`](https://huggingface.co/AbstractFramework/ernie-image-turbo-8bit) (`ernie-image-turbo-q8`) | Apache-2.0 | 123.5 | 15.4 | 8 | 1024×1024 |
 | [`qwen-image-4bit`](https://huggingface.co/AbstractFramework/qwen-image-4bit) (`qwen-image-4bit`) | Apache-2.0 | 124.9 | 13.8 | 9 | 1024×1024 |
+| [`boogu-image-turbo-mflux-q8`](https://huggingface.co/mflux-community/boogu-image-turbo-mflux-q8) (`boogu-turbo-q8`) | Apache-2.0 | 160.8 | 20.1 | 8 | 1024×1024 |
 | [`flux-3-image-klein-base-mflux-q8`](https://huggingface.co/mflux-community/flux-3-image-klein-base-mflux-q8) (`flux3-klein-q8`) | FLUX Kommunity | 180.6 | 11.3 | 16 | 1024×1024 |
 
 Satırlar `s/görsel`'e göre, en hızlısı başta. Buradaki her satır **1024×1024**, yani
@@ -250,6 +256,15 @@ pahalı adımlarını taşırlar — görsel başına ve adım başına sayılar
 çünkü Qwen'in görsel başına yayılımı yükleme değil gerçektir: uzun yazı çizimi
 gerektiren promptlar ~131 s, geri kalanı ~117 s sürer; ERNIE ise her promptta
 123.5 s'nin bir saniye içindedir.
+
+İki satır yeni ve ikisi de FLUX değil. **`iris-turbo-q8`** 3B'lik bir
+**pixel-space** modeldir: VAE ve latent yok, transformer doğrudan RGB üretir; **24.1
+s/görsel** ile klein ikilisinin gürültü aralığına, farklı bir mimariden girer.
+**`boogu-turbo-q8`** 10B'lik DMD-distile bir checkpoint'tir ve buradaki en büyük
+görsel paketidir (**20.3 GB**); 1024×1024'te **8 adım** ister (mflux portu 4 adımın
+~768 px'e kadar yettiğini not eder) ve **160.8 s/görsel** alır — yani FLUX 3'ün
+hemen önünde, ikinci en yavaş satır. **20.1 s/adım** çizelgenin değil parametre
+sayısının bedelidir.
 
 `bonsai-image-ternary-2bit`, satırı olmayan tek mlx-gen görsel profilidir: stok
 `mlx-gen 0.38.0` sürümünde kendi initializer'ı `compiled_predict_cache` alanını
@@ -281,11 +296,13 @@ hariç, durağan 7 görselin ortalamasıdır — model yüklemesini taşıyan il
 dışarıda bırakılır; `s/görsel` kolonu budur.
 **Klein ikilisi FLUX 3'ten ~8× hızlıdır** ve özel olarak FLUX 3 gerekmiyorsa
 kullanılacak olandır.
-Okunabilir metin ve doğru eller — klasik başarısızlık yüzeyleri — sekizinde de
-temiz çıktı. FLUX 3'ün ticari-çıktı sınırı devreye girdiğinde ama klein'in hızı
+Okunabilir metin ve doğru eller — klasik başarısızlık yüzeyleri — latent modellerin
+tamamında temiz çıktı; tek istisna pixel-space satırı Iris-3B Turbo: posteri başlığı
+çiziyor ama kırpılmış ikinci bir satır ekliyor ve elleri setin en belirsizi. FLUX 3'ün
+ticari-çıktı sınırı devreye girdiğinde ama klein'in hızı
 öncelik değilse, Apache-2.0 alternatifi Z-Image Turbo'dur.
 
-Altmış dört görsel, her biri kendisini üreten prompt ile:
+Seksen görsel, her biri kendisini üreten prompt ile:
 
 [`evidence/image-benchmark-2026-11-12.md`](evidence/image-benchmark-2026-11-12.md),
 [`evidence/image-benchmark-flux3-2026-11-12.md`](evidence/image-benchmark-flux3-2026-11-12.md),
@@ -293,8 +310,9 @@ Altmış dört görsel, her biri kendisini üreten prompt ile:
 [`evidence/image-benchmark-klein-q4-2026-11-17.md`](evidence/image-benchmark-klein-q4-2026-11-17.md),
 [`evidence/image-benchmark-qwen.md`](evidence/image-benchmark-qwen.md),
 [`evidence/image-benchmark-ernie.md`](evidence/image-benchmark-ernie.md),
-[`evidence/image-benchmark-anima.md`](evidence/image-benchmark-anima.md)
-ve [`evidence/image-benchmark-klein-base.md`](evidence/image-benchmark-klein-base.md).
+[`evidence/image-benchmark-anima.md`](evidence/image-benchmark-anima.md),
+[`evidence/image-benchmark-iris-2026-11-27.md`](evidence/image-benchmark-iris-2026-11-27.md)
+ve [`evidence/image-benchmark-boogu-2026-11-27.md`](evidence/image-benchmark-boogu-2026-11-27.md).
 
 <a id="video-üretimi"></a>
 

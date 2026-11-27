@@ -8,8 +8,8 @@ truly open model from a source-available one before shipping it into something
 that earns money.
 
 This is a reading of the published terms on Hugging Face. The original five rows
-were re-read on **2026-11-12**; the rows for Anima Turbo, `klein-base`, ERNIE, Qwen
-and Bonsai record what each card said when its profile was added. It is a summary,
+were re-read on **2026-11-12**; the rows for Anima Turbo, `klein-base`, ERNIE, Qwen,
+Bonsai, Iris and Boogu record what each card said when its profile was added. It is a summary,
 not legal advice; the licence text on each page is the authority.
 
 ## Image models (run by mflux)
@@ -22,6 +22,8 @@ not legal advice; the licence text on each page is the authority.
 | `mflux-community/anima-turbo-mflux-q8` | `circlestone-labs/Anima` | **Circlestone Labs non-commercial licence** | **no** | Not open source and not "free to use": non-commercial only. See below. |
 | `mflux-community/z-image-turbo-mflux-q4` | `Tongyi-MAI/Z-Image-Turbo` | **Apache-2.0** | yes | Clean; no output restrictions beyond Apache-2.0's own. Inherited from the base model. |
 | `mflux-community/flux-3-image-klein-base-mflux-q8` | `black-forest-labs/flux-3-image-klein-base` | **FLUX Kommunity License v1.0** | **only under US$5M revenue** | Not open source. See below. |
+| `mflux-community/iris-3b-turbo-mflux-q8` | `speridlabs/iris-3b` | **Apache-2.0** | yes | Clean; the community quant inherits the base licence unchanged. Pixel-space model, no VAE. |
+| `mflux-community/boogu-image-turbo-mflux-q8` | `Boogu/Boogu-Image-0.1-Turbo` | **Apache-2.0** | yes | Clean; the 10B checkpoint and its MLX quant are both Apache-2.0. |
 
 ## Image models (run by mlx-gen)
 

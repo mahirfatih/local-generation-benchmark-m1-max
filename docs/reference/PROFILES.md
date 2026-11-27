@@ -22,19 +22,19 @@ The image model is **not** served by oMLX: it is run by
 settings live in a separate file,
 [`profiles/mflux-profiles.json`](../../profiles/mflux-profiles.json).
 
-| Setting | `klein-q8` | `anima-turbo-q8` | `klein-base-q8` | `z-image-turbo-q4` | `flux3-klein-q8` |
-| :--- | ---: | ---: | ---: | ---: | ---: |
-| Model | `mflux-community/flux2-klein-4b-mflux-q8` | `mflux-community/anima-turbo-mflux-q8` | `mflux-community/flux-2-klein-base-4b-mflux-q8` | `mflux-community/z-image-turbo-mflux-q4` | `mflux-community/flux-3-image-klein-base-mflux-q8` |
-| Base model | `black-forest-labs/FLUX.2-klein-4B` | `circlestone-labs/Anima` | `black-forest-labs/FLUX.2-klein-base-4B` | `Tongyi-MAI/Z-Image-Turbo` | `black-forest-labs/flux-3-image-klein-base` |
-| CLI | `mflux-generate-flux2` | `mflux-generate-anima` | `mflux-generate-flux2` | `mflux-generate-z-image-turbo` | `mflux-generate-flux3` |
-| Quantization | MLX affine, 8-bit | MLX affine, 8-bit | MLX affine, 8-bit | MLX affine, 4-bit | MLX affine, 8-bit (modified) |
-| Width × height | 1024 × 1024 | 1024 × 1024 | 1024 × 1024 | 1024 × 1024 | 1024 × 1024 |
-| Steps | 4 | 8 | **20** | 9 | 16 |
-| Guidance scale | 1.0 | 1.0 | 1.0 | — (tool default) | — (none; distilled) |
-| Seed | 42 | 42 | 42 | 42 | 42 |
-| Compute precision | `float16` | — (not set) | `float16` | — (flag absent in mflux 0.38.0) | `float16` |
-| On disk | 8.0 GB | **4.0 GB** | 8.6 GB | 5.5 GB | 9.2 GB |
-| Licence | Apache-2.0 | **Circlestone non-commercial** | Apache-2.0 | Apache-2.0 | **FLUX Kommunity License** |
+| Setting | `klein-q8` | `anima-turbo-q8` | `klein-base-q8` | `z-image-turbo-q4` | `flux3-klein-q8` | `iris-turbo-q8` | `boogu-turbo-q8` |
+| :--- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Model | `mflux-community/flux2-klein-4b-mflux-q8` | `mflux-community/anima-turbo-mflux-q8` | `mflux-community/flux-2-klein-base-4b-mflux-q8` | `mflux-community/z-image-turbo-mflux-q4` | `mflux-community/flux-3-image-klein-base-mflux-q8` | `mflux-community/iris-3b-turbo-mflux-q8` | `mflux-community/boogu-image-turbo-mflux-q8` |
+| Base model | `black-forest-labs/FLUX.2-klein-4B` | `circlestone-labs/Anima` | `black-forest-labs/FLUX.2-klein-base-4B` | `Tongyi-MAI/Z-Image-Turbo` | `black-forest-labs/flux-3-image-klein-base` | `speridlabs/iris-3b` | `Boogu/Boogu-Image-0.1-Turbo` |
+| CLI | `mflux-generate-flux2` | `mflux-generate-anima` | `mflux-generate-flux2` | `mflux-generate-z-image-turbo` | `mflux-generate-flux3` | `mflux-generate-iris` | `mflux-generate-boogu` |
+| Quantization | MLX affine, 8-bit | MLX affine, 8-bit | MLX affine, 8-bit | MLX affine, 4-bit | MLX affine, 8-bit (modified) | MLX affine, 8-bit | MLX affine, 8-bit |
+| Width × height | 1024 × 1024 | 1024 × 1024 | 1024 × 1024 | 1024 × 1024 | 1024 × 1024 | 1024 × 1024 | 1024 × 1024 |
+| Steps | 4 | 8 | **20** | 9 | 16 | 4 | **8** |
+| Guidance scale | 1.0 | 1.0 | 1.0 | — (tool default) | — (none; distilled) | — (none; distilled, ignored) | — (none; distilled, ignored) |
+| Seed | 42 | 42 | 42 | 42 | 42 | 42 | 42 |
+| Compute precision | `float16` | — (not set) | `float16` | — (flag absent in mflux 0.38.0) | `float16` | — (no flag on this CLI) | — (no flag on this CLI) |
+| On disk | 8.0 GB | **4.0 GB** | 8.6 GB | 5.5 GB | 9.2 GB | 8.0 GB | **20.3 GB** |
+| Licence | Apache-2.0 | **Circlestone non-commercial** | Apache-2.0 | Apache-2.0 | **FLUX Kommunity License** | Apache-2.0 | Apache-2.0 |
 
 **`klein-q8`** — the quantization is 8-bit MLX affine across the text encoder,
 transformer and VAE, stored in the weights (no `--quantize` flag). The 4 steps and
@@ -107,6 +107,29 @@ fastest in float16 there. mflux measured FLUX.2 klein 4B (q4) at 6.8 → 5.0 s/s
 mflux build in the documented venv (`mlx-gen` 0.38.0) no longer accepts
 `--compute-precision`, so the harness passes no precision flag for this profile. The
 two FLUX profiles keep the `float16` value from the run that produced their figures.
+
+**`iris-turbo-q8`** — Iris-3B Turbo from Speridlabs, a 3B model that generates in
+**pixel space**: there is no VAE and no latent, so the package holds a text encoder
+and a transformer only and the transformer predicts RGB directly. That is the one
+architecture in this table that is not a latent diffusion model. The Turbo
+checkpoint is distilled to **4 steps**, and on it mflux ignores `--steps`,
+`--guidance` and `--negative-prompt` (it warns when they are passed), so the profile
+carries no guidance and the harness passes none. It measured **24.1 s/img** over
+eight prompts, 23.6–24.9 s, run 2026-11-27 — inside the klein pair's own
+run-to-run noise, on a different design. The CLI has no `--compute-precision` flag,
+so none is recorded. Eight prompts, seed 42, 1024×1024; data in
+[`reference/image-benchmark-iris.json`](../../reference/image-benchmark-iris.json).
+
+**`boogu-turbo-q8`** — Boogu Image 0.1 Turbo, a **10B** model distilled with
+decoupled DMD, and the largest image package in this repository at **20.3 GB**.
+Guidance is distilled into the checkpoint, so `--guidance` and `--negative-prompt`
+are accepted and ignored. The step count is the resolution's: mflux's own port notes
+that **4 steps is enough up to about 768 px**, and that **1024×1024 wants 8**, which
+is what this profile records. It measured **160.8 s/img** over eight prompts,
+151.8–169.7 s, run 2026-11-27 — the second-slowest image row, ahead only of FLUX 3,
+at **20.1 s/step**. The per-step cost is the parameter count, not the schedule.
+Eight prompts, seed 42, 1024×1024; data in
+[`reference/image-benchmark-boogu.json`](../../reference/image-benchmark-boogu.json).
 
 ## Image generation through mlx-gen (not mflux)
 

@@ -8,7 +8,7 @@
 
 | 🎯 Purpose | 🧩 Engines | 📊 Evidence | ⚖️ License |
 | :---: | :---: | :---: | :---: |
-| Measured local image/video generation on M1 Max | mflux · mlx-gen · VideoX-Fun-mlx | 64 PNG + 18 clips | MIT |
+| Measured local image/video generation on M1 Max | mflux · mlx-gen · VideoX-Fun-mlx | 80 PNG + 18 clips | MIT |
 
 > **New here?** [Overview](#overview) · [What was measured](#what-was-measured) · [Images](#image-generation) · [Videos](#video-generation) · [Profiles](#profiles)
 
@@ -205,6 +205,8 @@ flowchart TB
 | `anima-turbo-mflux-q8` | 4.0 GB | int8 | Circlestone non-commercial | [HF](https://huggingface.co/mflux-community/anima-turbo-mflux-q8) |
 | `flux-2-klein-base-4b-mflux-q8` | 8.6 GB | int8 | Apache-2.0 | [HF](https://huggingface.co/mflux-community/flux-2-klein-base-4b-mflux-q8) |
 | `z-image-turbo-mflux-q4` | 5.5 GB | int4 | Apache-2.0 | [HF](https://huggingface.co/mflux-community/z-image-turbo-mflux-q4) |
+| `iris-3b-turbo-mflux-q8` | 8.0 GB | int8 | Apache-2.0 | [HF](https://huggingface.co/mflux-community/iris-3b-turbo-mflux-q8) |
+| `boogu-image-turbo-mflux-q8` | 20.3 GB | int8 | Apache-2.0 | [HF](https://huggingface.co/mflux-community/boogu-image-turbo-mflux-q8) |
 | `bonsai-image-ternary-4B-mlx-2bit` | 3.6 GB | ternary 1.58-bit | Apache-2.0 | [HF](https://huggingface.co/prism-ml/bonsai-image-ternary-4B-mlx-2bit) |
 | `ernie-image-turbo-8bit` | 11.5 GB | int8 | Apache-2.0 | [HF](https://huggingface.co/AbstractFramework/ernie-image-turbo-8bit) |
 | `qwen-image-4bit` | 16.2 GB | mixed q4/q8 | Apache-2.0 | [HF](https://huggingface.co/AbstractFramework/qwen-image-4bit) |
@@ -212,7 +214,7 @@ flowchart TB
 | `CogVideoX-Fun-V1.5-5b-InP-mlx-q4` | 13 GB | int4 | CogVideoX License | [HF](https://huggingface.co/dgrauet/CogVideoX-Fun-V1.5-5b-InP-mlx-q4) |
 | `wan2.2-ti2v-5b-diffusers-8bit` | 17 GB | int8 | Apache-2.0 | [HF](https://huggingface.co/AbstractFramework/wan2.2-ti2v-5b-diffusers-8bit) |
 
-**Total on disk:** ~116 GB · **Runtime memory:** up to ~30 GB per loaded model on 64 GB unified memory. Every model runs from weights on disk — no API, no account.
+**Total on disk:** ~144 GB · **Runtime memory:** up to ~30 GB per loaded model on 64 GB unified memory. Every model runs from weights on disk — no API, no account.
 
 <a id="model-map"></a>
 
@@ -269,11 +271,13 @@ written PNG verified.
 | :--- | :--- | ---: | ---: | ---: | :--- |
 | [`FLUX.2-klein-4B-mflux-4bit`](https://huggingface.co/Runpod/FLUX.2-klein-4B-mflux-4bit) (`klein-q4`) | Apache-2.0 | **23.0** | 5.7 | 4 | 1024×1024 |
 | [`flux2-klein-4b-mflux-q8`](https://huggingface.co/mflux-community/flux2-klein-4b-mflux-q8) (`klein-q8`) | Apache-2.0 | 24.0 | 6.0 | 4 | 1024×1024 |
+| [`iris-3b-turbo-mflux-q8`](https://huggingface.co/mflux-community/iris-3b-turbo-mflux-q8) (`iris-turbo-q8`) | Apache-2.0 | 24.1 | 6.0 | 4 | 1024×1024 |
 | [`anima-turbo-mflux-q8`](https://huggingface.co/mflux-community/anima-turbo-mflux-q8) (`anima-turbo-q8`) | **Circlestone non-commercial** | 36.4 | 4.6 | 8 | 1024×1024 |
 | [`z-image-turbo-mflux-q4`](https://huggingface.co/mflux-community/z-image-turbo-mflux-q4) (`z-image-turbo-q4`) | Apache-2.0 | 95.8 | 10.6 | 9 | 1024×1024 |
 | [`flux-2-klein-base-4b-mflux-q8`](https://huggingface.co/mflux-community/flux-2-klein-base-4b-mflux-q8) (`klein-base-q8`) | Apache-2.0 | 97.1 | 4.9 | **20** | 1024×1024 |
 | [`ernie-image-turbo-8bit`](https://huggingface.co/AbstractFramework/ernie-image-turbo-8bit) (`ernie-image-turbo-q8`) | Apache-2.0 | 123.5 | 15.4 | 8 | 1024×1024 |
-| [`AbstractFramework/qwen-image-4bit`](https://huggingface.co/AbstractFramework/qwen-image-4bit) (`qwen-image-4bit`) | Apache-2.0 | 124.9 | 13.8 | 9 | 1024×1024 |
+| [`qwen-image-4bit`](https://huggingface.co/AbstractFramework/qwen-image-4bit) (`qwen-image-4bit`) | Apache-2.0 | 124.9 | 13.8 | 9 | 1024×1024 |
+| [`boogu-image-turbo-mflux-q8`](https://huggingface.co/mflux-community/boogu-image-turbo-mflux-q8) (`boogu-turbo-q8`) | Apache-2.0 | 160.8 | 20.1 | 8 | 1024×1024 |
 | [`flux-3-image-klein-base-mflux-q8`](https://huggingface.co/mflux-community/flux-3-image-klein-base-mflux-q8) (`flux3-klein-q8`) | FLUX Kommunity | 180.6 | 11.3 | 16 | 1024×1024 |
 
 Rows are ordered by `s/img`, fastest first. Every row here is **1024×1024**, so the
@@ -284,6 +288,15 @@ through **mlx-gen**, not mflux, and neither is a distilled few-step model: at 8 
 read the per-image and per-step figures together, because Qwen's per-image spread
 is real rather than load: the prompts that need a long text render run ~131 s, the
 rest ~117 s, where ERNIE sits within a second of 123.5 s on every prompt.
+
+Two rows are new and neither is a FLUX model. **`iris-turbo-q8`** is a 3B
+**pixel-space** model: there is no VAE and no latent, the transformer predicts RGB
+directly, and it lands at **24.1 s/img** — inside the klein pair's noise, on a
+different architecture. **`boogu-turbo-q8`** is a 10B DMD-distilled checkpoint and
+the largest image package here at **20.3 GB**; at 1024×1024 it needs **8 steps**
+(mflux's port notes 4 steps is enough up to ~768 px) and takes **160.8 s/img**, so
+it is the second-slowest row, ahead only of FLUX 3. Its 20.1 s/step is the price of
+the parameter count, not of the schedule.
 
 `bonsai-image-ternary-2bit` is the one mlx-gen image profile with **no row**: on
 stock `mlx-gen 0.38.0` its initializer omits `compiled_predict_cache`, which the
@@ -296,9 +309,9 @@ with settings in [`PROFILES.md`](docs/reference/PROFILES.md).
 ```mermaid
 xychart-beta horizontal
     title "Seconds per image (lower is better, model load included)"
-    x-axis ["klein-q4", "klein-q8", "anima-turbo", "z-image-turbo-q4", "klein-base-q8", "ernie-image", "qwen-image", "flux3-klein-q8"]
+    x-axis ["klein-q4", "klein-q8", "iris-turbo", "anima-turbo", "z-image-turbo-q4", "klein-base-q8", "ernie-image", "qwen-image", "boogu-turbo", "flux3-klein-q8"]
     y-axis "seconds" 0 --> 200
-    bar [23.0, 24.0, 36.4, 95.8, 97.1, 123.5, 124.9, 180.6]
+    bar [23.0, 24.0, 24.1, 36.4, 95.8, 97.1, 123.5, 124.9, 160.8, 180.6]
 ```
 
 A 4-step distilled 4B model runs ~24 s per 1024×1024 image (the first is slower,
@@ -322,11 +335,13 @@ is why the older figures are 22.5 / 23.8. All figures are the mean of the seven
 steady-state images, with the first — the one that includes model load — left out;
 that is the `s/img` column. **The klein pair is ~8× faster than FLUX 3** and is the
 one to use unless you need FLUX 3 specifically. Legible text and correct hands —
-the classic failure surfaces — come out clean on all. Z-Image Turbo is the
+the classic failure surfaces — come out clean across the latent models; the one
+exception is the pixel-space row, Iris-3B Turbo, whose poster adds a clipped second
+line and whose hands are the least certain. Z-Image Turbo is the
 Apache-2.0 alternative when FLUX 3's commercial-output cap rules it out but klein's
 speed is not the priority.
 
-Sixty-four images, each with the prompt that produced it:
+Eighty images, each with the prompt that produced it:
 
 [`evidence/image-benchmark-2026-11-12.md`](evidence/image-benchmark-2026-11-12.md),
 [`evidence/image-benchmark-flux3-2026-11-12.md`](evidence/image-benchmark-flux3-2026-11-12.md),
@@ -334,8 +349,10 @@ Sixty-four images, each with the prompt that produced it:
 [`evidence/image-benchmark-klein-q4-2026-11-17.md`](evidence/image-benchmark-klein-q4-2026-11-17.md),
 [`evidence/image-benchmark-qwen.md`](evidence/image-benchmark-qwen.md),
 [`evidence/image-benchmark-ernie.md`](evidence/image-benchmark-ernie.md),
-[`evidence/image-benchmark-anima.md`](evidence/image-benchmark-anima.md)
-and [`evidence/image-benchmark-klein-base.md`](evidence/image-benchmark-klein-base.md).
+[`evidence/image-benchmark-anima.md`](evidence/image-benchmark-anima.md),
+[`evidence/image-benchmark-klein-base.md`](evidence/image-benchmark-klein-base.md),
+[`evidence/image-benchmark-iris-2026-11-27.md`](evidence/image-benchmark-iris-2026-11-27.md)
+and [`evidence/image-benchmark-boogu-2026-11-27.md`](evidence/image-benchmark-boogu-2026-11-27.md).
 
 <a id="video-generation"></a>
 

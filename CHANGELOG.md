@@ -6,6 +6,32 @@ date-based snapshots rather than semver releases.
 
 ## [Unreleased]
 
+### Added — two non-FLUX image models measured: Iris-3B Turbo and Boogu Image Turbo
+
+- **`iris-turbo-q8`** — `mflux-community/iris-3b-turbo-mflux-q8`, Apache-2.0,
+  8.0 GB. A 3B **pixel-space** model: no VAE, no latent, the transformer predicts
+  RGB. 4-step distilled, so `--steps`, `--guidance` and `--negative-prompt` are
+  ignored by mflux and the profile carries no guidance. Measured **24.1 s/img**
+  over eight prompts at 1024×1024 (23.6–24.9 s), seed 42, run 2026-11-27. Data in
+  [`reference/image-benchmark-iris.json`](reference/image-benchmark-iris.json),
+  page in [`evidence/image-benchmark-iris-2026-11-27.md`](evidence/image-benchmark-iris-2026-11-27.md).
+- **`boogu-turbo-q8`** — `mflux-community/boogu-image-turbo-mflux-q8`, Apache-2.0,
+  **20.3 GB**, the largest image package here. 10B, DMD-distilled; mflux's port
+  notes 4 steps only holds up to about 768 px, so 1024×1024 is measured at **8
+  steps**. Measured **160.8 s/img** (151.8–169.7 s) at 20.1 s/step, run
+  2026-11-27. Data in
+  [`reference/image-benchmark-boogu.json`](reference/image-benchmark-boogu.json).
+- Both are `mflux-generate-*` profiles, so the harness needed no new argv rule:
+  neither CLI has `--compute-precision`, and the harness only passes flags a
+  profile records. The two models were added to every listing document, the
+  licence table, both disk totals (`~116` → `~144 GB`), the model map (HTML and
+  both PNGs) and the `known` figures in `test/test.sh`.
+- Two candidates were dropped before any profile was written. `SenseNova-U1.5` has
+  no mflux port and its `mlx-community` artifact targets a separate Swift runtime,
+  so it cannot run through this harness; `MOSS-Image-SFT` is mflux-supported but
+  its 4-step LoRA repository is gone and the 8-step alternative needs layer
+  replacements the CLI cannot apply, so it would only run at 50 steps.
+
 ### Fixed — Bonsai Image's missing cache field identified and verified locally
 
 - **`bonsai-image-ternary-2bit` failure traced to one missing field.** On stock

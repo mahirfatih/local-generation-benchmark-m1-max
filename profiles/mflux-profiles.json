@@ -396,6 +396,77 @@
         "https://huggingface.co/mflux-community/flux-2-klein-base-4b-mflux-q8",
         "https://huggingface.co/black-forest-labs/FLUX.2-klein-base-4B"
       ]
+    },
+    "iris-turbo-q8": {
+      "name": "iris-turbo-q8",
+      "display_name": "iris-turbo-q8",
+      "description": "Iris-3B Turbo, MLX 8-bit (mflux-community q8), 4-step distilled. Pixel-space: no VAE, the transformer predicts RGB. Apache-2.0.",
+      "task": "text-to-image",
+      "cli": "mflux-generate-iris",
+      "model": "mflux-community/iris-3b-turbo-mflux-q8",
+      "mflux_base_model": "iris-3b",
+      "base_model": "speridlabs/iris-3b",
+      "license": "apache-2.0",
+      "license_note": "Apache-2.0. No output restrictions beyond the licence's own terms.",
+      "local_path": "~/models/mflux-community/iris-3b-turbo-mflux-q8",
+      "on_disk_gb": 8.0,
+      "quantization": {
+        "scheme": "mlx-affine",
+        "bits": 8,
+        "applies_to": [
+          "text_encoder",
+          "transformer"
+        ],
+        "note": "The level is stored in the weights, so no --quantize flag is needed. There is no VAE to quantize: Iris-3B generates in pixel space, so the package holds a text encoder and a transformer only."
+      },
+      "settings": {
+        "width": 1024,
+        "height": 1024,
+        "steps": 4,
+        "guidance_scale": null,
+        "seed": 42
+      },
+      "compute_precision_note": "No compute_precision is set: mflux-generate-iris has no --compute-precision flag on mflux 0.24.0, so the harness passes none. Guidance is not set either: the Turbo checkpoint is distilled and mflux ignores --guidance, --steps and --negative-prompt on it (it prints a warning when they are given).",
+      "sources": [
+        "https://huggingface.co/mflux-community/iris-3b-turbo-mflux-q8",
+        "https://huggingface.co/speridlabs/iris-3b"
+      ]
+    },
+    "boogu-turbo-q8": {
+      "name": "boogu-turbo-q8",
+      "display_name": "boogu-turbo-q8",
+      "description": "Boogu Image 0.1 Turbo, MLX 8-bit (mflux-community q8), 10B DMD-distilled, 8 steps at 1024x1024. Apache-2.0.",
+      "task": "text-to-image",
+      "cli": "mflux-generate-boogu",
+      "model": "mflux-community/boogu-image-turbo-mflux-q8",
+      "mflux_base_model": "boogu-image-turbo",
+      "base_model": "Boogu/Boogu-Image-0.1-Turbo",
+      "license": "apache-2.0",
+      "license_note": "Apache-2.0. No output restrictions beyond the licence's own terms.",
+      "local_path": "~/models/mflux-community/boogu-image-turbo-mflux-q8",
+      "on_disk_gb": 20.3,
+      "quantization": {
+        "scheme": "mlx-affine",
+        "bits": 8,
+        "applies_to": [
+          "text_encoder",
+          "transformer",
+          "vae"
+        ],
+        "note": "The level is stored in the weights, so no --quantize flag is needed. The text tower ships as mllm/, the transformer and VAE keep their own directories."
+      },
+      "settings": {
+        "width": 1024,
+        "height": 1024,
+        "steps": 8,
+        "guidance_scale": null,
+        "seed": 42
+      },
+      "compute_precision_note": "No compute_precision is set: mflux-generate-boogu has no --compute-precision flag on mflux 0.24.0. Guidance is distilled into the checkpoint, so --guidance and --negative-prompt are accepted but ignored (the CLI warns). 8 steps is the 1024x1024 setting: mflux's own port notes that 4 steps is enough up to about 768 px, where 1024x1024 under-resolves fine detail.",
+      "sources": [
+        "https://huggingface.co/mflux-community/boogu-image-turbo-mflux-q8",
+        "https://huggingface.co/Boogu/Boogu-Image-0.1-Turbo"
+      ]
     }
   },
   "model_to_profile": {
@@ -407,6 +478,8 @@
     "AbstractFramework/ernie-image-turbo-8bit": "ernie-image-turbo-q8",
     "AbstractFramework/qwen-image-4bit": "qwen-image-4bit",
     "mflux-community/anima-turbo-mflux-q8": "anima-turbo-q8",
-    "mflux-community/flux-2-klein-base-4b-mflux-q8": "klein-base-q8"
+    "mflux-community/flux-2-klein-base-4b-mflux-q8": "klein-base-q8",
+    "mflux-community/iris-3b-turbo-mflux-q8": "iris-turbo-q8",
+    "mflux-community/boogu-image-turbo-mflux-q8": "boogu-turbo-q8"
   }
 }

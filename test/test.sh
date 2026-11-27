@@ -248,6 +248,7 @@ known = {
     "z-image-turbo-q4": 95.8, "klein-base-q8": 97.1,
     "ernie-image-turbo-q8": 123.5, "qwen-image-4bit": 124.9,
     "flux3-klein-q8": 180.6,
+    "iris-turbo-q8": 24.1, "boogu-turbo-q8": 160.8,
     "cogvideox-fun-1.5-5b-inp-q4": 247.7, "wan22-ti2v-5b-q8": 255.6,
     "cogvideox-fun-1.5-5b-inp-q8": 262.1,
 }
@@ -442,6 +443,8 @@ DISPLAY_NAMES = {
     "anima-turbo-q8": ["Anima Turbo", "anima-turbo"],
     "klein-base-q8": ["FLUX.2 klein 4B Base", "FLUX.2-klein-base-4B", "flux2-klein-base-4b", "flux-2-klein-base-4b"],
     "bonsai-image-ternary-2bit": ["Bonsai Image 4B", "bonsai-image-ternary"],
+    "iris-turbo-q8": ["Iris 3B Turbo", "Iris-3B", "iris-3b"],
+    "boogu-turbo-q8": ["Boogu Image", "Boogu-Image"],
     "cogvideox-fun-1.5-5b-inp-q8": ["CogVideoX-Fun 5B", "CogVideoX-Fun-V1.5-5b-InP"],
     "cogvideox-fun-1.5-5b-inp-q4": ["CogVideoX-Fun 5B", "CogVideoX-Fun-V1.5-5b-InP"],
     "wan22-ti2v-5b-q8": ["Wan2.2 TI2V 5B", "Wan2.2-TI2V-5B"],

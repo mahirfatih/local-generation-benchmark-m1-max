@@ -13,11 +13,13 @@ a number.
 | [`image-benchmark-ernie.md`](image-benchmark-ernie.md) | mlx-gen / ernie-image-turbo-q8 | The same, for ERNIE Image Turbo |
 | [`image-benchmark-anima.md`](image-benchmark-anima.md) | mflux / anima-turbo-q8 | The same, for Anima Turbo — measured at **1024×1024** |
 | [`image-benchmark-klein-base.md`](image-benchmark-klein-base.md) | mflux / klein-base-q8 | The same, for the non-distilled `klein` — **20 steps** against its sibling's 4 |
+| [`image-benchmark-iris-2026-11-27.md`](image-benchmark-iris-2026-11-27.md) | mflux / iris-turbo-q8 | The same, for Iris-3B Turbo — pixel-space, no VAE |
+| [`image-benchmark-boogu-2026-11-27.md`](image-benchmark-boogu-2026-11-27.md) | mflux / boogu-turbo-q8 | The same, for Boogu Image Turbo — 10B, **8 steps** at 1024×1024 |
 | [`video-benchmark-2026-11-12.md`](video-benchmark-2026-11-12.md) | VideoX-Fun-mlx / mlx-gen | 18 clips over 3 models and 6 prompts, each with its prompt, its seconds and its `ffprobe` reading |
 
 The outputs themselves sit beside the pages:
 
-- [`images/`](images/) — 64 PNGs (the current eight models × eight prompts), named `<profile>--<prompt-id>.png`; the sixteen superseded `klein-q4`/`klein-q8` runs from the guidance fix sit beside them as `*_1.png`
+- [`images/`](images/) — 80 PNGs (the current ten models × eight prompts), named `<profile>--<prompt-id>.png`; the sixteen superseded `klein-q4`/`klein-q8` runs from the guidance fix sit beside them as `*_1.png`
 - [`videos/`](videos/) — 18 clips (4 GIF batches and 2 MP4 batches) named
   `<profile>--<prompt-id>`: six CogVideoX int8 and six int4 GIFs, and six Wan2.2
   MP4s

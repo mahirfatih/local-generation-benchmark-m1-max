@@ -225,7 +225,8 @@ def selftest():
     known_unrunnable = {"bonsai-image-ternary-2bit"}  # mlx-gen bug, issue #22
     expected = {"klein-q8", "klein-q4", "flux3-klein-q8", "z-image-turbo-q4",
                 "ernie-image-turbo-q8", "qwen-image-4bit",
-                "anima-turbo-q8", "klein-base-q8"} | known_unrunnable
+                "anima-turbo-q8", "klein-base-q8",
+                "iris-turbo-q8", "boogu-turbo-q8"} | known_unrunnable
     if set(gens) != expected:
         ok = False
         print("FAIL: unexpected profiles:", sorted(set(gens) ^ expected))

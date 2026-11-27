@@ -24,11 +24,13 @@ measured on the same M1 Max.
 | :--- | :--- | :--- | :--- | ---: | :--- |
 | **Image** | `flux2-klein-4b` (q4) | mflux | Apache-2.0 | **23.0 s** | 1024×1024, 4 steps |
 | Image | `flux2-klein-4b` (q8) | mflux | Apache-2.0 | 24.0 s | 1024×1024, 4 steps |
+| Image | `iris-3b-turbo` (q8) | mflux | Apache-2.0 | 24.1 s | 1024×1024, 4 steps |
 | Image | `anima-turbo` (q8) | mflux | **Circlestone non-commercial** | 36.4 s | 1024×1024, 8 steps |
 | Image | `z-image-turbo` | mflux | Apache-2.0 | 95.8 s | 1024×1024, 9 steps |
 | Image | `flux2-klein-base-4b` (q8) | mflux | Apache-2.0 | 97.1 s | 1024×1024, **20 steps** |
 | Image | `ernie-image-turbo-q8` | mlx-gen | Apache-2.0 | 123.5 s | 1024×1024, 8 steps |
 | Image | `qwen-image-4bit` | mlx-gen | Apache-2.0 | 124.9 s | 1024×1024, 9 steps |
+| Image | `boogu-image-turbo` (q8) | mflux | Apache-2.0 | 160.8 s | 1024×1024, 8 steps |
 | Image | `flux-3-image-klein-base` | mflux | FLUX Kommunity | 180.6 s | 1024×1024, 16 steps |
 | **Video** | `CogVideoX-Fun-V1.5-5b-InP` (int4) | VideoX-Fun-mlx | **CogVideoX License** | **247.7 s** | 672×384, 5 frames, GIF |
 | Video | `Wan2.2-TI2V-5B` (int8) | mlx-gen | Apache-2.0 | 255.6 s | 480×832, 25 frames, MP4 |
@@ -53,14 +55,16 @@ written PNG checked.
 | :--- | :--- | ---: | ---: | ---: | :--- |
 | `FLUX.2-klein-4B-mflux-4bit` | Apache-2.0 | **23.0** | 5.7 | 4 | 1024×1024 |
 | `flux2-klein-4b-mflux-q8` | Apache-2.0 | 24.0 | 6.0 | 4 | 1024×1024 |
+| `iris-3b-turbo-mflux-q8` | Apache-2.0 | 24.1 | 6.0 | 4 | 1024×1024 |
 | `anima-turbo-mflux-q8` | **Circlestone non-commercial** | 36.4 | 4.6 | 8 | 1024×1024 |
 | `z-image-turbo-mflux-q4` | Apache-2.0 | 95.8 | 10.6 | 9 | 1024×1024 |
 | `flux-2-klein-base-4b-mflux-q8` | Apache-2.0 | 97.1 | 4.9 | **20** | 1024×1024 |
 | `ernie-image-turbo-8bit` (mlx-gen) | Apache-2.0 | 123.5 | 15.4 | 8 | 1024×1024 |
 | `qwen-image-4bit` (mlx-gen) | Apache-2.0 | 124.9 | 13.8 | 9 | 1024×1024 |
+| `boogu-image-turbo-mflux-q8` | Apache-2.0 | 160.8 | 20.1 | 8 | 1024×1024 |
 | `flux-3-image-klein-base-mflux-q8` | FLUX Kommunity | 180.6 | 11.3 | 16 | 1024×1024 |
 
-All eight were run on eight prompts covering the surfaces that separate image
+All ten were run on eight prompts covering the surfaces that separate image
 models: photorealism, hands, legible text, composition, style. **The klein pair is
 ~8× faster than FLUX 3** and is the one to use unless you need FLUX 3
 specifically. The **two klein quantisations are a tie** — the 4-bit is the
@@ -87,9 +91,21 @@ per-image and per-step figures together, because Qwen's per-image figure carries
 real spread (the text-heavy prompts run ~131 s against ~117 s for the rest, where
 ERNIE sits within a second of 123.5 s on every prompt and the other rows sit
 within a few seconds too). Every image row here is 1024×1024, so the
-`s/img` column compares like with like. The PNGs are committed in
+`s/img` column compares like with like.
+
+**Iris-3B Turbo** is the architectural outlier: a 3B **pixel-space** model with no
+VAE and no latent — the transformer predicts RGB directly — and it lands at 24.1 s,
+inside the klein pair's own run-to-run noise, on a different design. **Boogu Image
+Turbo** is the largest image package here (20.3 GB) and the second-slowest row:
+10B parameters, DMD-distilled to 4 steps, but mflux's port notes that 4 steps only
+holds up to about 768 px, so 1024×1024 is measured at 8 steps and 160.8 s. Its
+20.1 s/step is the parameter count, not the schedule.
+
+The PNGs are committed in
 [`evidence/images/`](../../evidence/images/); legible text and correct hands came
-out clean on all of them.
+out clean on the latent models. The pixel-space row is the exception: Iris-3B
+Turbo's poster renders the headline but adds a clipped second line, and its hands
+are the least certain of the set — a real cost of dropping the VAE.
 
 One further mlx-gen image profile exists but carries **no timing row**, so it is
 named here rather than given a number this table cannot support:

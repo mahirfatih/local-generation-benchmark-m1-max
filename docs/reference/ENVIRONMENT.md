@@ -94,7 +94,7 @@ and `mlxgen capabilities` confirms the routing before a run costs you 20 minutes
 
 ## Models
 
-Weights are read from disk, never from an API. Roughly 116 GB for everything
+Weights are read from disk, never from an API. Roughly 144 GB for everything
 measured here — the same total the [README](../../README.md) states.
 
 | Model | Local size |
@@ -104,6 +104,8 @@ measured here — the same total the [README](../../README.md) states.
 | `mflux-community/flux-2-klein-base-4b-mflux-q8` | 8.6 GB |
 | `mflux-community/anima-turbo-mflux-q8` | 4.0 GB |
 | `mflux-community/z-image-turbo-mflux-q4` | 5.5 GB |
+| `mflux-community/iris-3b-turbo-mflux-q8` | 8.0 GB |
+| `mflux-community/boogu-image-turbo-mflux-q8` | 20.3 GB |
 | `mflux-community/flux-3-image-klein-base-mflux-q8` | 9.2 GB |
 | `AbstractFramework/ernie-image-turbo-8bit` | 11.5 GB |
 | `AbstractFramework/qwen-image-4bit` | 16.2 GB |
