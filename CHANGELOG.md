@@ -6,6 +6,8 @@ date-based snapshots rather than semver releases.
 
 ## [Unreleased]
 
+## [2026-11-27]
+
 ### Added — two non-FLUX image models measured: Iris-3B Turbo and Boogu Image Turbo
 
 - **`iris-turbo-q8`** — `mflux-community/iris-3b-turbo-mflux-q8`, Apache-2.0,
