@@ -238,7 +238,7 @@ Which generation model for which job, at the seconds it actually cost, in one pi
 
 Both harnesses run offline against themselves before they touch a model:
 `python3 scripts/measure/<suite>.py --selftest`. `test/test.sh` runs the gate and
-proves the harnesses agree with their own fixtures. The gate is thirteen steps —
+proves the harnesses agree with their own fixtures. The gate is fourteen steps —
 syntax and naming, prompt sets, profiles, evidence links, licences, both
 selftests, the reference figures recomputed from the JSON, the Mermaid diagrams,
 the model map's files, PNGs and Hugging Face links, that every profile is

@@ -108,6 +108,32 @@ for path in ("profiles/mflux-profiles.json", "profiles/video-profiles.json"):
     print(f"{path}: every profile links to its own model")
 PY
 
+step "4c. Profiles — sources are links, and the base model has a Hugging Face one"
+python3 - <<'PY'
+import json, pathlib
+# A model row is only complete if a reader can follow it to the weights *and* to
+# the base model the licence comes from. The base link is the one that goes
+# missing: adding a quant is a copy-paste, and the new profile inherits the base
+# id in `base_model` without the URL in `sources`, so the licence claim has no
+# page behind it. Non-Hugging-Face sources are allowed — the mlx-gen profiles
+# carry the runner's GitHub link — but the base model has to be a HF page.
+# Checked offline: that the URLs resolve is a release-time check, not something
+# a gate with no network can prove.
+for path in ("profiles/mflux-profiles.json", "profiles/video-profiles.json"):
+    gens = json.loads(pathlib.Path(path).read_text())["generation_profiles"]
+    for key, prof in gens.items():
+        sources = prof.get("sources", [])
+        bad = [s for s in sources if not s.startswith("https://")]
+        assert not bad, f"{key}: source is not a link: {bad}"
+        hf = [s for s in sources if s.startswith("https://huggingface.co/")]
+        base = prof.get("base_model", "")
+        if "/" in base:
+            assert any(s.rstrip("/").endswith(base) for s in hf), (
+                f"{key}: no Hugging Face source links to its base model {base}"
+            )
+    print(f"{path}: every source is a link and every base model has a HF page")
+PY
+
 step "5. Evidence — every clip and image named in the evidence pages exists"
 python3 - <<'PY'
 import pathlib, re, sys

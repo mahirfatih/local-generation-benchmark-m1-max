@@ -26,11 +26,12 @@ date-based snapshots rather than semver releases.
   profile records. The two models were added to every listing document, the
   licence table, both disk totals (`~116` → `~144 GB`), the model map (HTML and
   both PNGs) and the `known` figures in `test/test.sh`.
-- Two candidates were dropped before any profile was written. `SenseNova-U1.5` has
-  no mflux port and its `mlx-community` artifact targets a separate Swift runtime,
-  so it cannot run through this harness; `MOSS-Image-SFT` is mflux-supported but
-  its 4-step LoRA repository is gone and the 8-step alternative needs layer
-  replacements the CLI cannot apply, so it would only run at 50 steps.
+- **New gate step 4c keeps the base-model link.** A profile's `sources` must now
+  carry a Hugging Face page for its `base_model`, not just its own weights: a new
+  quant is a copy-paste, and the base URL is what goes missing while the licence
+  claim still cites it. Sources may be non-HF (the mlx-gen profiles link the
+  runner's GitHub), and the step is offline — resolution of the URLs is checked
+  by hand at release time.
 
 ### Fixed — Bonsai Image's missing cache field identified and verified locally
 
